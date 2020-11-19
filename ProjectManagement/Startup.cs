@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProjectManagement.Data;
+using ProjectManagement.Repository;
 
 namespace ProjectManagement
 {
@@ -41,6 +42,10 @@ namespace ProjectManagement
                 config.Cookie.Name = "Identity.Cookie";
                 config.LoginPath = "/Account/Login";
             });
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+
             services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
         }
 
