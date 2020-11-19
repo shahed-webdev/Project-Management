@@ -2,14 +2,14 @@
 let linkData = [{
     "LinkCategoryID": 1,
     "SN": 1,
-    "Category": "Category",
+    "Category": "Projects",
     "IconClass": "fas fa-list-ul",
     "links": [{
         "LinkID": 1,
         "SN": 1,
-        "Controller": "Category",
-        "Action": "Index",
-        "Title": "Category",
+        "Controller": "Projects",
+        "Action": "Features",
+        "Title": "Features List",
         "IconClass": null
     }]
 }];
