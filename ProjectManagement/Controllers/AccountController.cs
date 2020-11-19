@@ -58,7 +58,7 @@ namespace ProjectManagement.Controllers
                 return RedirectToPage("./Lockout");
 
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Incorrect username or password");
             return View(model);
         }
 

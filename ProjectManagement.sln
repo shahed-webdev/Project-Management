@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagement.Data", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagement.Repository", "ProjectManagement.Repository\ProjectManagement.Repository.csproj", "{EAF76B95-F29E-4B11-B75E-FBE4AE81525D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement.ViewModel", "ProjectManagement.ViewModel\ProjectManagement.ViewModel.csproj", "{EB556D93-B2CF-4CA6-94BF-CB26FD387830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagement.ViewModel", "ProjectManagement.ViewModel\ProjectManagement.ViewModel.csproj", "{EB556D93-B2CF-4CA6-94BF-CB26FD387830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
