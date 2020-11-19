@@ -10,7 +10,10 @@ namespace ProjectManagement.Repository
 
         public UnitOfWork(ApplicationDbContext db, IMapper mapper)
         {
+            _db = db;
+            _mapper = mapper;
 
+            Registration = new RegistrationRepository(_db, _mapper);
         }
 
         public void Dispose()
@@ -18,6 +21,8 @@ namespace ProjectManagement.Repository
             _db.Dispose();
         }
 
+
+        public IRegistrationRepository Registration { get; }
 
         public int SaveChanges()
         {
