@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProjectManagement.Data;
+using System.Linq;
 
 namespace ProjectManagement.Repository
 {
@@ -11,12 +12,12 @@ namespace ProjectManagement.Repository
 
         public int GetRegID_ByUserName(string userName)
         {
-            throw new System.NotImplementedException();
+            return Db.Registration.FirstOrDefault(r => r.UserName == userName)?.RegistrationId ?? 0;
         }
 
         public UserType UserTypeByUserName(string userName)
         {
-            throw new System.NotImplementedException();
+            return Db.Registration.FirstOrDefault(r => r.UserName == userName).Type;
         }
     }
 }
