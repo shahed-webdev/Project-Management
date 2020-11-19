@@ -14,6 +14,7 @@ namespace ProjectManagement.Data
         public int ProjectId { get; set; }
         public int ProjectSectorId { get; set; }
         public int ProjectStatusId { get; set; }
+        public int CityId { get; set; }
         public string Title { get; set; }
         public string ProjectName { get; set; }
         public string ReportName { get; set; }
@@ -26,6 +27,7 @@ namespace ProjectManagement.Data
         public DateTime SubmissionDate { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
         public ProjectSector ProjectSector { get; set; }
+        public City City { get; set; }
         public ICollection<ProjectDonor> ProjectDonors { get; set; }
         public ICollection<ProjectReports> ProjectReports { get; set; }
         public ICollection<ProjectBeneficiary> ProjectBeneficiaries { get; set; }

@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
+    <Folder Include="NewFolder\" />
+    <Folder Include="Project\" />
   </ItemGroup>
 
 </Project>
