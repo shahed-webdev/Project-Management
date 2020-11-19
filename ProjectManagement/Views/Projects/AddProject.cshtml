@@ -60,22 +60,31 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <div class="md-form">
                         <input type="text" id="inputDonors" class="form-control" required>
                         <label for="inputDonors">Donor</label>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-7">
                     <div class="md-form">
                         <input type="text" id="inputSectors" class="form-control" disabled value="@ViewBag.linkTitle">
                         <label for="inputSectors">Sector</label>
                     </div>
                 </div>
-                <div class="col-lg-4">
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="number" id="inputTotalBudget" class="form-control">
+                        <input type="number" id="inputTotalBudget" class="form-control" required>
                         <label for="inputTotalBudget">Total Budget</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="number" id="inputTotalExpenditure" class="form-control" required>
+                        <label for="inputTotalExpenditure">Total Expenditure</label>
                     </div>
                 </div>
             </div>
