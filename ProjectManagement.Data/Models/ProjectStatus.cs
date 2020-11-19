@@ -12,4 +12,5 @@ namespace ProjectManagement.Data
         public string Status { get; set; }
         public ICollection<Project> Projects { get; set; }
     }
+
 }

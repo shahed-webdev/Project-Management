@@ -10,13 +10,39 @@ namespace ProjectManagement.Data
 
         }
 
-        public virtual DbSet<Registration> Registration { get; set; }
+        public virtual DbSet<City> City { get; set; }
+        public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<Donor> Donor { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<ProjectBeneficiary> ProjectBeneficiary { get; set; }
+        public virtual DbSet<ProjectBeneficiaryType> ProjectBeneficiaryType { get; set; }
+        public virtual DbSet<ProjectDonor> ProjectDonor { get; set; }
+        public virtual DbSet<ProjectReports> ProjectReports { get; set; }
+        public virtual DbSet<ProjectSector> ProjectSector { get; set; }
+        public virtual DbSet<ProjectStatus> ProjectStatus { get; set; }
+        public virtual DbSet<Registration> Registration { get; set; }
+        public virtual DbSet<ReportType> ReportType { get; set; }
+        public virtual DbSet<State> State { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.ApplyConfiguration(new RegistrationConfiguration());
+            builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new CompanyConfiguration());
+            builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new DonorConfiguration());
+            builder.ApplyConfiguration(new ProjectConfiguration());
+            builder.ApplyConfiguration(new ProjectBeneficiaryConfiguration());
+            builder.ApplyConfiguration(new ProjectBeneficiaryTypeConfiguration());
+            builder.ApplyConfiguration(new ProjectDonorConfiguration());
+            builder.ApplyConfiguration(new ProjectReportsConfiguration());
+            builder.ApplyConfiguration(new ProjectSectorConfiguration());
+            builder.ApplyConfiguration(new ProjectStatusConfiguration());
+            builder.ApplyConfiguration(new RegistrationConfiguration());
+            builder.ApplyConfiguration(new ReportTypeConfiguration());
+            builder.ApplyConfiguration(new StateConfiguration());
 
             base.OnModelCreating(builder);
             builder.SeedAdminData();
