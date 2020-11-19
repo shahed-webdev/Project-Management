@@ -1,0 +1,48 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout";
+}
+
+@section Styles{
+    <link href="~/pages-css/home.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="card mt-5">
+        <div class="row">
+            <div class="col-md-7 col-lg-8">
+                <div class="info-container">
+                    <h2>Company History</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised</p>
+
+                    <h2 class="mt-5">Company Working Area</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem</p>
+                </div>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="login-container">
+                    <h3 class="card-title text-center mb-5">
+                        <strong class="dark-grey-text font-weight-bold">Login</strong>
+                    </h3>
+
+                    <form asp-route-returnUrl="@ViewBag.ReturnUrl" class="form-signin" asp-controller="Account" asp-action="Login" method="post">
+                        <div class="md-form mb-5 pb-3">
+                            <input asp-for="UserName" class="form-control" required>
+                            <label asp-for="UserName"></label>
+                            <span asp-validation-for="UserName"></span>
+                        </div>
+                        <div class="md-form mb-5 pb-3">
+                            <input asp-for="Password" class="form-control" type="password" required>
+                            <label asp-for="Password"></label>
+                            <span asp-validation-for="Password"></span>
+                        </div>
+
+                        <button class="btn btn-block btn-rounded btn-custom-bg z-depth-1a mb-3" type="submit">Sign in</button>
+                        <div asp-validation-summary="ModelOnly"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

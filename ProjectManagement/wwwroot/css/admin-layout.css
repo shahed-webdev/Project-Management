@@ -1,0 +1,15 @@
+﻿
+:root { --bg-primary: #19c2f3; --bg-light: #17c0f2; --bg-secondary: #0a4da2; --color-primary: #19c2f3; --color-secondary: #0a4da2; }
+
+/*header*/
+header nav { background-color: var(--bg-primary) }
+.btn-custom-bg { background-color: var(--bg-light); color: #fff }
+.btn-custom-bg:hover { background-color: var(--bg-primary); color: #fff }
+
+/*main*/
+main { min-height: 86vh; }
+
+/*footer*/
+footer { background-color: var(--bg-primary) }
+
+#toTop { background-color: var(--bg-secondary); color: #fff; bottom: 10px; cursor: pointer; display: none; position: fixed; right: 10px; z-index: 999; padding: 6px 13px; border-radius: 5px; }
