@@ -18,21 +18,20 @@
     @await RenderSectionAsync("Styles", false)
 </head>
 <body>
-    <div id="header">
+    <header>
         <nav class="m-0 navbar navbar-expand-lg navbar-dark red darken-1">
             <div class="container-fluid">
                 <div>
                     <a class="sidedrawer-toggle d-md-none js-show-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
                     <a class="sidedrawer-toggle d-none d-md-inline-block js-hide-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
-                    <span class="navbar-brand ml-1">E-super Shop</span>
+                    <span class="navbar-brand ml-1">Project Management</span>
                 </div>
             </div>
         </nav>
-    </div>
+    </header>
 
     <div id="sidedrawer" class="d-print-none z-depth-1">
         <Partial Name="_AdminLoginPartial" />
-        <ul id="menuItem"></ul>
     </div>
 
     <main id="content-wrapper" style="min-height:801px">
@@ -63,9 +62,6 @@
     <script src="~/js/moment.js"></script>
     <!--sidebar-->
     <script src="https://cdn.muicss.com/mui-latest/js/mui.min.js"></script>
-
-    <!-- menu-links -->
-    <script src="~/js/menu-links.js"></script>
     <script src="~/js/sidedrawer-show-hide.js"></script>
 
     <!-- others js -->
