@@ -12,14 +12,16 @@
     <!-- MDB -->
     <link href="~/mdb/css/mdb-admin.min.css" rel="stylesheet" />
     <!-- custom style-->
-    <link href="~/css/admin-master.css" rel="stylesheet" />
+    <link href="~/css/admin-layout.css?v=.2" rel="stylesheet" />
+    <!-- side navbar style-->
+    <link href="~/css/side-navbar.css?v=.2" rel="stylesheet" />
 
     <!-- others style-->
     @await RenderSectionAsync("Styles", false)
 </head>
 <body>
     <header>
-        <nav class="m-0 navbar navbar-expand-lg navbar-dark red darken-1">
+        <nav class="m-0 navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <div>
                     <a class="sidedrawer-toggle d-md-none js-show-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
@@ -32,15 +34,20 @@
 
     <div id="sidedrawer" class="d-print-none z-depth-1">
         <Partial Name="_AdminLoginPartial" />
+        <ul id="menuItem"></ul>
     </div>
 
-    <main id="content-wrapper" style="min-height:801px">
+    <main id="content-wrapper">
         <div class="container-fluid">
             @RenderBody()
         </div>
     </main>
 
-    <footer class="page-footer font-small wow fadeIn red darken-1 mt-4">
+    <footer class="page-footer font-small wow fadeIn mt-4">
+        <div class="footer-copyright text-center py-3">
+            © @DateTime.Now.Year Copyright:
+            <a href="">projectmanagement.com</a>
+        </div>
     </footer>
 
     <!-- jQuery -->
@@ -62,6 +69,7 @@
     <script src="~/js/moment.js"></script>
     <!--sidebar-->
     <script src="https://cdn.muicss.com/mui-latest/js/mui.min.js"></script>
+    <script src="~/js/sidedrawer-links.js"></script>
     <script src="~/js/sidedrawer-show-hide.js"></script>
 
     <!-- others js -->
@@ -70,7 +78,7 @@
     <script type="text/javascript">
         $(function () {
             //Back to top
-            $('body').append('<div id="toTop" class="btn orange darken-4 text-white d-print-none">TOP</div>');
+            $('body').append('<div id="toTop">TOP</div>');
             $(window).scroll(function () {
                 if ($(this).scrollTop() !== 0)
                     $('#toTop').fadeIn();

@@ -34,11 +34,15 @@
         </nav>
     </header>
 
-    <main style="min-height:822px" class="mb-4">
+    <main>
         @RenderBody()
     </main>
 
-    <footer class="page-footer font-small mt-4">
+    <footer class="page-footer font-small wow fadeIn mt-4">
+        <div class="footer-copyright text-center py-3">
+            © @DateTime.Now.Year Copyright:
+            <a href="">projectmanagement.com</a>
+        </div>
     </footer>
 
 
