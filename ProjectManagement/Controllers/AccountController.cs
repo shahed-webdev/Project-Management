@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Data;
+using ProjectManagement.Repository;
+using ProjectManagement.ViewModel;
+using System.Threading.Tasks;
 
 namespace ProjectManagement.Controllers
 {
@@ -54,7 +56,7 @@ namespace ProjectManagement.Controllers
 
             if (result.IsLockedOut)
                 return RedirectToPage("./Lockout");
-            
+
 
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
