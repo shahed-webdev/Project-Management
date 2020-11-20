@@ -1,15 +1,190 @@
-﻿
+﻿@model ProjectAddModel
 @{
     ViewData["Title"] = "Add Project";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section Styles{
+    <style>
+        .select-wrapper input.select-dropdown { margin: 0 0 .50rem; }
+        fieldset legend { color: #484848; padding: 0 5px; font-size: 1.3rem; }
+    </style>
+}
+
 <div class="container">
-    <h5 class="page-header mb-3">@ViewBag.linkTitle</h5>
-
-    <div class="card card-body">
-
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="page-header mt-2">Add Project</h4>
+            <p class="mb-3">@ViewBag.linkTitle</p>
+        </div>
+        <a href="/Projects/Features"><i class="fas fa-long-arrow-alt-left mr-1"></i> Back to Features</a>
     </div>
+
+    <form id="formAdd">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="text" id="inputTitle" class="form-control" required>
+                        <label for="inputTitle">Title</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="text" id="inputDescription" class="form-control" required>
+                        <label for="inputDescription">Description</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input type="text" id="inputStartDate" class="form-control datepicker" required>
+                        <label for="inputStartDate">Start Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input type="text" id="inputEndDate" class="form-control datepicker" required>
+                        <label for="inputEndDate">End Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <select id="selectStatus" class="mdb-select md-form" searchable="Search here.." required>
+                            <option value="" disabled selected>Choose Status</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="md-form">
+                        <input type="text" id="inputDonors" class="form-control" required>
+                        <label for="inputDonors">Donor</label>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="md-form">
+                        <input type="text" id="inputSectors" class="form-control" disabled value="@ViewBag.linkTitle">
+                        <label for="inputSectors">Sector</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="number" id="inputTotalBudget" class="form-control" required>
+                        <label for="inputTotalBudget">Total Budget</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="number" id="inputTotalExpenditure" class="form-control" required>
+                        <label for="inputTotalExpenditure">Total Expenditure</label>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
+                <legend class="w-auto m-0">Location</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <select id="selectCountry" class="mdb-select md-form m-0" searchable="Search here.." required>
+                            <option value="" disabled selected>Country</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectState" class="mdb-select md-form m-0" searchable="Search here.." required>
+                            <option value="" disabled selected>State</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectCity" class="mdb-select md-form m-0" searchable="Search here.." required>
+                            <option value="" disabled selected>City</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="row my-4">
+                <div class="col-lg-12">
+                    <div class="md-form">
+                        <div class="file-field">
+                            <div class="btn btn-outline-info btn-rounded btn-sm float-left">
+                                <span>Choose Photo</span>
+                                <input id="inputFile" type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Upload Photo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead class="grey lighten-5">
+                <tr>
+                    <th>
+                        <select id="selectBeneficiaryType" class="mdb-select md-form m-0" required>
+                            <option value="" disabled selected>Beneficiary Type</option>
+                        </select>
+                    </th>
+                    <th>
+                        <div class="md-form m-0">
+                            <input type="text" id="inputBeneficiaryCount" class="form-control" required>
+                            <label for="inputBeneficiaryCount">Beneficiary Count</label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 130px">
+                        <button type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Male</td>
+                    <td>10</td>
+                    <td class="text-center"><i class="far fa-trash-alt text-red"></i></td>
+                </tr>
+                <tr>
+                    <td>Male</td>
+                    <td>10</td>
+                    <td class="text-center"><i class="far fa-trash-alt"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-right mt-4">
+            <button class="btn btn-custom-bg">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+        </div>
+    </form>
+
 </div>
 
+@section Scripts{
 
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+            $('.datepicker').pickadate();
+        });
+
+        $('input[type="file"]').change(function (e) {
+            const $this = $(e.target);
+            const $fileField = $this.closest('.file-field');
+            const $pathInput = $fileField.find('input.file-path');
+            const fileNames = [];
+
+            fileNames.push(e.target.files[0].name);
+
+            $pathInput.val(fileNames.join(', '));
+            $pathInput.trigger('change');
+        });
+    </script>
+}

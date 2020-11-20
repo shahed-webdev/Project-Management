@@ -103,7 +103,7 @@ namespace ProjectManagement.Controllers
 
             if (returnUrl != null) return LocalRedirect(returnUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }
