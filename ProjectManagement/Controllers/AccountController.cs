@@ -26,6 +26,9 @@ namespace ProjectManagement.Controllers
         public IActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Dashboard");
+            
             return View();
         }
 

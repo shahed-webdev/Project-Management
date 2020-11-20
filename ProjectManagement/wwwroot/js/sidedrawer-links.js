@@ -1,5 +1,40 @@
 ﻿
 let linkData = [{
+        "LinkCategoryID": 1,
+        "SN": 1,
+        "Category": "Settings",
+        "IconClass": "fas fa-cog",
+        "links": [{
+            "LinkID": 1,
+            "SN": 1,
+            "Controller": "Settings",
+            "Action": "ProjectStatus",
+            "Title": "Project Status",
+            "IconClass": null
+        }, {
+            "LinkID": 2,
+            "SN": 2,
+            "Controller": "Settings",
+            "Action": "ProjectDonor",
+            "Title": "Project Donor",
+            "IconClass": null
+        }, {
+            "LinkID": 3,
+            "SN": 3,
+            "Controller": "Settings",
+            "Action": "BeneficiaryType",
+            "Title": "Project Beneficiary",
+            "IconClass": null
+        }, {
+            "LinkID": 4,
+            "SN": 4,
+            "Controller": "Settings",
+            "Action": "ProjectSector",
+            "Title": "Project Sector",
+            "IconClass": null
+        }]
+    },
+    {
     "LinkCategoryID": 1,
     "SN": 1,
     "Category": "Projects",
@@ -60,7 +95,7 @@ const linkCategory = function (category, iconCss, links) {
     const strong = document.createElement('strong');
     strong.appendChild(span)
     strong.appendChild(ico)
-    strong.appendChild(document.createTextNode(category))  
+    strong.appendChild(document.createTextNode(category))
 
     const ul = document.createElement('ul');
     ul.classList.add('sub-menu')
@@ -74,7 +109,7 @@ const linkCategory = function (category, iconCss, links) {
 }
 
 //append link to DOM
-const appendMenuDOM = function (/*linkData*/) { 
+const appendMenuDOM = function (/*linkData*/) {
     const fragment = document.createDocumentFragment();
 
     const span = document.createElement('span');
@@ -93,7 +128,7 @@ const appendMenuDOM = function (/*linkData*/) {
     li.appendChild(strong)
 
     fragment.appendChild(li)
-    
+
     linkData.forEach(item => {
         const link = linkCategory(item.Category, item.IconClass, createLinks(item.links))
         fragment.appendChild(link)

@@ -8,6 +8,7 @@
     <style>
         .select-wrapper input.select-dropdown { margin: 0 0 .50rem; }
         fieldset legend { color: #484848; padding: 0 5px; font-size: 1.3rem; }
+        #formAdd { display: none}
     </style>
 }
 
@@ -20,7 +21,7 @@
         <a href="/Projects/Features"><i class="fas fa-long-arrow-alt-left mr-1"></i> Back to Features</a>
     </div>
 
-    <form id="formAdd">
+    <form id="formStep">
         <div class="card card-body">
             <div class="row">
                 <div class="col-lg-6">
@@ -54,6 +55,7 @@
                     <div class="md-form">
                         <select id="selectStatus" class="mdb-select md-form" searchable="Search here.." required>
                             <option value="" disabled selected>Choose Status</option>
+                            <option value="1">Choose Status</option>
                         </select>
                     </div>
                 </div>
@@ -73,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
@@ -95,16 +97,19 @@
                     <div class="col-lg-4">
                         <select id="selectCountry" class="mdb-select md-form m-0" searchable="Search here.." required>
                             <option value="" disabled selected>Country</option>
+                            <option value="1">Country</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
                         <select id="selectState" class="mdb-select md-form m-0" searchable="Search here.." required>
                             <option value="" disabled selected>State</option>
+                            <option value="1">State</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
                         <select id="selectCity" class="mdb-select md-form m-0" searchable="Search here.." required>
                             <option value="" disabled selected>City</option>
+                            <option value="1">City</option>
                         </select>
                     </div>
                 </div>
@@ -128,34 +133,35 @@
 
             <table class="table">
                 <thead class="grey lighten-5">
-                <tr>
-                    <th>
-                        <select id="selectBeneficiaryType" class="mdb-select md-form m-0" required>
-                            <option value="" disabled selected>Beneficiary Type</option>
-                        </select>
-                    </th>
-                    <th>
-                        <div class="md-form m-0">
-                            <input type="text" id="inputBeneficiaryCount" class="form-control" required>
-                            <label for="inputBeneficiaryCount">Beneficiary Count</label>
-                        </div>
-                    </th>
-                    <th class="text-right" style="width: 130px">
-                        <button type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
-                    </th>
-                </tr>
+                    <tr>
+                        <th>
+                            <select id="selectBeneficiaryType" class="mdb-select md-form m-0">
+                                <option value="" disabled selected>Beneficiary Type</option>
+                                <option value="1">Beneficiary Type</option>
+                            </select>
+                        </th>
+                        <th>
+                            <div class="md-form m-0">
+                                <input type="text" id="inputBeneficiaryCount" class="form-control" >
+                                <label for="inputBeneficiaryCount">Beneficiary Count</label>
+                            </div>
+                        </th>
+                        <th class="text-right" style="width: 130px">
+                            <button type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Male</td>
-                    <td>10</td>
-                    <td class="text-center"><i class="far fa-trash-alt text-red"></i></td>
-                </tr>
-                <tr>
-                    <td>Male</td>
-                    <td>10</td>
-                    <td class="text-center"><i class="far fa-trash-alt"></i></td>
-                </tr>
+                    <tr>
+                        <td>Male</td>
+                        <td>10</td>
+                        <td class="text-center"><i class="far fa-trash-alt text-red"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Male</td>
+                        <td>10</td>
+                        <td class="text-center"><i class="far fa-trash-alt"></i></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -165,17 +171,26 @@
         </div>
     </form>
 
+    <form id="formAdd">
+        <div class="card card-body">
+      
+        </div>
+
+        <div class="text-right mt-4">
+            <button type="submit" class="btn btn-custom-bg">Add Project</button>
+        </div>
+    </form>
 </div>
 
 @section Scripts{
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
 
-        $('input[type="file"]').change(function (e) {
+        $('input[type="file"]').change(function(e) {
             const $this = $(e.target);
             const $fileField = $this.closest('.file-field');
             const $pathInput = $fileField.find('input.file-path');
@@ -185,6 +200,27 @@
 
             $pathInput.val(fileNames.join(', '));
             $pathInput.trigger('change');
+        });
+
+        //global model 
+        const model = {};
+
+        //selectors
+        const formStep = document.getElementById("formStep");
+        const formAdd = document.getElementById("formAdd");
+
+        //first step
+        formStep.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            this.style.display = "none";
+            formAdd.style.display = "block";
+        });
+
+        //post project
+        formAdd.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
         });
     </script>
 }
