@@ -6,15 +6,10 @@ using System.Collections.Generic;
 
 namespace ProjectManagement.BusinessLogic
 {
-    public class ProjectSectorCore : IProjectSectorCore
+    public class ProjectSectorCore : CoreDependencies, IProjectSectorCore
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _db;
-
-        public ProjectSectorCore(IMapper mapper, IUnitOfWork db)
+        public ProjectSectorCore(IMapper mapper, IUnitOfWork db) : base(mapper, db)
         {
-            _mapper = mapper;
-            _db = db;
         }
 
         public DbResponse Add(ProjectSectorAddModel model)
@@ -52,5 +47,7 @@ namespace ProjectManagement.BusinessLogic
                 return new DbResponse<List<ProjectSectorViewModel>>(false, e.Message);
             }
         }
+
+
     }
 }

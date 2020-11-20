@@ -13,12 +13,14 @@ namespace ProjectManagement.Repository
             _db = db;
             _mapper = mapper;
 
+            Donor = new DonorRepository(_db, _mapper);
             Registration = new RegistrationRepository(_db, _mapper);
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
             ProjectStatus = new ProjectStatusRepository(_db, _mapper);
         }
 
 
+        public IDonorRepository Donor { get; }
         public IRegistrationRepository Registration { get; }
 
         public IProjectSectorRepository ProjectSector { get; }
