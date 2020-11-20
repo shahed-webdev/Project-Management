@@ -14,6 +14,7 @@ namespace ProjectManagement.Repository
             _mapper = mapper;
 
             Registration = new RegistrationRepository(_db, _mapper);
+            ProjectSector = new ProjectSectorRepository(_db, _mapper);
         }
 
         public void Dispose()
@@ -23,6 +24,7 @@ namespace ProjectManagement.Repository
 
 
         public IRegistrationRepository Registration { get; }
+        public IProjectSectorRepository ProjectSector { get; }
 
         public int SaveChanges()
         {

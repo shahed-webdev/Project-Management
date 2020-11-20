@@ -12,8 +12,4 @@
     <ProjectReference Include="..\ProjectManagement.Data\ProjectManagement.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapper\" />
-  </ItemGroup>
-
 </Project>
