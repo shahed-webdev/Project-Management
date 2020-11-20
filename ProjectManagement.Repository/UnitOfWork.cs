@@ -15,20 +15,26 @@ namespace ProjectManagement.Repository
 
             Registration = new RegistrationRepository(_db, _mapper);
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
+            ProjectStatus = new ProjectStatusRepository(_db, _mapper);
+        }
+
+
+        public IRegistrationRepository Registration { get; }
+
+        public IProjectSectorRepository ProjectSector { get; }
+
+        public IProjectStatusRepository ProjectStatus { get; }
+
+        public IProjectBeneficiaryTypeRepository ProjectBeneficiaryType { get; }
+
+        public int SaveChanges()
+        {
+            return _db.SaveChanges();
         }
 
         public void Dispose()
         {
             _db.Dispose();
-        }
-
-
-        public IRegistrationRepository Registration { get; }
-        public IProjectSectorRepository ProjectSector { get; }
-
-        public int SaveChanges()
-        {
-            return _db.SaveChanges();
         }
     }
 }

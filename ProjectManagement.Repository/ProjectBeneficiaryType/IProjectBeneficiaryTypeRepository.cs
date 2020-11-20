@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ProjectManagement.Repository
 {
-    public interface IProjectStatusRepository
+    public interface IProjectBeneficiaryTypeRepository
     {
-        void Add(ProjectStatusAddModel model);
+        void Add(ProjectBeneficiaryTypeAddModel model);
         bool IsExist(string status);
-        List<ProjectStatusViewModel> List();
+        List<ProjectBeneficiaryTypeViewModel> List();
         List<DDL> Ddl();
     }
 }
