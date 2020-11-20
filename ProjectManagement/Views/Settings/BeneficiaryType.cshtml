@@ -4,5 +4,64 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>BeneficiaryType</h1>
+
+<div class="container">
+    <h4 class="page-header mb-3">Project Beneficiary Type</h4>
+   
+    <div class="card mb-3 px-3 py-2">
+        <form id="formAdd">
+            <div class="md-form input-group">
+                <input id="inputType" type="text" class="form-control" required>
+                <label for="inputType">Beneficiary Type</label>
+
+                <div class="input-group-append">
+                    <button class="btn btn-md btn-custom-bg m-0 px-3" type="submit">Add Type</button>
+                </div>
+            </div>
+            <span id="error" class="red-text"></span>
+        </form>
+    </div>
+
+    <div class="card card-body">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    <strong>@item.BeneficiaryType</strong>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const formAdd = document.getElementById("formAdd");
+        const error = document.getElementById("error");
+
+        formAdd.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = { BeneficiaryType: this.inputType.value }
+
+            $.ajax({
+                url: "/Settings/PostBeneficiaryType",
+                type: "POST",
+                data: model,
+                success: function(response) {
+                    console.log(response);
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+
+                    error.textContent = response.Message;
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}
 

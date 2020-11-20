@@ -3,6 +3,91 @@
     ViewData["Title"] = "Project Donor";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@section Styles
+{
+    <style>
+        .list-group-item h5 {margin-bottom: .3rem; font-weight: bold; color: #484848 }
+        .list-group-item span { color: #6a6969; font-size: .9rem; }
+    </style>
+}
 
-<h1>ProjectDonor</h1>
+<div class="container">
+    <h4 class="page-header mb-3">Project Donor</h4>
+    <div class="card mb-3 px-3 py-2">
+        <form id="formAdd">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input id="inputName" type="text" class="form-control" required>
+                        <label for="inputName">Donor Name</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input id="inputPhone" type="text" class="form-control" required>
+                        <label for="inputPhone">Donor Phone</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input id="inputEmail" type="email" class="form-control" required>
+                        <label for="inputEmail">Donor Email</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-md btn-custom-bg px-3 md-form" type="submit">Add Donor</button>
+                </div>
+            </div>
+            <span id="error" class="red-text"></span>
+        </form>
+    </div>
+
+    <div class="card card-body">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    <h5><i class="fas fa-user mr-1"></i>@item.Name</h5>
+                    <span class="mr-2"><i class="fas fa-phone mr-1"></i>@item.Phone</span>
+                    <span><i class="fas fa-envelope mr-1"></i>@item.Email</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const formAdd = document.getElementById("formAdd");
+        const error = document.getElementById("error");
+
+        formAdd.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
+            const model = {
+                Name: this.inputName.value,
+                Phone: this.inputPhone.value,
+                Email: this.inputEmail.value
+            }
+
+            $.ajax({
+                url: "/Settings/PostDonor",
+                type: "POST",
+                data: model,
+                success: function (response) {
+                    console.log(response);
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+
+                    error.textContent = response.Message;
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}
 

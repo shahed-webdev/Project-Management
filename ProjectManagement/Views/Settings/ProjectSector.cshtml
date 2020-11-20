@@ -4,5 +4,61 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>ProjectSector</h1>
+<div class="container">
+    <h4 class="page-header mb-3">Project Sector</h4>
+    <div class="card mb-3 px-3 py-2">
+        <form id="formAdd">
+            <div class="md-form input-group">
+                <input id="inputSector" type="text" class="form-control" required>
+                <label for="inputSector">Project Sector</label>
+
+                <div class="input-group-append">
+                    <button class="btn btn-md btn-custom-bg m-0 px-3" type="submit">Add Sector</button>
+                </div>
+            </div>
+            <span id="error" class="red-text"></span>
+        </form>
+    </div>
+
+    <div class="card card-body">
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    <strong>@item.Sector</strong>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const formAdd = document.getElementById("formAdd");
+        const error = document.getElementById("error");
+
+        formAdd.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = { Sector: this.inputSector.value }
+
+            $.ajax({
+                url: "/Settings/PostProjectSector",
+                type: "POST",
+                data: model,
+                success: function(response) {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+
+                    error.textContent = response.Message;
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}
 
