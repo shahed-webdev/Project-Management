@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ProjectStatusViewModel>
+
+@{
+    ViewData["Title"] = "Project Status";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="container">
+    <h4 class="page-header mb-3">Project Status</h4>
+    <div class="card card-body">
+        <form id="formAdd">
+            <div class="row">
+                <div class="col">
+                    <div class="md-form">
+                        <label for="inputStatus">Status</label>
+                        <input id="inputStatus" type="text" required class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="submit" value="Add" class="btn btn-custom-bg md-form" />
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">@item.Status</li>
+        }
+    </ul>
+    
+</div>
+
+@section Scripts{
+    <script>
+        const formAdd = document.getElementById("formAdd");
+        formAdd.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
+            const model = { Status: this.inputStatus.value }
+
+            $.ajax({
+                url: "Settings/PostProjectStatus",
+                type: "POST",
+                data: model,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}
+
+
