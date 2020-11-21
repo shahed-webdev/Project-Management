@@ -35,6 +35,29 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Edit(ProjectSectorViewModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.Sector))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ProjectSector.IsExist(model.Sector, model.ProjectSectorId))
+                    return new DbResponse(false, $"{model.Sector} already Exist");
+
+                _db.ProjectSector.Edit(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse<List<ProjectSectorViewModel>> List()
         {
             try

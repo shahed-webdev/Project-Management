@@ -35,6 +35,29 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Edit(ProjectBeneficiaryTypeViewModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.BeneficiaryType))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ProjectBeneficiaryType.IsExist(model.BeneficiaryType, model.ProjectBeneficiaryTypeId))
+                    return new DbResponse(false, $"{model.BeneficiaryType} already Exist");
+
+                _db.ProjectBeneficiaryType.Edit(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse<List<ProjectBeneficiaryTypeViewModel>> List()
         {
             try

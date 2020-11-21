@@ -19,9 +19,22 @@ namespace ProjectManagement.Repository
             Db.ProjectSector.Add(sector);
         }
 
+        public void Edit(ProjectSectorViewModel model)
+        {
+            var sector = Db.ProjectSector.Find(model.ProjectSectorId);
+            if (sector == null) return;
+            sector.Sector = model.Sector;
+            Db.ProjectSector.Update(sector);
+        }
+
         public bool IsExist(string sector)
         {
             return Db.ProjectSector.Any(c => c.Sector == sector);
+        }
+
+        public bool IsExist(string sector, int updateId)
+        {
+            return Db.ProjectSector.Any(c => c.Sector == sector && c.ProjectSectorId != updateId);
         }
 
         public List<ProjectSectorViewModel> List()

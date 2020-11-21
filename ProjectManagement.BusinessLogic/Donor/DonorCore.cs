@@ -36,6 +36,29 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Edit(DonorViewModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Email))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Donor.IsExistEmail(model.Email, model.DonorId))
+                    return new DbResponse(false, $"{model.Email} already Exist");
+
+                _db.Donor.Edit(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse<List<DonorViewModel>> List()
         {
             try

@@ -6,11 +6,13 @@ namespace ProjectManagement.BusinessLogic
     public interface ILocationCore
     {
         DbResponse CountryAdd(CountryAddModel model);
+        DbResponse CountryEdit(CountryViewModel model);
         DbResponse<List<CountryViewModel>> CountryList();
         DbResponse<List<DDL>> CountryDdl();
 
 
         DbResponse StateAdd(StateAddModel model);
+        DbResponse StateEdit(StateEditModel model);
         DbResponse<List<StateViewModel>> StateList(int countryId);
         DbResponse<List<DDL>> StateDdl(int countryId);
 
