@@ -11,6 +11,7 @@ namespace ProjectManagement.Repository
         IProjectSectorRepository ProjectSector { get; }
         IProjectStatusRepository ProjectStatus { get; }
         IProjectBeneficiaryTypeRepository ProjectBeneficiaryType { get; }
+        IReportTypeRepository ReportType { get; }
         IStateRepository State { get; }
         int SaveChanges();
     }

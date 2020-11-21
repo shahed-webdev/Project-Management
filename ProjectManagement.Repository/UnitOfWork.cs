@@ -20,6 +20,7 @@ namespace ProjectManagement.Repository
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
             ProjectStatus = new ProjectStatusRepository(_db, _mapper);
             Registration = new RegistrationRepository(_db, _mapper);
+            ReportType = new ReportTypeRepository(_db, _mapper);
             State = new StateRepository(_db, _mapper);
         }
 
@@ -29,6 +30,7 @@ namespace ProjectManagement.Repository
         public IProjectSectorRepository ProjectSector { get; }
         public IProjectStatusRepository ProjectStatus { get; }
         public IProjectBeneficiaryTypeRepository ProjectBeneficiaryType { get; }
+        public IReportTypeRepository ReportType { get; }
         public IRegistrationRepository Registration { get; }
         public IStateRepository State { get; }
 
