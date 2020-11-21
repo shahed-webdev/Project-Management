@@ -26,19 +26,55 @@
         <ul class="list-group list-group-flush">
             @foreach (var item in Model)
             {
-                <li class="list-group-item">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                     <strong>@item.Status</strong>
+                    <a data-id="@item.ProjectStatusId" data-value="@item.Status" class="far fa-edit btnUpdate"></a>
                 </li>
             }
         </ul>
     </div>
 </div>
 
+<!--update modal-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-notify modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formUpdate">
+                    <input type="hidden" id="hiddenUpdateId">
+                    <div class="form-group">
+                        <label for="updateStatus" class="active">Status</label>
+                        <input type="text" id="updateStatus" class="form-control" required>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-outline-info waves-effect">Update <i class="fas fa-paper-plane-o ml-1"></i></button>
+                    </div>
+                </form>
+                <span id="error2" class="red-text"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts{
     <script>
+        //selectors
         const formAdd = document.getElementById("formAdd");
+        const formUpdate = document.getElementById("formUpdate");
         const error = document.getElementById("error");
+        const listContainer = document.querySelector(".list-group");
+        const modalContainer = $("#updateModal");
 
+        //insert
         formAdd.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
@@ -49,13 +85,52 @@
                 type: "POST",
                 data: model,
                 success: function(response) {
-                    console.log(response);
                     if (response.IsSuccess) {
                         location.reload();
                         return;
                     }
 
                     error.textContent = response.Message;
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //on edit
+        listContainer.addEventListener("click", function(evt) {
+            const element = evt.target;
+            const onUpdate = element.classList.contains("btnUpdate");
+
+            if (!onUpdate) return;
+
+            formUpdate.hiddenUpdateId.value = element.getAttribute("data-id");
+            formUpdate.updateStatus.value = element.getAttribute("data-value");
+
+            modalContainer.modal("show");
+        });
+
+        //update
+        formUpdate.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = {
+                ProjectStatusId: this.hiddenUpdateId.value,
+                Status: this.updateStatus.value
+            }
+
+            $.ajax({
+                url: "/Settings/UpdateProjectStatus",
+                type: "POST",
+                data: model,
+                success: function(response) {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+
+                    error2.textContent = response.Message;
                 },
                 error: function(err) {
                     console.log(err);

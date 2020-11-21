@@ -38,8 +38,8 @@ namespace ProjectManagement.Repository
                 .OrderBy(p => p.Status)
                 .Select(s => new DDL
                 {
-                    value = s.Status,
-                    label = s.ProjectStatusId.ToString()
+                    value = s.ProjectStatusId.ToString(),
+                    label = s.Status
                 })
                 .ToList();
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagement.BusinessLogic;
 using ProjectManagement.ViewModel;
 
@@ -12,13 +13,15 @@ namespace ProjectManagement.Controllers
         private readonly IDonorCore _donor;
         private readonly IProjectBeneficiaryTypeCore _beneficiary;
         private readonly IProjectSectorCore _sector;
+        private readonly ILocationCore _location;
 
-        public SettingsController(IProjectStatusCore status, IDonorCore donor, IProjectBeneficiaryTypeCore beneficiary, IProjectSectorCore sector)
+        public SettingsController(IProjectStatusCore status, IDonorCore donor, IProjectBeneficiaryTypeCore beneficiary, IProjectSectorCore sector, ILocationCore location)
         {
-            this._status = status;
+            _status = status;
             _donor = donor;
             _beneficiary = beneficiary;
             _sector = sector;
+            _location = location;
         }
 
         //*****Project Status*****
@@ -30,6 +33,13 @@ namespace ProjectManagement.Controllers
 
         [HttpPost]
         public IActionResult PostProjectStatus(ProjectStatusAddModel model)
+        {
+            var response = _status.Add(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProjectStatus(ProjectStatusAddModel model)
         {
             var response = _status.Add(model);
             return Json(response);
@@ -77,6 +87,62 @@ namespace ProjectManagement.Controllers
         public IActionResult PostProjectSector(ProjectSectorAddModel model)
         {
             var response = _sector.Add(model);
+            return Json(response);
+        }
+
+        /***location**/
+        //country
+        public IActionResult Country()
+        {
+            var model = _location.CountryList();
+            return View(model.Data);
+        }
+
+        [HttpPost]
+        public IActionResult PostCountry(CountryAddModel model)
+        {
+            var response = _location.CountryAdd(model);
+            return Json(response);
+        }
+
+
+        //state
+        public IActionResult State()
+        {
+            ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
+            return View();
+        }
+
+        public IActionResult GetStateByCountry(int id)
+        {
+            var model = _location.StateList(id);
+            return Json(model.Data);
+        }
+
+        [HttpPost]
+        public IActionResult PostState(StateAddModel model)
+        {
+            var response = _location.StateAdd(model);
+            return Json(response);
+        }
+
+        //city
+        public IActionResult City()
+        {
+            ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
+            return View();
+        }
+
+        public IActionResult GetCityByState(int id)
+        {
+            var model = _location.CityList(id);
+            return Json(model.Data);
+        }
+
+        [HttpPost]
+        public IActionResult PostCity(CityAddModel model)
+        {
+            var response = _location.CityAdd(model);
             return Json(response);
         }
     }
