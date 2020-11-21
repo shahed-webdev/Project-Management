@@ -13,21 +13,24 @@ namespace ProjectManagement.Repository
             _db = db;
             _mapper = mapper;
 
+            City = new CityRepository(_db, _mapper);
+            Country = new CountryRepository(_db, _mapper);
             Donor = new DonorRepository(_db, _mapper);
-            Registration = new RegistrationRepository(_db, _mapper);
+            ProjectBeneficiaryType = new ProjectBeneficiaryTypeRepository(_db, _mapper);
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
             ProjectStatus = new ProjectStatusRepository(_db, _mapper);
+            Registration = new RegistrationRepository(_db, _mapper);
+            State = new StateRepository(_db, _mapper);
         }
 
-
+        public ICityRepository City { get; }
+        public ICountryRepository Country { get; }
         public IDonorRepository Donor { get; }
-        public IRegistrationRepository Registration { get; }
-
         public IProjectSectorRepository ProjectSector { get; }
-
         public IProjectStatusRepository ProjectStatus { get; }
-
         public IProjectBeneficiaryTypeRepository ProjectBeneficiaryType { get; }
+        public IRegistrationRepository Registration { get; }
+        public IStateRepository State { get; }
 
         public int SaveChanges()
         {
