@@ -11,6 +11,6 @@ namespace ProjectManagement.Repository
         bool IsExist(int stateId, string city, int updateId);
         List<CityViewModel> List(int stateId);
         List<DDL> Ddl(int stateId);
-        void Edit(CityViewModel model);
+        void Edit(CityEditModel model);
     }
 }

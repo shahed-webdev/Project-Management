@@ -57,13 +57,14 @@ namespace ProjectManagement.Repository
                 .ToList();
         }
 
-        public void Edit(CityViewModel model)
+        public void Edit(CityEditModel model)
         {
             var city = Db.City.Find(model.CityId);
 
             if (city == null) return;
 
             city.CityName = model.CityName;
+            city.StateId = model.StateId;
             Db.City.Update(city);
         }
     }

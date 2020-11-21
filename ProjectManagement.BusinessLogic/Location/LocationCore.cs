@@ -21,7 +21,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.Country.IsExist(model.CountryName))
-                    return new DbResponse(false, $"{model.CountryName} already Exist");
+                    return new DbResponse(false, $"'{model.CountryName}' already Exist");
 
                 _db.Country.Add(model);
                 _db.SaveChanges();
@@ -44,7 +44,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.Country.IsExist(model.CountryName, model.CountryId))
-                    return new DbResponse(false, $"{model.CountryName} already Exist");
+                    return new DbResponse(false, $"'{model.CountryName}' already Exist");
 
                 _db.Country.Edit(model);
                 _db.SaveChanges();
@@ -93,7 +93,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.State.IsExist(model.CountryId, model.StateName))
-                    return new DbResponse(false, $"{model.StateName} already Exist");
+                    return new DbResponse(false, $"'{model.StateName}' already Exist");
 
                 _db.State.Add(model);
                 _db.SaveChanges();
@@ -116,7 +116,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.State.IsExist(model.CountryId, model.StateName, model.StateId))
-                    return new DbResponse(false, $"{model.StateName} already Exist");
+                    return new DbResponse(false, $"'{model.StateName}' already Exist");
 
                 _db.State.Edit(model);
                 _db.SaveChanges();
@@ -166,9 +166,32 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.City.IsExist(model.StateId, model.CityName))
-                    return new DbResponse(false, $"{model.CityName} already Exist");
+                    return new DbResponse(false, $"'{model.CityName}' already Exist");
 
                 _db.City.Add(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
+        public DbResponse CityEdit(CityEditModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.CityName))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.City.IsExist(model.StateId, model.CityName, model.CityId))
+                    return new DbResponse(false, $"'{model.CityName}' already Exist");
+
+                _db.City.Edit(model);
                 _db.SaveChanges();
 
 

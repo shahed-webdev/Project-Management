@@ -18,6 +18,7 @@ namespace ProjectManagement.BusinessLogic
 
 
         DbResponse CityAdd(CityAddModel model);
+        DbResponse CityEdit(CityEditModel model);
         DbResponse<List<CityViewModel>> CityList(int stateId);
         DbResponse<List<DDL>> CityDdl(int stateId);
     }

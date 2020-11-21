@@ -21,7 +21,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectStatus.IsExist(model.Status))
-                    return new DbResponse(false, "Status already Exist");
+                    return new DbResponse(false, $"'{model.Status}' already Exist");
 
                 _db.ProjectStatus.Add(model);
                 _db.SaveChanges();
@@ -44,7 +44,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectStatus.IsExist(model.Status, model.ProjectStatusId))
-                    return new DbResponse(false, $"{model.Status} already Exist");
+                    return new DbResponse(false, $"'{model.Status}' already Exist");
 
                 _db.ProjectStatus.Edit(model);
                 _db.SaveChanges();

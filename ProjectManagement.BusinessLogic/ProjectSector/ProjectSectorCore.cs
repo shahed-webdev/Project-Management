@@ -21,7 +21,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectSector.IsExist(model.Sector))
-                    return new DbResponse(false, "Sector Name already Exist");
+                    return new DbResponse(false, $"'{model.Sector}' already Exist");
 
                 _db.ProjectSector.Add(model);
                 _db.SaveChanges();
@@ -44,7 +44,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectSector.IsExist(model.Sector, model.ProjectSectorId))
-                    return new DbResponse(false, $"{model.Sector} already Exist");
+                    return new DbResponse(false, $"'{model.Sector}' already Exist");
 
                 _db.ProjectSector.Edit(model);
                 _db.SaveChanges();

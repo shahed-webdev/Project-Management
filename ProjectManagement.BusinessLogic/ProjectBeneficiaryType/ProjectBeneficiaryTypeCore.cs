@@ -21,7 +21,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectBeneficiaryType.IsExist(model.BeneficiaryType))
-                    return new DbResponse(false, "Beneficiary Type already Exist");
+                    return new DbResponse(false, $"'{model.BeneficiaryType}' already Exist");
 
                 _db.ProjectBeneficiaryType.Add(model);
                 _db.SaveChanges();
@@ -44,7 +44,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.ProjectBeneficiaryType.IsExist(model.BeneficiaryType, model.ProjectBeneficiaryTypeId))
-                    return new DbResponse(false, $"{model.BeneficiaryType} already Exist");
+                    return new DbResponse(false, $"'{model.BeneficiaryType}' already Exist");
 
                 _db.ProjectBeneficiaryType.Edit(model);
                 _db.SaveChanges();

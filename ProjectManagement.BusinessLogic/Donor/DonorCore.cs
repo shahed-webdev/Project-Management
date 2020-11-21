@@ -22,7 +22,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.Donor.IsExistEmail(model.Email))
-                    return new DbResponse(false, "Donor already Exist");
+                    return new DbResponse(false, $"'{model.Email}' already Exist");
 
                 _db.Donor.Add(model);
                 _db.SaveChanges();
@@ -45,7 +45,7 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, "Invalid Data");
 
                 if (_db.Donor.IsExistEmail(model.Email, model.DonorId))
-                    return new DbResponse(false, $"{model.Email} already Exist");
+                    return new DbResponse(false, $"'{model.Email}' already Exist");
 
                 _db.Donor.Edit(model);
                 _db.SaveChanges();
