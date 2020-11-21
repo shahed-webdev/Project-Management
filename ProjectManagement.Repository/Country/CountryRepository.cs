@@ -48,8 +48,8 @@ namespace ProjectManagement.Repository
                 .OrderBy(p => p.CountryName)
                 .Select(s => new DDL
                 {
-                    value = s.CountryName,
-                    label = s.CountryId.ToString()
+                    value = s.CountryId.ToString(),
+                    label = s.CountryName
                 })
                 .ToList();
         }

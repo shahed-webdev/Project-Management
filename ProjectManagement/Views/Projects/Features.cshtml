@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<ProjectSectorViewModel>  
 @{
     ViewData["Title"] = "Features";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,38 +8,13 @@
     <h4 class="page-header mb-3">Features List</h4>
     <div class="card card-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Activism along the Agricultural, Fishery, Dairy and Horticulture Value Chain</span>
-                <a href="/Projects/AddProject/Activism along the Agricultural, Fishery, Dairy and Horticulture Value Chain"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Access to Justice</span>
-                <a href="/Projects/AddProject/Access to Justice"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Youth Development (Education, skill, moral and cultural behavior)</span>
-                <a href="/Projects/AddProject/Youth Development (Education, skill, moral and cultural behavior)"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Health and Nutrition</span>
-                <a href="/Projects/AddProject/Health and Nutrition"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Climate Emergency, Biodiversity and Disaster Management</span>
-                <a href="/Projects/AddProject/Climate Emergency, Biodiversity and Disaster Management"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Climate Emergency, Biodiversity and Disaster Management</span>
-                <a href="/Projects/AddProject/Climate Emergency, Biodiversity and Disaster Management"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Company as a social entrepreneurship</span>
-                <a href="/Projects/AddProject/Company as a social entrepreneurship"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>Micro finance</span>
-                <a href="/Projects/AddProject/Micro finance"><i class="fas fa-plus"></i> Add Project</a>
-            </li>
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@item.Sector</span>
+                    <a href="/Projects/AddProject/@item.ProjectSectorId"><i class="fas fa-plus"></i> Add Project</a>
+                </li>
+            }
         </ul>
     </div>
 </div>

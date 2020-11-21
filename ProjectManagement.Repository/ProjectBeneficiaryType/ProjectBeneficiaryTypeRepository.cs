@@ -52,8 +52,8 @@ namespace ProjectManagement.Repository
                 .OrderBy(p => p.BeneficiaryType)
                 .Select(s => new DDL
                 {
-                    value = s.BeneficiaryType,
-                    label = s.ProjectBeneficiaryTypeId.ToString()
+                    label = s.BeneficiaryType,
+                    value = s.ProjectBeneficiaryTypeId.ToString()
                 })
                 .ToList();
         }

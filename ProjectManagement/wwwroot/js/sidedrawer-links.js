@@ -32,22 +32,43 @@ let linkData = [{
             "Action": "ProjectSector",
             "Title": "Project Sector",
             "IconClass": null
+        }, {
+            "LinkID": 5,
+            "SN": 5,
+            "Controller": "Settings",
+            "Action": "Country",
+            "Title": "Country",
+            "IconClass": null
+        }, {
+            "LinkID": 6,
+            "SN": 6,
+            "Controller": "Settings",
+            "Action": "State",
+            "Title": "State",
+            "IconClass": null
+        }, {
+            "LinkID": 7,
+            "SN": 7,
+            "Controller": "Settings",
+            "Action": "City",
+            "Title": "City",
+            "IconClass": null
         }]
     },
     {
-    "LinkCategoryID": 1,
-    "SN": 1,
-    "Category": "Projects",
-    "IconClass": "fas fa-list-ul",
-    "links": [{
-        "LinkID": 1,
+        "LinkCategoryID": 1,
         "SN": 1,
-        "Controller": "Projects",
-        "Action": "Features",
-        "Title": "Features List",
-        "IconClass": null
-    }]
-}];
+        "Category": "Projects",
+        "IconClass": "fas fa-list-ul",
+        "links": [{
+            "LinkID": 1,
+            "SN": 1,
+            "Controller": "Projects",
+            "Action": "Features",
+            "Title": "Features List",
+            "IconClass": null
+        }]
+    }];
 
 //selectors
 const menuItem = document.getElementById("menuItem")

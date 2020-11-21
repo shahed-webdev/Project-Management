@@ -8,7 +8,7 @@
     <style>
         .select-wrapper input.select-dropdown { margin: 0 0 .50rem; }
         fieldset legend { color: #484848; padding: 0 5px; font-size: 1.3rem; }
-        #formAdd { display: none}
+        #formAdd { display: none }
     </style>
 }
 
@@ -53,9 +53,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <select id="selectStatus" class="mdb-select md-form" searchable="Search here.." required>
+                        <select id="selectStatus" asp-items="@ViewBag.Status" class="mdb-select md-form" searchable="Search here.." required>
                             <option value="" disabled selected>Choose Status</option>
-                            <option value="1">Choose Status</option>
                         </select>
                     </div>
                 </div>
@@ -95,9 +94,8 @@
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
                     <div class="col-lg-4">
-                        <select id="selectCountry" class="mdb-select md-form m-0" searchable="Search here.." required>
+                        <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here.." required>
                             <option value="" disabled selected>Country</option>
-                            <option value="1">Country</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
@@ -121,12 +119,13 @@
                         <div class="file-field">
                             <div class="btn btn-outline-info btn-rounded btn-sm float-left">
                                 <span>Choose Photo</span>
-                                <input id="inputFile" type="file">
+                                <input id="inputPhoto" type="file" accept="image/*">
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Upload Photo">
+                                <input id="filePath" class="file-path validate" type="text" placeholder="Upload Photo">
                             </div>
                         </div>
+                        <span id="imageError" class="field-validation-error"></span>
                     </div>
                 </div>
             </div>
@@ -135,14 +134,13 @@
                 <thead class="grey lighten-5">
                     <tr>
                         <th>
-                            <select id="selectBeneficiaryType" class="mdb-select md-form m-0">
+                            <select asp-items="@ViewBag.Type" id="selectBeneficiaryType" class="mdb-select md-form m-0">
                                 <option value="" disabled selected>Beneficiary Type</option>
-                                <option value="1">Beneficiary Type</option>
                             </select>
                         </th>
                         <th>
                             <div class="md-form m-0">
-                                <input type="text" id="inputBeneficiaryCount" class="form-control" >
+                                <input type="text" id="inputBeneficiaryCount" class="form-control">
                                 <label for="inputBeneficiaryCount">Beneficiary Count</label>
                             </div>
                         </th>
@@ -173,7 +171,7 @@
 
     <form id="formAdd">
         <div class="card card-body">
-      
+
         </div>
 
         <div class="text-right mt-4">
@@ -185,32 +183,98 @@
 @section Scripts{
 
     <script>
-        $(document).ready(function() {
+        $(function () {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
 
-        $('input[type="file"]').change(function(e) {
-            const $this = $(e.target);
-            const $fileField = $this.closest('.file-field');
-            const $pathInput = $fileField.find('input.file-path');
-            const fileNames = [];
+        //set image file
+        const inputPhoto = document.getElementById("inputPhoto");
+        const imageError = document.getElementById("imageError");
+        const pathInput = document.getElementById("filePath");
 
-            fileNames.push(e.target.files[0].name);
+        inputPhoto.addEventListener("change", function (e) {
+            imageError.textContent = "";
 
-            $pathInput.val(fileNames.join(', '));
-            $pathInput.trigger('change');
+            const size = e.target.files[0].size / 1024 / 1024;
+            const allowSize = 2;
+            const regex = new RegExp("(.*?)\.(jpeg|jpg|png|webp)$");
+
+            if (!(regex.test(e.target.value.toLowerCase()))) {
+                e.target.value = "";
+                pathInput.value = "";
+
+                imageError.textContent = `Please select correct file format`;
+                return;
+            }
+
+            if (size > allowSize) {
+                e.target.value = "";
+                pathInput.value = "";
+
+                imageError.textContent = `image size must be less than ${allowSize}MB. your file size:${size.toFixed()} MB`;
+                return;
+            }
+
+            pathInput.value = e.target.files[0].name;
         });
 
-        //global model 
+
+        //global model
         const model = {};
 
         //selectors
         const formStep = document.getElementById("formStep");
         const formAdd = document.getElementById("formAdd");
+        //location
+        const selectCountry = document.getElementById("selectCountry");
+        const selectState = document.getElementById("selectState");
+        const selectCity = document.getElementById("selectCity");
+
+        //on change country
+        selectCountry.addEventListener("change", function () {
+            const id = +this.value
+
+            //$('.product-select').materialSelect("destroy");
+            //$('.product-select').materialSelect();
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetStateByCountry",
+                data: { id },
+                success: function (response) {
+                    console.log(response)
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "State";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.StateId;
+                        option.text = item.StateName;
+                        fragment.appendChild(option);
+                    });
+
+                    selectState.innerHTML = "";
+                    selectState.appendChild(fragment);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
 
         //first step
-        formStep.addEventListener("submit", function(evt) {
+        formStep.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
             this.style.display = "none";

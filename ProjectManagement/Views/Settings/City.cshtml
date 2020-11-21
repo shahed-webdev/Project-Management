@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewData["Title"] = "City";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h4 class="page-header mb-3">City</h4>
+    <div class="card mb-3 px-3 py-2">
+        <form id="formAdd">
+            <div class="row">
+                <div class="col">
+                    <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form" searchable="Search here.." required>
+                        <option value="" disabled selected>Country</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select id="selectState" class="mdb-select md-form" searchable="Search here.." required>
+                        <option value="" disabled selected>State</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <div class="md-form input-group">
+                        <input id="inputCityName" type="text" class="form-control" required>
+                        <label for="inputCityName">City Name</label>
+
+                        <div class="input-group-append">
+                            <button class="btn btn-md btn-custom-bg m-0 px-3" type="submit">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span id="error" class="red-text"></span>
+        </form>
+    </div>
+
+    <div class="card card-body">
+        <ul id="listItem" class="list-group list-group-flush"></ul>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function() {
+            $('.mdb-select').materialSelect();
+        });
+
+        //selectors
+        const formAdd = document.getElementById("formAdd");
+        const selectCountry = document.getElementById("selectCountry");
+        const selectState = document.getElementById("selectState");
+        const listItem = document.getElementById("listItem");
+        const error = document.getElementById("error");
+
+        //country change
+        selectCountry.addEventListener("change", function() {
+            const id = +this.value;
+
+            selectState.innerHTML = "";
+            listItem.innerHTML = "";
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Settings/GetStateByCountry",
+                data: { id },
+                success: function(response) {
+                    const fragment = document.createDocumentFragment();
+
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "State";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.StateId;
+                        option.text = item.StateName;
+                        fragment.appendChild(option);
+                    });
+
+                    selectState.append(fragment);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //state change
+        selectState.addEventListener("change", function() {
+            const id = +this.value;
+            appendData(id);
+        });
+
+        //append to dom
+        function appendData(id) {
+            listItem.innerHTML = "";
+            if (!id) return;
+
+            $.ajax({
+                url: "/Settings/GetCityByState",
+                data: { id },
+                success: function(response) {
+                    const fragment = document.createDocumentFragment();
+                    response.forEach(item => {
+                        const li = document.createElement("li");
+                        li.className = "list-group-item";
+                        li.innerHTML = `<strong>${item.CityName}</strong>`;
+                        fragment.appendChild(li);
+                    });
+
+                    listItem.append(fragment);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
+        //insert
+        formAdd.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = {
+                StateId: +this.selectState.value,
+                CityName: this.inputCityName.value
+            }
+
+            $.ajax({
+                url: "/Settings/PostCity",
+                type: "POST",
+                data: model,
+                success: response => {
+                    if (response.IsSuccess) {
+                        appendData(model.StateId);
+                        this.inputCityName.value = "";
+                        return;
+                    }
+
+                    error.textContent = response.Message;
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}
+
