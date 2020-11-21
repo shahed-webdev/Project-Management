@@ -39,9 +39,9 @@ namespace ProjectManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProjectStatus(ProjectStatusAddModel model)
+        public IActionResult UpdateProjectStatus(ProjectStatusViewModel model)
         {
-            var response = _status.Add(model);
+            var response = _status.Edit(model);
             return Json(response);
         }
 
@@ -60,6 +60,13 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
+        [HttpPost]
+        public IActionResult UpdateProjectDonor(DonorViewModel model)
+        {
+            var response = _donor.Edit(model);
+            return Json(response);
+        }
+
 
         //*****Project Beneficiary Type*****
         public IActionResult BeneficiaryType()
@@ -72,6 +79,13 @@ namespace ProjectManagement.Controllers
         public IActionResult PostBeneficiaryType(ProjectBeneficiaryTypeAddModel model)
         {
             var response = _beneficiary.Add(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateBeneficiaryType(ProjectBeneficiaryTypeViewModel model)
+        {
+            var response = _beneficiary.Edit(model);
             return Json(response);
         }
 
@@ -89,6 +103,15 @@ namespace ProjectManagement.Controllers
             var response = _sector.Add(model);
             return Json(response);
         }
+
+        [HttpPost]
+        public IActionResult UpdateProjectSector(ProjectSectorViewModel model)
+        {
+            var response = _sector.Edit(model);
+            return Json(response);
+        }
+
+
 
         /***location**/
         //country
