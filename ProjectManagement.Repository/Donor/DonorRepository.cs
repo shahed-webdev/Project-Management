@@ -21,9 +21,27 @@ namespace ProjectManagement.Repository
             Db.Donor.Add(donor);
         }
 
+        public void Edit(DonorViewModel model)
+        {
+            var donor = Db.Donor.Find(model.DonorId);
+
+            if (donor == null) return;
+
+            donor.Name = model.Name;
+            donor.Email = model.Email;
+            donor.Phone = model.Phone;
+
+            Db.Donor.Update(donor);
+        }
+
         public bool IsExistEmail(string email)
         {
             return Db.Donor.Any(c => c.Email == email);
+        }
+
+        public bool IsExistEmail(string email, int updateId)
+        {
+            return Db.Donor.Any(c => c.Email == email && c.DonorId != updateId);
         }
 
         public List<DonorViewModel> List()

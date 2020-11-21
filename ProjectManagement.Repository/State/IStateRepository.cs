@@ -12,6 +12,6 @@ namespace ProjectManagement.Repository
         bool IsExist(int countryId, string state, int updateId);
         List<StateViewModel> List(int countryId);
         List<DDL> Ddl(int countryId);
-        void Edit(StateViewModel model);
+        void Edit(StateEditModel model);
     }
 }

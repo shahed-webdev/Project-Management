@@ -19,9 +19,22 @@ namespace ProjectManagement.Repository
             Db.ProjectStatus.Add(status);
         }
 
+        public void Edit(ProjectStatusViewModel model)
+        {
+            var status = Db.ProjectStatus.Find(model.ProjectStatusId);
+            if (status == null) return;
+            status.Status = model.Status;
+            Db.ProjectStatus.Update(status);
+        }
+
         public bool IsExist(string status)
         {
             return Db.ProjectStatus.Any(c => c.Status == status);
+        }
+
+        public bool IsExist(string status, int updateId)
+        {
+            return Db.ProjectStatus.Any(c => c.Status == status && c.ProjectStatusId != updateId);
         }
 
         public List<ProjectStatusViewModel> List()

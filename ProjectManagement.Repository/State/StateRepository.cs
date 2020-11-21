@@ -56,13 +56,14 @@ namespace ProjectManagement.Repository
                 .ToList();
         }
 
-        public void Edit(StateViewModel model)
+        public void Edit(StateEditModel model)
         {
             var state = Db.State.Find(model.StateId);
 
             if (state == null) return;
 
             state.StateName = model.StateName;
+            state.CountryId = model.CountryId;
             Db.State.Update(state);
         }
     }

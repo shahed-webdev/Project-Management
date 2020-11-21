@@ -35,6 +35,29 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Edit(ProjectStatusViewModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.Status))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ProjectStatus.IsExist(model.Status, model.ProjectStatusId))
+                    return new DbResponse(false, $"{model.Status} already Exist");
+
+                _db.ProjectStatus.Edit(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse<List<ProjectStatusViewModel>> List()
         {
             try

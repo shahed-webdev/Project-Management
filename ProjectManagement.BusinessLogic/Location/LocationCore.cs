@@ -35,6 +35,29 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse CountryEdit(CountryViewModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.CountryName))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Country.IsExist(model.CountryName, model.CountryId))
+                    return new DbResponse(false, $"{model.CountryName} already Exist");
+
+                _db.Country.Edit(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse<List<CountryViewModel>> CountryList()
         {
             try
@@ -73,6 +96,29 @@ namespace ProjectManagement.BusinessLogic
                     return new DbResponse(false, $"{model.StateName} already Exist");
 
                 _db.State.Add(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
+        public DbResponse StateEdit(StateEditModel model)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(model.StateName))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.State.IsExist(model.CountryId, model.StateName, model.StateId))
+                    return new DbResponse(false, $"{model.StateName} already Exist");
+
+                _db.State.Edit(model);
                 _db.SaveChanges();
 
 
