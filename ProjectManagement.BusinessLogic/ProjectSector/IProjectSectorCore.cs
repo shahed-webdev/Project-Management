@@ -8,5 +8,6 @@ namespace ProjectManagement.BusinessLogic
         DbResponse Add(ProjectSectorAddModel model);
         DbResponse Edit(ProjectSectorViewModel model);
         DbResponse<List<ProjectSectorViewModel>> List();
+        DbResponse<ProjectSectorViewModel> Get(int sectorId);
     }
 }

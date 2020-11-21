@@ -7,6 +7,7 @@ namespace ProjectManagement.Repository
     {
         void Add(ProjectSectorAddModel model);
         void Edit(ProjectSectorViewModel model);
+        ProjectSectorViewModel Get(int sectorId);
         bool IsExist(string sector);
         bool IsExist(string sector, int updateId);
         List<ProjectSectorViewModel> List();

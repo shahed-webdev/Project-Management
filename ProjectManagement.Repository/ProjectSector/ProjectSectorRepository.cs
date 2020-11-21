@@ -27,6 +27,15 @@ namespace ProjectManagement.Repository
             Db.ProjectSector.Update(sector);
         }
 
+        public ProjectSectorViewModel Get(int sectorId)
+        {
+            return Db.ProjectSector
+                .Where(s => s.ProjectSectorId == sectorId)
+                .ProjectTo<ProjectSectorViewModel>(_mapper.ConfigurationProvider)
+                .OrderBy(p => p.Sector)
+                .FirstOrDefault();
+        }
+
         public bool IsExist(string sector)
         {
             return Db.ProjectSector.Any(c => c.Sector == sector);

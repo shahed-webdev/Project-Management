@@ -71,6 +71,20 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse<ProjectSectorViewModel> Get(int sectorId)
+        {
+            try
+            {
+                var data = _db.ProjectSector.Get(sectorId);
+                if (data == null)
+                    return new DbResponse<ProjectSectorViewModel>(false, "Invalid ID");
 
+                return new DbResponse<ProjectSectorViewModel>(true, "Success", data);
+            }
+            catch (Exception e)
+            {
+                return new DbResponse<ProjectSectorViewModel>(false, e.Message);
+            }
+        }
     }
 }
