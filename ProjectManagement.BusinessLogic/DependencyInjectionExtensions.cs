@@ -12,6 +12,8 @@ namespace ProjectManagement.BusinessLogic
             services.AddTransient<IProjectBeneficiaryTypeCore, ProjectBeneficiaryTypeCore>();
             services.AddTransient<IProjectSectorCore, ProjectSectorCore>();
             services.AddTransient<IProjectStatusCore, ProjectStatusCore>();
+            services.AddTransient<ILocationCore, LocationCore>();
+
             return services;
         }
     }
