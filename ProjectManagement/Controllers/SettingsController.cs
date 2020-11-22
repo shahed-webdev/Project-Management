@@ -90,29 +90,6 @@ namespace ProjectManagement.Controllers
         }
 
 
-        //*****Project Sector*****
-        public IActionResult ProjectSector()
-        {
-            var model = _sector.List();
-            return View(model.Data);
-        }
-
-        [HttpPost]
-        public IActionResult PostProjectSector(ProjectSectorAddModel model)
-        {
-            var response = _sector.Add(model);
-            return Json(response);
-        }
-
-        [HttpPost]
-        public IActionResult UpdateProjectSector(ProjectSectorViewModel model)
-        {
-            var response = _sector.Edit(model);
-            return Json(response);
-        }
-
-
-
         /***location**/
         //country
         public IActionResult Country()

@@ -34,7 +34,28 @@
 
     <div id="sidedrawer" class="d-print-none z-depth-1">
         <Partial Name="_AdminLoginPartial" />
-        <ul id="menuItem"></ul>
+        <ul id="menuItem">
+            <li>
+                <strong>
+                    <span class="fas fa-tachometer-alt"></span>
+                    <a class="links" href="/Dashboard/Index">Dashboard</a>
+                </strong>
+            </li>
+            <li>
+                <strong>
+                    <span class="fas fa-cog">
+                    </span><i class="fas fa-caret-right"></i>Settings
+                </strong>
+                <ul class="sub-menu">
+                    <li><a class="links" href="/Settings/ProjectStatus">Project Status</a></li>
+                    <li><a class="links" href="/Settings/ProjectDonor">Project Donor</a></li>
+                    <li><a class="links" href="/Settings/BeneficiaryType">Project Beneficiary</a></li>
+                    <li><a class="links" href="/Settings/Country">Country</a></li>
+                    <li><a class="links" href="/Settings/State">State</a></li>
+                    <li><a class="links" href="/Settings/City">City</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <main id="content-wrapper">
@@ -68,8 +89,8 @@
     <!--moment js-->
     <script src="~/js/moment.js"></script>
     <!--sidebar-->
-    <script src="https://cdn.muicss.com/mui-latest/js/mui.min.js"></script>
-    <script src="~/js/sidedrawer-links.js"></script>
+<script src="https://cdn.muicss.com/mui-latest/js/mui.min.js"></script>
+<script src="~/js/sidedrawer-links.js"></script>
     <script src="~/js/sidedrawer-show-hide.js"></script>
 
     <!-- others js -->
