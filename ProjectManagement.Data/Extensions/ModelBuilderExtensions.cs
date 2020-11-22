@@ -60,6 +60,49 @@ namespace ProjectManagement.Data
                 CompanyId = 1,
                 Name = "Company Name",
             });
+
+            builder.Entity<ProjectSector>().HasData(
+                new ProjectSector
+                {
+                    ProjectSectorId = 1,
+                    Sector = "Access to Justice"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 2,
+                    Sector = "Activism along the Agricultural, Fishery, Dairy and Horticulture Value Chain"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 3,
+                    Sector = "Climate Emergency, Biodiversity and Disaster Management 1"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 4,
+                    Sector = "Climate Emergency, Biodiversity and Disaster Management 2"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 5,
+                    Sector = "Company as a social entrepreneurship"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 6,
+                    Sector = "Health and Nutrition"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 7,
+                    Sector = "Microfinance"
+                },
+                new ProjectSector
+                {
+                    ProjectSectorId = 8,
+                    Sector = "Youth Development (Education, skill, moral and cultural behavior)"
+                }
+            );
         }
     }
 }
