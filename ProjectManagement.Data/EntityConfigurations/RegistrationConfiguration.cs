@@ -32,6 +32,11 @@ namespace ProjectManagement.Data
             builder.Property(e => e.CreatedOnUtc)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("(getutcdate())");
+
+            builder.HasOne(r => r.ProjectSector)
+                .WithMany(s => s.Users)
+                .HasForeignKey(r => r.ProjectSectorId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

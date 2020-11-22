@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectManagement.Data;
 
 namespace ProjectManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201122054618_ProjectTableModify")]
+    partial class ProjectTableModify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,17 +57,10 @@ namespace ProjectManagement.Data.Migrations
                         },
                         new
                         {
-                            Id = "9E6E9812-4A93-4F28-81F3-8B52181EFA77",
-                            ConcurrencyStamp = "9E6E9812-4A93-4F28-81F3-8B52181EFA77",
-                            Name = "ReadOnly",
-                            NormalizedName = "READONLY"
-                        },
-                        new
-                        {
-                            Id = "B6ED309F-4F39-4862-B488-B27669C202C5",
-                            ConcurrencyStamp = "B6ED309F-4F39-4862-B488-B27669C202C5",
-                            Name = "FullExist",
-                            NormalizedName = "FULLEXIST"
+                            Id = "F73A5277-2535-48A4-A371-300508ADDD2F",
+                            ConcurrencyStamp = "F73A5277-2535-48A4-A371-300508ADDD2F",
+                            Name = "SubAdmin",
+                            NormalizedName = "SUBADMIN"
                         });
                 });
 
@@ -628,9 +623,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("ProjectSectorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -642,8 +634,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("RegistrationId");
-
-                    b.HasIndex("ProjectSectorId");
 
                     b.ToTable("Registration");
 
@@ -819,14 +809,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasForeignKey("ReportTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjectManagement.Data.Registration", b =>
-                {
-                    b.HasOne("ProjectManagement.Data.ProjectSector", "ProjectSector")
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectSectorId")
-                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("ProjectManagement.Data.State", b =>

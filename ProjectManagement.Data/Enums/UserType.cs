@@ -9,5 +9,11 @@ namespace ProjectManagement.Data
 
         [Description("Sub-Admin")]
         SubAdmin,
+
+        [Description("Read Only")]
+        ReadOnly,
+
+        [Description("Full Exist")]
+        FullExist,
     }
 }

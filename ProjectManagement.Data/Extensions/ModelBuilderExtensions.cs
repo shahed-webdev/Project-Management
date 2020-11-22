@@ -20,11 +20,19 @@ namespace ProjectManagement.Data
                 },
                 new IdentityRole
                 {
-                    Id = "F73A5277-2535-48A4-A371-300508ADDD2F",
-                    Name = UserType.SubAdmin.ToString(),
-                    NormalizedName = UserType.SubAdmin.ToString().ToUpper(),
-                    ConcurrencyStamp = "F73A5277-2535-48A4-A371-300508ADDD2F"
-                });
+                    Id = "9E6E9812-4A93-4F28-81F3-8B52181EFA77",
+                    Name = UserType.ReadOnly.ToString(),
+                    NormalizedName = UserType.ReadOnly.ToString().ToUpper(),
+                    ConcurrencyStamp = "9E6E9812-4A93-4F28-81F3-8B52181EFA77"
+                },
+                new IdentityRole
+                {
+                    Id = "B6ED309F-4F39-4862-B488-B27669C202C5",
+                    Name = UserType.FullExist.ToString(),
+                    NormalizedName = UserType.FullExist.ToString().ToUpper(),
+                    ConcurrencyStamp = "B6ED309F-4F39-4862-B488-B27669C202C5"
+                }
+            );
 
 
             builder.Entity<IdentityUser>().HasData(new IdentityUser

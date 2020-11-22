@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectManagement.Data;
 
 namespace ProjectManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201122055746_AddRole")]
+    partial class AddRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -628,9 +630,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("ProjectSectorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -642,8 +641,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("RegistrationId");
-
-                    b.HasIndex("ProjectSectorId");
 
                     b.ToTable("Registration");
 
@@ -819,14 +816,6 @@ namespace ProjectManagement.Data.Migrations
                         .HasForeignKey("ReportTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjectManagement.Data.Registration", b =>
-                {
-                    b.HasOne("ProjectManagement.Data.ProjectSector", "ProjectSector")
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectSectorId")
-                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("ProjectManagement.Data.State", b =>

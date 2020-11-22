@@ -13,8 +13,8 @@ namespace ProjectManagement.Data
         }
         public int ProjectId { get; set; }
         public int ProjectSectorId { get; set; }
-        public int ProjectStatusId { get; set; }
-        public int CityId { get; set; }
+        public int? ProjectStatusId { get; set; }
+        public int? CityId { get; set; }
         public string Title { get; set; }
         public string ProjectName { get; set; }
         public string ReportName { get; set; }
@@ -22,9 +22,9 @@ namespace ProjectManagement.Data
         public decimal TotalBudget { get; set; }
         public decimal TotalExpenditure { get; set; }
         public byte[] Photo { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime SubmissionDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public DateTime? SubmissionDate { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
         public ProjectSector ProjectSector { get; set; }
         public City City { get; set; }
