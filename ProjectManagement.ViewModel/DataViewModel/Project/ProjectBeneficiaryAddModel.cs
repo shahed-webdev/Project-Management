@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.ViewModel.Project
+﻿namespace ProjectManagement.ViewModel
 {
     public class ProjectBeneficiaryAddModel
     {

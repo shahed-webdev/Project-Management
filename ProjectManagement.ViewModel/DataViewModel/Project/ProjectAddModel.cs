@@ -1,5 +1,4 @@
-﻿using ProjectManagement.ViewModel.Project;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ProjectManagement.ViewModel
