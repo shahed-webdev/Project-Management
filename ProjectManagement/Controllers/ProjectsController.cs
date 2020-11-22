@@ -28,9 +28,12 @@ namespace ProjectManagement.Controllers
             return View(model.Data);
         }  
         
-        public IActionResult AddProject(string id)
+        public IActionResult AddProject(int? id)
         {
-            ViewBag.linkTitle = id;
+            if (!id.HasValue) return RedirectToAction("Features");
+
+           ViewBag.linkTitle = _sector.Get(id.GetValueOrDefault()).Data.Sector;
+
             ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label");
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
             ViewBag.Type = new SelectList(_type.Ddl().Data, "value", "label");

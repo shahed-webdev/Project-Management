@@ -1,9 +1,10 @@
 ﻿
 header { z-index: 5; transition: left 0.2s; }
-#sidedrawer { background-color: #fff; position: fixed; top: 0; bottom: 0; width: 250px; left: -250px; overflow: auto; z-index: 2; transition: transform 0.2s; }
+#sidedrawer { background-color: #333; position: fixed; top: 0; bottom: 0; width: 250px; left: -250px; overflow: auto; z-index: 2; transition: transform 0.2s; }
 #content-wrapper { overflow-x: auto; padding: 15px 0; margin-left: 0; transition: margin-left 0.2s; }
 
-.manu-top-wraper { text-align: center; padding: 25px 0 15px 0; background-color: #d8f6ff; }
+.manu-top-wraper { text-align: center; padding: 25px 0 15px 0; background-color: var(--bg-primary); }
+.manu-top-wraper ul li{color: #fff }
 
 /*Toggle Sidedrawer*/
 #sidedrawer.active { transform: translate(250px); }
@@ -14,22 +15,22 @@ header { z-index: 5; transition: left 0.2s; }
 .sidedrawer-toggle i{ color: #fff}
 .sidedrawer-toggle:hover { color: #fff; text-decoration: none; }
 #mui-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 99999999; background-color: rgba(0,0,0,.2); overflow: auto; }
-#sidedrawer ul.sub-manu li a.active { color: #263238; font-weight: 400; }
+/*#sidedrawer ul.sub-manu li a.active { color: #263238; font-weight: 400; }*/
 
 /*Sidebar link*/
 .sub-menu { display: none; transition: opacity 1s ease-out; opacity: 0; }
 .sub-menu.active { display: block; opacity: 1; }
-#sidedrawer ul li a.link-active { color:var(--color-secondary) !important; pointer-events: none }
+#sidedrawer ul li a.link-active { color: #79e1f9 !important; pointer-events: none }
 #sidedrawer .fa-caret-right { float: right; color: #b0b0b0; margin-top: 4px; }
 #sidedrawer strong.open .fas.fa-caret-right::before { content: "\f0d7"; font-family: 'Font Awesome 5 Pro'; }
 
 #sidedrawer ul { list-style: none; }
 #sidedrawer > ul { padding-left: 0; }
 #sidedrawer > ul > li:first-child { padding-top: 15px; }
-#sidedrawer ul li a.links { color: #393939; }
+#sidedrawer ul li a.links { color: #eee; }
 
-#sidedrawer strong { display: block; padding: 15px 20px; cursor: pointer; color: #515050; letter-spacing: .0125em; font-weight: 500; }
-#sidedrawer strong > span { margin-right: 15px; color:var(--color-secondary); }
+#sidedrawer strong { display: block; padding: 15px 20px; cursor: pointer; color: #fff; letter-spacing: .0125em; font-weight: 500; }
+#sidedrawer strong > span { margin-right: 15px; color:#fff; }
 #sidedrawer strong + ul > li { padding: 9px 0 0 24px; }
 #sidedrawer strong + ul > li:first-child { padding: 0 0 0 24px; }
 
