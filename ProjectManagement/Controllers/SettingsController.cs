@@ -14,14 +14,16 @@ namespace ProjectManagement.Controllers
         private readonly IProjectBeneficiaryTypeCore _beneficiary;
         private readonly IProjectSectorCore _sector;
         private readonly ILocationCore _location;
+        private readonly IReportTypeCore _reportType;
 
-        public SettingsController(IProjectStatusCore status, IDonorCore donor, IProjectBeneficiaryTypeCore beneficiary, IProjectSectorCore sector, ILocationCore location)
+        public SettingsController(IProjectStatusCore status, IDonorCore donor, IProjectBeneficiaryTypeCore beneficiary, IProjectSectorCore sector, ILocationCore location, IReportTypeCore reportType)
         {
             _status = status;
             _donor = donor;
             _beneficiary = beneficiary;
             _sector = sector;
             _location = location;
+            _reportType = reportType;
         }
 
         //*****Project Status*****
@@ -143,6 +145,28 @@ namespace ProjectManagement.Controllers
         public IActionResult PostCity(CityAddModel model)
         {
             var response = _location.CityAdd(model);
+            return Json(response);
+        }
+
+
+        //*****Report Type*****
+        public IActionResult ReportType()
+        {
+            var model = _reportType.List();
+            return View(model.Data);
+        }
+
+        [HttpPost]
+        public IActionResult PostReportType(ReportTypeAddModel model)
+        {
+            var response = _reportType.Add(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateReportType(ReportTypeViewModel model)
+        {
+            var response = _reportType.Edit(model);
             return Json(response);
         }
     }

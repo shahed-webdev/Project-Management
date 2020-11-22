@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagement.BusinessLogic;
+
 
 namespace ProjectManagement.Controllers
 {
@@ -12,14 +14,16 @@ namespace ProjectManagement.Controllers
         private readonly IProjectSectorCore _sector;
         private readonly IProjectBeneficiaryTypeCore _type;
         private readonly ILocationCore _location;
+        private readonly IDonorCore _donor;
    
 
-        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector)
+        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor)
         {
             _status = status;
             _type = type;
             _location = location;
             _sector = sector;
+            _donor = donor;
         }
 
         public IActionResult Features()
@@ -52,6 +56,13 @@ namespace ProjectManagement.Controllers
         public IActionResult GetCityByState(int id)
         {
             var response = _location.CityDdl(id);
+            return Json(response);
+        }
+
+        //find donors
+        public async Task<IActionResult> FindDonors(string name)
+        {
+            var response = await _donor.SearchAsync(name);
             return Json(response);
         }
     }

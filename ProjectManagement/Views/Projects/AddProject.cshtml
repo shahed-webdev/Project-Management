@@ -6,6 +6,9 @@
 
 @section Styles{
     <link href="~/pages-css/add-project.css?v=1" rel="stylesheet" />
+    <style>
+        #successMessage { display: none }
+    </style>
 }
 
 <div class="container">
@@ -15,6 +18,10 @@
             <p class="mb-3">@ViewBag.linkTitle</p>
         </div>
         <a href="/Projects/Features"><i class="fas fa-long-arrow-alt-left mr-1"></i> Back to Features</a>
+    </div>
+
+    <div id="successMessage" class="alert alert-success text-center" role="alert">
+        Project Submitted Successfully!
     </div>
 
     <form id="formStep">
@@ -27,13 +34,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputTitle" class="form-control" required>
+                        <input type="text" id="inputTitle" class="form-control">
                         <label for="inputTitle">Title</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputDescription" class="form-control" required>
+                        <input type="text" id="inputDescription" class="form-control">
                         <label for="inputDescription">Description</label>
                     </div>
                 </div>
@@ -42,19 +49,19 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputStartDate" class="form-control datepicker" required>
+                        <input type="text" id="inputStartDate" value="@DateTime.Now.ToString("d MMMM, yyyy")" class="form-control datepicker">
                         <label for="inputStartDate">Start Date</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputEndDate" class="form-control datepicker" required>
+                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@DateTime.Now.ToString("d MMMM, yyyy")">
                         <label for="inputEndDate">End Date</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <select id="selectStatus" asp-items="@ViewBag.Status" class="mdb-select md-form" searchable="Search here.." required>
+                        <select id="selectStatus" asp-items="@ViewBag.Status" class="mdb-select md-form" searchable="Search here..">
                             <option value="" disabled selected>Choose Status</option>
                         </select>
                     </div>
@@ -64,7 +71,7 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="md-form">
-                        <input type="text" id="inputDonors" class="form-control" required>
+                        <input type="text" id="inputDonors" class="form-control">
                         <label for="inputDonors">Donor</label>
                     </div>
                 </div>
@@ -79,13 +86,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="number" id="inputTotalBudget" class="form-control" required>
+                        <input type="number" id="inputTotalBudget" class="form-control">
                         <label for="inputTotalBudget">Total Budget</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="number" id="inputTotalExpenditure" class="form-control" required>
+                        <input type="number" id="inputTotalExpenditure" class="form-control">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
                     </div>
                 </div>
@@ -95,17 +102,17 @@
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
                     <div class="col-lg-4">
-                        <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here.." required>
+                        <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Country</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <select id="selectState" class="mdb-select md-form m-0" searchable="Search here.." required>
+                        <select id="selectState" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>State</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <select id="selectCity" class="mdb-select md-form m-0" searchable="Search here.." required>
+                        <select id="selectCity" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>City</option>
                         </select>
                     </div>
@@ -159,11 +166,57 @@
 
     <form id="formAdd">
         <div class="card card-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input type="text" id="inputProjectName" class="form-control">
+                        <label for="inputProjectName">Project Name</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@DateTime.Now.ToString("d MMMM, yyyy")">
+                        <label for="inputSubmissionDate">Submission Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input type="text" id="inputReportName" class="form-control">
+                        <label for="inputReportName">Report Name</label>
+                    </div>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-lg-5">
+                    <select id="selectReportName" class="mdb-select md-form" searchable="Search here..">
+                        <option value="" disabled selected>Report Name</option>
+                        <option value="1">Baseline Reports</option>
+                        <option value="2">Inception Reports</option>
+                        <option value="3">Monthly Progress Reports</option>
+                        <option value="4">Quarterly Progress Reports</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="md-form">
+                        <div class="file-field">
+                            <div class="btn btn-outline-info btn-rounded btn-sm float-left">
+                                <span>Choose Attachment</span>
+                                <input id="inputAttachment" type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="filePath2" class="file-path validate" type="text" placeholder="Upload Attachment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="text-right mt-4">
-            <button type="submit" class="btn btn-custom-bg">Add Project</button>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <button id="btnPrevious" type="button" class="btn btn-grey"><i class="far fa-long-arrow-alt-left mr-1"></i>Previous</button>
+            <button type="submit" class="btn btn-custom-bg">Submit</button>
         </div>
     </form>
 </div>
@@ -178,10 +231,13 @@
 
         //set image file
         const inputPhoto = document.getElementById("inputPhoto");
-        const imageError = document.getElementById("imageError");
-        const pathInput = document.getElementById("filePath");
+        const inputAttachment = document.getElementById("inputAttachment");
 
+        //image file
         inputPhoto.addEventListener("change", function (e) {
+            const imageError = document.getElementById("imageError");
+            const pathInput = document.getElementById("filePath");
+
             imageError.textContent = "";
 
             const size = e.target.files[0].size / 1024 / 1024;
@@ -207,11 +263,19 @@
             pathInput.value = e.target.files[0].name;
         });
 
+        //file attachment
+        inputAttachment.addEventListener("change", function (e) {
+            const pathInput = document.getElementById("filePath2");
+            pathInput.value = e.target.files[0].name;
+        });
+
+
         //global model
         const model = {};
 
         //selectors
         const formStep = document.getElementById("formStep");
+        const btnPrevious = document.getElementById("btnPrevious");
         const formAdd = document.getElementById("formAdd");
         //location
         const selectCountry = document.getElementById("selectCountry");
@@ -290,18 +354,52 @@
             });
         });
 
+        //Donors autocomplete
+        //$('#inputDonors').typeahead({
+        //    minLength: 1,
+        //    displayText: function (item) {
+        //        return item.Name;
+        //    },
+        //    afterSelect: function (item) {
+        //        this.$element[0].value = ''
+        //    },
+        //    source: function (request, result) {
+        //        $.ajax({
+        //            url: "/Projects/FindDonors",
+        //            data: { name: request },
+        //            success: function (response) { result(response); },
+        //            error: function (err) { console.log(err) }
+        //        });
+        //    },
+        //    updater: function (item) {
+        //        //appendAttribute(item);
+        //        console.log(item)
+        //        return item;
+        //    }
+        //});
+
+
         //first step
         formStep.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
-            //this.style.display = "none";
-            //formAdd.style.display = "block";
+            this.style.display = "none";
+            formAdd.style.display = "block";
+        });
+
+        //Previous
+        btnPrevious.addEventListener("click", function (evt) {
+            evt.preventDefault();
+
+            formStep.style.display = "block";
+            formAdd.style.display = "none";
         });
 
         //post project
         formAdd.addEventListener("submit", function (evt) {
             evt.preventDefault();
-
-        });
+            document.getElementById("successMessage").style.display = "block";
+            this.style.display = "none";
+        })
     </script>
 }

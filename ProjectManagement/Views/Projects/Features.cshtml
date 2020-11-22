@@ -2,33 +2,33 @@
 @{
     ViewData["Title"] = "Features";
 }
-@section Styles
-{
+
+@section Styles{
     <style>
         .features-item { min-height: 250px; }
         .page-header { font-weight: bold; }
-        .media .media-body p { font-size: 1.1rem; line-height: 1.9rem; }
+        .media .media-body p { font-size: 1.1rem;}
     </style>
 }
+
 <div class="container">
     <h4 class="page-header my-4">FEATURES LIST</h4>
 
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="col-lg-4 col-md-12 mb-4">
+            <div class="col-lg-3 mb-4">
                 <a href="/Dashboard/Index/@item.ProjectSectorId">
                     <div class="media stylish-color-dark z-depth-1 rounded h-100 align-items-center">
-                        <div class="media-body p-4 text-center text-white">
+                        <div class="media-body p-3 text-center text-white">
                             <p class="mb-0">
                                 @item.Sector
-                            <i class="far fa-long-arrow-alt-right"></i>
-                        </p>
+                            </p>
                         </div>
-                </div>
-            </a>
-        </div>
-    }
+                    </div>
+                </a>
+            </div>
+        }
     </div>
 </div>
 
