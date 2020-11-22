@@ -40,7 +40,7 @@ namespace ProjectManagement.Repository
 
         public List<ReportTypeViewModel> List()
         {
-            return Db.ProjectBeneficiaryType
+            return Db.ReportType
                 .ProjectTo<ReportTypeViewModel>(_mapper.ConfigurationProvider)
                 .OrderBy(p => p.ReportName)
                 .ToList();
