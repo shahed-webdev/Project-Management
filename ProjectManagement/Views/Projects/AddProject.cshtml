@@ -169,7 +169,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputProjectName" class="form-control">
+                        <input type="text" id="inputProjectName" class="form-control" disabled>
                         <label for="inputProjectName">Project Name</label>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputReportName" class="form-control">
+                        <input type="text" id="inputReportName" disabled class="form-control">
                         <label for="inputReportName">Report Name</label>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
 @section Scripts{
 
     <script>
-        $(function () {
+        $(function() {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
@@ -234,7 +234,7 @@
         const inputAttachment = document.getElementById("inputAttachment");
 
         //image file
-        inputPhoto.addEventListener("change", function (e) {
+        inputPhoto.addEventListener("change", function(e) {
             const imageError = document.getElementById("imageError");
             const pathInput = document.getElementById("filePath");
 
@@ -264,7 +264,7 @@
         });
 
         //file attachment
-        inputAttachment.addEventListener("change", function (e) {
+        inputAttachment.addEventListener("change", function(e) {
             const pathInput = document.getElementById("filePath2");
             pathInput.value = e.target.files[0].name;
         });
@@ -283,7 +283,7 @@
         const selectCity = document.getElementById("selectCity");
 
         //on change country
-        selectCountry.addEventListener("change", function () {
+        selectCountry.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -291,7 +291,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -312,14 +312,14 @@
                     selectState.innerHTML = "";
                     selectState.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state
-        selectState.addEventListener("change", function () {
+        selectState.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -327,7 +327,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -348,7 +348,7 @@
                     selectCity.innerHTML = "";
                     selectCity.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -380,26 +380,54 @@
 
 
         //first step
-        formStep.addEventListener("submit", function (evt) {
+        formStep.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
-            this.style.display = "none";
-            formAdd.style.display = "block";
+            stepChange(true);
+
+            if (this.inputTitle.value) {
+                formAdd.inputProjectName.value = this.inputTitle.value;
+                formAdd.inputProjectName.nextElementSibling.classList.add("active");
+
+                formAdd.inputReportName.value = this.inputTitle.value;
+                formAdd.inputReportName.nextElementSibling.classList.add("active");
+            }
         });
 
         //Previous
-        btnPrevious.addEventListener("click", function (evt) {
+        btnPrevious.addEventListener("click", function(evt) {
             evt.preventDefault();
 
-            formStep.style.display = "block";
-            formAdd.style.display = "none";
+            stepChange(false);
         });
 
         //post project
-        formAdd.addEventListener("submit", function (evt) {
+        formAdd.addEventListener("submit", function(evt) {
             evt.preventDefault();
+
+            if (!formStep.inputTitle.value) {
+                stepChange(false);
+
+                formStep.inputTitle.setAttribute("required", "required");
+                formStep.inputTitle.focus();
+
+                return;
+            }
+
+
             document.getElementById("successMessage").style.display = "block";
             this.style.display = "none";
         })
+
+        //next or prev page
+        function stepChange(isNext) {
+            if (isNext) {
+                formStep.style.display = "none";
+                formAdd.style.display = "block";
+            } else {
+                formStep.style.display = "block";
+                formAdd.style.display = "none";
+            }
+        }
     </script>
 }
