@@ -9,7 +9,7 @@ namespace ProjectManagement.BusinessLogic
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDonorCore, DonorCore>();
-            services.AddTransient<IProjectCore, ProjectCore>();
+            //services.AddTransient<IProjectCore, ProjectCore>();
             services.AddTransient<IProjectBeneficiaryTypeCore, ProjectBeneficiaryTypeCore>();
             services.AddTransient<IProjectSectorCore, ProjectSectorCore>();
             services.AddTransient<IProjectStatusCore, ProjectStatusCore>();
