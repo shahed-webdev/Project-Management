@@ -23,7 +23,7 @@ namespace ProjectManagement.Controllers
 
         //GET: Login
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
@@ -37,7 +37,7 @@ namespace ProjectManagement.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<IActionResult> Index(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -51,7 +51,7 @@ namespace ProjectManagement.Controllers
                 {
                     UserType.Admin => LocalRedirect(returnUrl ??= Url.Content("~/Dashboard/Index")),
                     UserType.SubAdmin => LocalRedirect(returnUrl ??= Url.Content("~/Dashboard/Index")),
-                    _ => LocalRedirect(returnUrl ??= Url.Content("~/Account/Login"))
+                    _ => LocalRedirect(returnUrl ??= Url.Content("~/Account/Index"))
                 };
             }
 
@@ -106,7 +106,7 @@ namespace ProjectManagement.Controllers
 
             if (returnUrl != null) return LocalRedirect(returnUrl);
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Account");
         }
     }
 }

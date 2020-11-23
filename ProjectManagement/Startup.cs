@@ -70,7 +70,7 @@ namespace ProjectManagement
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute("default", "{controller=Account}/{action=Login}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Account}/{action=Index}/{id?}");
             });
         }
     }
