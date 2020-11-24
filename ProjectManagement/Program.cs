@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProjectManagement.Data;
@@ -15,7 +14,7 @@ namespace ProjectManagement
             using (var scope = host.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                db.Database.Migrate();
+                //db.Database.Migrate();
             }
 
             host.Run();
