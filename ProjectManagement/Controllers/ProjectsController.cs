@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagement.BusinessLogic;
+using ProjectManagement.ViewModel;
 
 
 namespace ProjectManagement.Controllers
@@ -16,9 +17,10 @@ namespace ProjectManagement.Controllers
         private readonly ILocationCore _location;
         private readonly IDonorCore _donor;
         private readonly IReportTypeCore _reportType;
-   
+        private readonly IProjectCore _project;
 
-        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor, IReportTypeCore reportType)
+
+        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor, IReportTypeCore reportType, IProjectCore project)
         {
             _status = status;
             _type = type;
@@ -26,6 +28,7 @@ namespace ProjectManagement.Controllers
             _sector = sector;
             _donor = donor;
             _reportType = reportType;
+            _project = project;
         }
 
         public IActionResult Features()
@@ -67,6 +70,14 @@ namespace ProjectManagement.Controllers
         {
             var response = await _donor.SearchAsync(name);
             return Json(response.Data);
+        }
+
+        //POST: Add Project
+        [HttpPost]
+        public IActionResult PostAddProject(ProjectAddModel model)
+        {
+            var response = _project.Add(model);
+            return Json(response);
         }
     }
 }
