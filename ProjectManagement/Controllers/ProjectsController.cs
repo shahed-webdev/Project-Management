@@ -15,15 +15,17 @@ namespace ProjectManagement.Controllers
         private readonly IProjectBeneficiaryTypeCore _type;
         private readonly ILocationCore _location;
         private readonly IDonorCore _donor;
+        private readonly IReportTypeCore _reportType;
    
 
-        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor)
+        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor, IReportTypeCore reportType)
         {
             _status = status;
             _type = type;
             _location = location;
             _sector = sector;
             _donor = donor;
+            _reportType = reportType;
         }
 
         public IActionResult Features()
@@ -41,6 +43,7 @@ namespace ProjectManagement.Controllers
             ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label");
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
             ViewBag.Type = new SelectList(_type.Ddl().Data, "value", "label");
+            ViewBag.ReportType = new SelectList(_reportType.Ddl().Data, "value", "label");
 
             return View();
         }
@@ -63,7 +66,7 @@ namespace ProjectManagement.Controllers
         public async Task<IActionResult> FindDonors(string name)
         {
             var response = await _donor.SearchAsync(name);
-            return Json(response);
+            return Json(response.Data);
         }
     }
 }

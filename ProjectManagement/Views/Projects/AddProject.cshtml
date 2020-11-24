@@ -189,12 +189,8 @@
 
             <div class="row">
                 <div class="col-lg-5">
-                    <select id="selectReportName" class="mdb-select md-form" searchable="Search here..">
+                    <select asp-items="@ViewBag.ReportType" id="selectReportName" class="mdb-select md-form" searchable="Search here..">
                         <option value="" disabled selected>Report Name</option>
-                        <option value="1">Baseline Reports</option>
-                        <option value="2">Inception Reports</option>
-                        <option value="3">Monthly Progress Reports</option>
-                        <option value="4">Quarterly Progress Reports</option>
                     </select>
                 </div>
 
@@ -355,28 +351,28 @@
         });
 
         //Donors autocomplete
-        //$('#inputDonors').typeahead({
-        //    minLength: 1,
-        //    displayText: function (item) {
-        //        return item.Name;
-        //    },
-        //    afterSelect: function (item) {
-        //        this.$element[0].value = ''
-        //    },
-        //    source: function (request, result) {
-        //        $.ajax({
-        //            url: "/Projects/FindDonors",
-        //            data: { name: request },
-        //            success: function (response) { result(response); },
-        //            error: function (err) { console.log(err) }
-        //        });
-        //    },
-        //    updater: function (item) {
-        //        //appendAttribute(item);
-        //        console.log(item)
-        //        return item;
-        //    }
-        //});
+        $('#inputDonors').typeahead({
+            minLength: 1,
+            displayText: function (item) {
+                return item.Name;
+            },
+            afterSelect: function (item) {
+                this.$element[0].value = item.Name;
+            },
+            source: function (request, result) {
+                $.ajax({
+                    url: "/Projects/FindDonors",
+                    data: { name: request },
+                    success: function (response) { result(response); },
+                    error: function (err) { console.log(err) }
+                });
+            },
+            updater: function (item) {
+                //appendAttribute(item);
+                console.log(item)
+                return item;
+            }
+        });
 
 
         //first step
