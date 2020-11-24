@@ -35,6 +35,11 @@ namespace ProjectManagement.Repository
             return Db.Project.Any(c => c.Title == title && c.ProjectId != updateId);
         }
 
+        public bool IsNull(int projectId)
+        {
+            return Db.Project.Any(c => c.ProjectId == projectId);
+        }
+
         public List<ProjectListViewModel> List(int sectorId)
         {
             return Db.Project
@@ -55,6 +60,15 @@ namespace ProjectManagement.Repository
                     label = s.ProjectName.ToString()
                 })
                 .ToList();
+        }
+
+        public void AddExpediter(ProjectExpediterAddModel model)
+        {
+            var project = Db.Project.Find(model.ProjectId);
+            if (project == null) return;
+
+            project.TotalExpenditure += model.Expenditure;
+            Db.Project.Update(project);
         }
     }
 }

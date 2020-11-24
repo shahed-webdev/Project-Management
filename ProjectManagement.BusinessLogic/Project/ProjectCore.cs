@@ -65,5 +65,25 @@ namespace ProjectManagement.BusinessLogic
                 return new DbResponse<List<DDL>>(false, e.Message);
             }
         }
+
+        public DbResponse AddExpediter(ProjectExpediterAddModel model)
+        {
+            try
+            {
+
+                if (_db.Project.IsNull(model.ProjectId))
+                    return new DbResponse(false, $"No data Found");
+
+                _db.Project.AddExpediter(model);
+                _db.SaveChanges();
+
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
     }
 }
