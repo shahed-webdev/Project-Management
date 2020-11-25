@@ -9,5 +9,6 @@ namespace ProjectManagement.BusinessLogic
         DbResponse Edit(ProjectEditViewModel model);
         DbResponse<List<ProjectListViewModel>> List(int sectorId);
         DbResponse<List<DDL>> Ddl(int sectorId);
+        DbResponse AddExpediter(ProjectExpediterAddModel model);
     }
 }

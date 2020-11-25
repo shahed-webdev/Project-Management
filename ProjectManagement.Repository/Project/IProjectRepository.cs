@@ -9,7 +9,9 @@ namespace ProjectManagement.Repository
         void Edit(ProjectEditViewModel model);
         bool IsExist(string title);
         bool IsExist(string title, int updateId);
+        bool IsNull(int projectId);
         List<ProjectListViewModel> List(int sectorId);
         List<DDL> Ddl(int sectorId);
+        void AddExpediter(ProjectExpediterAddModel model);
     }
 }
