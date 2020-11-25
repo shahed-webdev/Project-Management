@@ -8,6 +8,8 @@
     <link href="~/pages-css/add-project.css?v=1" rel="stylesheet" />
     <style>
         #successMessage { display: none }
+        #donor-container span { background-color: #ddd; border-radius: 5px; padding: 4px 8px; margin-right: 7px; text-align: center; margin-bottom: 6px; display: inline-block; }
+        #donor-container span i { font-size: .9rem; cursor: pointer; margin-left: 5px; }
     </style>
 }
 
@@ -137,6 +139,7 @@
                 </div>
             </div>
 
+            <label id="beneficiaryError" class="red-text d-inline-block"></label>
             <table class="table">
                 <thead class="grey lighten-5">
                     <tr>
@@ -152,11 +155,11 @@
                             </div>
                         </th>
                         <th class="text-right" style="width: 130px">
-                            <button type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                            <button id="btnBeneficiaryAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
                         </th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="beneficiaryTypeBody"></tbody>
             </table>
         </div>
 
@@ -268,7 +271,11 @@
 
 
         //global model
-        const model = {};
+        const model = {
+            ProjectDonors: [],
+            ProjectBeneficiaries: [],
+            ProjectReports: []
+        };
 
         //selectors
         const formStep = document.getElementById("formStep");
@@ -352,29 +359,97 @@
         });
 
         //Donors autocomplete
+        const donorContainer = document.getElementById("donor-container");
         $('#inputDonors').typeahead({
             minLength: 1,
-            displayText: function (item) {
+            displayText: function(item) {
                 return item.Name;
             },
-            afterSelect: function (item) {
-                this.$element[0].value = item.Name;
+            afterSelect: function(item) {
+                this.$element[0].value = "";
             },
-            source: function (request, result) {
+            source: function(request, result) {
                 $.ajax({
                     url: "/Projects/FindDonors",
                     data: { name: request },
-                    success: function (response) { result(response); },
-                    error: function (err) { console.log(err) }
+                    success: function(response) { result(response); },
+                    error: function(err) { console.log(err) }
                 });
             },
-            updater: function (item) {
-                //appendAttribute(item);
+            updater: function(item) {
+                appendDonor(item);
                 console.log(item)
                 return item;
             }
         });
 
+        //add donor
+        function appendDonor(donor) {
+            if (model.ProjectDonors.indexOf(donor.DonorId) !== -1) return;
+
+            model.ProjectDonors.push(donor.DonorId);
+
+            const span = document.createElement("span");
+            span.innerHTML = `<strong>${donor.Name}</strong><i data-id="${donor.DonorId}" class="delete fas fa-times-circle"></i>`;
+
+            donorContainer.appendChild(span);
+        }
+
+        //remove donor
+        donorContainer.addEventListener("click", function(evt) {
+            const element = evt.target;
+            const onDelete = element.classList.contains("delete");
+            console.log(onDelete)
+            if (!onDelete) return;
+
+            const id = +element.getAttribute("data-id");
+            const index = model.ProjectDonors.indexOf(id);
+
+            if (index > -1) {
+                model.ProjectDonors.splice(index, 1);
+                element.parentElement.remove();
+            }
+        });
+
+        //**Beneficiary Add***
+        const btnBeneficiaryAdd = document.getElementById("btnBeneficiaryAdd");
+        const beneficiaryError = document.getElementById("beneficiaryError");
+
+        btnBeneficiaryAdd.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            beneficiaryError.textContent = "";
+
+            const id = +selectBeneficiaryType.value;
+            const type = selectBeneficiaryType.options[selectBeneficiaryType.selectedIndex].text;
+            const count = +inputBeneficiaryCount.value;
+   
+            if (!id) {
+                beneficiaryError.textContent = "Select Beneficiary Type";
+                return;
+            }
+
+            if (!count) {
+                beneficiaryError.textContent = "Add Beneficiary Count";
+                return;
+            }
+
+            const obj = {
+                ProjectBeneficiaryTypeId: id,
+                Count: count
+            }
+
+            const isAdded = model.ProjectBeneficiaries.some(function(el) {
+                return el.ProjectBeneficiaryTypeId === id;
+            });
+     
+            if (isAdded) return;
+
+            model.ProjectBeneficiaries.push(obj);
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+            beneficiaryTypeBody.appendChild(tr);
+        });
 
         //first step
         formStep.addEventListener("submit", function(evt) {
