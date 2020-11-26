@@ -42,7 +42,7 @@ namespace ProjectManagement
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Account/Login";
+                config.LoginPath = "/Account/Index";
             });
 
             services.AddDependencyInjection();

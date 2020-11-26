@@ -5,7 +5,7 @@
 }
 
 @section Styles{
-    <link href="~/pages-css/add-project.css?v=1" rel="stylesheet" />
+    <link href="~/pages-css/add-project.css?v=2" rel="stylesheet" />
     <style>
         #successMessage { display: none }
         #donor-container span { background-color: #ddd; border-radius: 5px; padding: 4px 8px; margin-right: 7px; text-align: center; margin-bottom: 6px; display: inline-block; }
@@ -28,7 +28,7 @@
 
     <form id="formStep">
         <div class="card card-body">
-            <ul id="progressbar">
+            <ul class="progressbar">
                 <li class="active">Step 1</li>
                 <li>Step 2</li>
             </ul>
@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="md-form mb-0">
-                        <input type="text" id="inputDonors" class="form-control">
+                        <input type="text" id="inputDonors" autocomplete="off" class="form-control">
                         <label for="inputDonors">Donor</label>
                     </div>
                     <div id="donor-container" class="mb-4"></div>
@@ -170,6 +170,10 @@
 
     <form id="formAdd">
         <div class="card card-body">
+            <ul class="progressbar">
+                <li class="active">Step 1</li>
+                <li class="active">Step 2</li>
+            </ul>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
@@ -196,6 +200,7 @@
                     <select asp-items="@ViewBag.ReportType" id="selectReportName" class="mdb-select md-form" searchable="Search here..">
                         <option value="" disabled selected>Report Name</option>
                     </select>
+                    <span id="errorReportName" class="red-text"></span>
                 </div>
 
                 <div class="col-lg-7">
@@ -212,6 +217,8 @@
                     </div>
                 </div>
             </div>
+            
+            <ul id="report-list" class="list-group list-group-flush"></ul>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-4">
@@ -222,284 +229,11 @@
 </div>
 
 @section Scripts{
-
+    <script src="~/pages-js/add-project.js"></script>
     <script>
-        $(function() {
+        $(function () {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
-
-        //set image file
-        const inputPhoto = document.getElementById("inputPhoto");
-        const inputAttachment = document.getElementById("inputAttachment");
-
-        //image file
-        inputPhoto.addEventListener("change", function(e) {
-            const imageError = document.getElementById("imageError");
-            const pathInput = document.getElementById("filePath");
-
-            imageError.textContent = "";
-
-            const size = e.target.files[0].size / 1024 / 1024;
-            const allowSize = 2;
-            const regex = new RegExp("(.*?)\.(jpeg|jpg|png|webp)$");
-
-            if (!(regex.test(e.target.value.toLowerCase()))) {
-                e.target.value = "";
-                pathInput.value = "";
-
-                imageError.textContent = `Please select correct file format`;
-                return;
-            }
-
-            if (size > allowSize) {
-                e.target.value = "";
-                pathInput.value = "";
-
-                imageError.textContent = `image size must be less than ${allowSize}MB. your file size:${size.toFixed()} MB`;
-                return;
-            }
-
-            pathInput.value = e.target.files[0].name;
-        });
-
-        //file attachment
-        inputAttachment.addEventListener("change", function(e) {
-            const pathInput = document.getElementById("filePath2");
-            pathInput.value = e.target.files[0].name;
-        });
-
-
-        //global model
-        const model = {
-            ProjectDonors: [],
-            ProjectBeneficiaries: [],
-            ProjectReports: []
-        };
-
-        //selectors
-        const formStep = document.getElementById("formStep");
-        const btnPrevious = document.getElementById("btnPrevious");
-        const formAdd = document.getElementById("formAdd");
-        //location
-        const selectCountry = document.getElementById("selectCountry");
-        const selectState = document.getElementById("selectState");
-        const selectCity = document.getElementById("selectCity");
-
-        //on change country
-        selectCountry.addEventListener("change", function() {
-            const id = +this.value
-
-            if (!id) return;
-
-            $.ajax({
-                url: "/Projects/GetStateByCountry",
-                data: { id },
-                success: function(response) {
-                    if (!response.IsSuccess) return;
-
-                    const fragment = document.createDocumentFragment();
-                    const option1 = document.createElement("option");
-                    option1.value = "";
-                    option1.text = "State";
-                    option1.setAttribute("disabled", "disabled");
-                    option1.setAttribute("selected", true);
-                    fragment.appendChild(option1);
-
-                    response.Data.forEach(item => {
-                        const option = document.createElement("option");
-                        option.value = item.value;
-                        option.text = item.label;
-                        fragment.appendChild(option);
-                    });
-
-                    selectState.innerHTML = "";
-                    selectState.appendChild(fragment);
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
-        });
-
-        //on change state
-        selectState.addEventListener("change", function() {
-            const id = +this.value
-
-            if (!id) return;
-
-            $.ajax({
-                url: "/Projects/GetCityByState",
-                data: { id },
-                success: function(response) {
-                    if (!response.IsSuccess) return;
-
-                    const fragment = document.createDocumentFragment();
-                    const option1 = document.createElement("option");
-                    option1.value = "";
-                    option1.text = "City";
-                    option1.setAttribute("disabled", "disabled");
-                    option1.setAttribute("selected", true);
-                    fragment.appendChild(option1);
-
-                    response.Data.forEach(item => {
-                        const option = document.createElement("option");
-                        option.value = item.value;
-                        option.text = item.label;
-                        fragment.appendChild(option);
-                    });
-
-                    selectCity.innerHTML = "";
-                    selectCity.appendChild(fragment);
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
-        });
-
-        //Donors autocomplete
-        const donorContainer = document.getElementById("donor-container");
-        $('#inputDonors').typeahead({
-            minLength: 1,
-            displayText: function(item) {
-                return item.Name;
-            },
-            afterSelect: function(item) {
-                this.$element[0].value = "";
-            },
-            source: function(request, result) {
-                $.ajax({
-                    url: "/Projects/FindDonors",
-                    data: { name: request },
-                    success: function(response) { result(response); },
-                    error: function(err) { console.log(err) }
-                });
-            },
-            updater: function(item) {
-                appendDonor(item);
-                console.log(item)
-                return item;
-            }
-        });
-
-        //add donor
-        function appendDonor(donor) {
-            if (model.ProjectDonors.indexOf(donor.DonorId) !== -1) return;
-
-            model.ProjectDonors.push(donor.DonorId);
-
-            const span = document.createElement("span");
-            span.innerHTML = `<strong>${donor.Name}</strong><i data-id="${donor.DonorId}" class="delete fas fa-times-circle"></i>`;
-
-            donorContainer.appendChild(span);
-        }
-
-        //remove donor
-        donorContainer.addEventListener("click", function(evt) {
-            const element = evt.target;
-            const onDelete = element.classList.contains("delete");
-            console.log(onDelete)
-            if (!onDelete) return;
-
-            const id = +element.getAttribute("data-id");
-            const index = model.ProjectDonors.indexOf(id);
-
-            if (index > -1) {
-                model.ProjectDonors.splice(index, 1);
-                element.parentElement.remove();
-            }
-        });
-
-        //**Beneficiary Add***
-        const btnBeneficiaryAdd = document.getElementById("btnBeneficiaryAdd");
-        const beneficiaryError = document.getElementById("beneficiaryError");
-
-        btnBeneficiaryAdd.addEventListener("click", function(evt) {
-            evt.preventDefault();
-            beneficiaryError.textContent = "";
-
-            const id = +selectBeneficiaryType.value;
-            const type = selectBeneficiaryType.options[selectBeneficiaryType.selectedIndex].text;
-            const count = +inputBeneficiaryCount.value;
-   
-            if (!id) {
-                beneficiaryError.textContent = "Select Beneficiary Type";
-                return;
-            }
-
-            if (!count) {
-                beneficiaryError.textContent = "Add Beneficiary Count";
-                return;
-            }
-
-            const obj = {
-                ProjectBeneficiaryTypeId: id,
-                Count: count
-            }
-
-            const isAdded = model.ProjectBeneficiaries.some(function(el) {
-                return el.ProjectBeneficiaryTypeId === id;
-            });
-     
-            if (isAdded) return;
-
-            model.ProjectBeneficiaries.push(obj);
-
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
-            beneficiaryTypeBody.appendChild(tr);
-        });
-
-        //first step
-        formStep.addEventListener("submit", function(evt) {
-            evt.preventDefault();
-
-            stepChange(true);
-
-            if (this.inputTitle.value) {
-                formAdd.inputProjectName.value = this.inputTitle.value;
-                formAdd.inputProjectName.nextElementSibling.classList.add("active");
-
-                formAdd.inputReportName.value = this.inputTitle.value;
-                formAdd.inputReportName.nextElementSibling.classList.add("active");
-            }
-        });
-
-        //Previous
-        btnPrevious.addEventListener("click", function(evt) {
-            evt.preventDefault();
-
-            stepChange(false);
-        });
-
-        //post project
-        formAdd.addEventListener("submit", function(evt) {
-            evt.preventDefault();
-
-            if (!formStep.inputTitle.value) {
-                stepChange(false);
-
-                formStep.inputTitle.setAttribute("required", "required");
-                formStep.inputTitle.focus();
-
-                return;
-            }
-
-
-            document.getElementById("successMessage").style.display = "block";
-            this.style.display = "none";
-        })
-
-        //next or prev page
-        function stepChange(isNext) {
-            if (isNext) {
-                formStep.style.display = "none";
-                formAdd.style.display = "block";
-            } else {
-                formStep.style.display = "block";
-                formAdd.style.display = "none";
-            }
-        }
     </script>
 }
