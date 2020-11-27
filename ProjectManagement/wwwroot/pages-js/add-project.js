@@ -14,10 +14,11 @@ const inputPhoto = document.getElementById("inputPhoto");
 inputPhoto.addEventListener("change", function (e) {
     const imageError = document.getElementById("imageError");
     const pathInput = document.getElementById("filePath");
+    const file = e.target.files[0];
 
     imageError.textContent = "";
 
-    const size = e.target.files[0].size / 1024 / 1024;
+    const size = file.size / 1024 / 1024;
     const allowSize = 2;
     const regex = new RegExp("(.*?)\.(jpeg|jpg|png|webp)$");
 
@@ -37,20 +38,20 @@ inputPhoto.addEventListener("change", function (e) {
         return;
     }
 
-    pathInput.value = e.target.files[0].name;
+    pathInput.value = file.name;
 
     //resize image
     const img = new Image();
     img.onload = function () {
         const width = 200;
-        resizeImage(img, width, 0.5);
+        resizeImage(img, width, 0.5, file.name);
     }
 
     img.src = URL.createObjectURL(e.target.files[0]);
 });
 
 //resize photo
-function resizeImage(img, width, step) {
+function resizeImage(img, width, step, fileName) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext("2d");
     const oc = document.createElement('canvas');
@@ -84,7 +85,6 @@ function resizeImage(img, width, step) {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
 
-    // document.getElementById("stepped").src = canvas.toDataURL();
 
     const dataUrl = canvas.toDataURL("image/png");
     const blobBin = atob(dataUrl.split(',')[1]);
@@ -95,18 +95,9 @@ function resizeImage(img, width, step) {
     }
 
     const file = new Blob([new Uint8Array(array)], { type: 'image/png' });
-    model.Photo = file;
+    file.name = fileName;
 
-    //const formData = new FormData();
-    //formData.append("photo", file);
-
-    //$.ajax({
-    //    url: "uploadFile.php",
-    //    type: "POST",
-    //    data: formData,
-    //    processData: false,
-    //    contentType: false
-    //})
+    model.FilePhoto = file;
 }
 
 
@@ -136,12 +127,9 @@ inputAttachment.addEventListener("change", function (e) {
         return;
     };
 
-    const pathInput = document.getElementById("filePath2");
-    pathInput.value = e.target.files[0].name;
-
     const reports = {
         ReportTypeId: id,
-        Attachment: e.target.files[0]
+        Attachment: e.target.files[0] 
     }
 
     model.ProjectReports.push(reports);
@@ -152,14 +140,19 @@ inputAttachment.addEventListener("change", function (e) {
     reportList.appendChild(li);
 
     this.value = "";
-    pathInput.value = "";
 });
 
 //remove
-reportList.addEventListener("click", function(evt) {
+reportList.addEventListener("click", function (evt) {
     const element = evt.target;
+    const onDelete = element.classList.contains("remove");
 
+    if (!onDelete) return;
 
+    const id = +element.getAttribute("data-id");
+
+    model.ProjectReports = model.ProjectReports.filter(el => el.ReportTypeId !== id);
+    element.parentElement.remove();
 });
 
 
@@ -391,10 +384,51 @@ formAdd.addEventListener("submit", function (evt) {
         return;
     }
 
+    const formData = new FormData();
+    formData.append('ProjectSectorId',formStep.hiddenProjectSectorId.value);
+    formData.append('ProjectStatusId', formStep.selectStatus.value);
+    formData.append('CityId', formStep.selectCity.value);
+    formData.append('Title', formStep.inputTitle.value);
+    formData.append('Description', formStep.inputDescription.value);
+    formData.append('TotalBudget', formStep.inputTotalBudget.value);
+    formData.append('TotalExpenditure', formStep.inputTotalExpenditure.value);
+    formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
+    formData.append('StartDate', formStep.inputStartDate.value);
+    formData.append('EndDate', formStep.inputEndDate.value);
+    formData.append('SubmissionDate', formAdd.inputSubmissionDate.value);
 
-    document.getElementById("successMessage").style.display = "block";
-    this.style.display = "none";
-})
+    model.ProjectDonors.forEach((item, i) => {
+        formData.append(`ProjectDonors[${i}]`, item);
+    });
+
+    model.ProjectReports.forEach((item, i) => {
+        formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
+        formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
+    });
+
+    model.ProjectBeneficiaries.forEach((item, i) => {
+        formData.append(`ProjectBeneficiaries[${i}].ProjectBeneficiaryTypeId`, item.ProjectBeneficiaryTypeId);
+        formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
+    });
+
+
+    $.ajax({
+        url: "/Projects/PostAddProject",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: res => {
+            console.log(res)
+            document.getElementById("successMessage").style.display = "block";
+            this.style.display = "none";
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    });
+});
+
 
 //next or prev page
 function stepChange(isNext) {

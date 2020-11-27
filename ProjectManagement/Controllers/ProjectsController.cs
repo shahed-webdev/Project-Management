@@ -1,6 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagement.BusinessLogic;
 using ProjectManagement.ViewModel;
@@ -19,8 +24,11 @@ namespace ProjectManagement.Controllers
         private readonly IReportTypeCore _reportType;
         private readonly IProjectCore _project;
 
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location, IProjectSectorCore sector, IDonorCore donor, IReportTypeCore reportType, IProjectCore project)
+        public ProjectsController(IProjectStatusCore status, IProjectBeneficiaryTypeCore type, ILocationCore location,
+            IProjectSectorCore sector, IDonorCore donor, IReportTypeCore reportType, IProjectCore project,
+            IWebHostEnvironment webHostEnvironment)
         {
             _status = status;
             _type = type;
@@ -29,19 +37,21 @@ namespace ProjectManagement.Controllers
             _donor = donor;
             _reportType = reportType;
             _project = project;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Features()
         {
             var model = _sector.List();
             return View(model.Data);
-        }  
-        
+        }
+
         public IActionResult AddProject(int? id)
         {
             if (!id.HasValue) return RedirectToAction("Features");
 
-           ViewBag.linkTitle = _sector.Get(id.GetValueOrDefault()).Data.Sector;
+            ViewBag.linkTitle = _sector.Get(id.GetValueOrDefault()).Data.Sector;
+            ViewBag.ProjectSectorId = _sector.Get(id.GetValueOrDefault()).Data.ProjectSectorId;
 
             ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label");
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
@@ -76,8 +86,31 @@ namespace ProjectManagement.Controllers
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
         {
+            foreach (var report in model.ProjectReports)
+            {
+                report.FileName = UploadedFile(report.Attachment);
+                report.FileUrl = "~/FILES/projectReports";
+            }
+            
             var response = _project.Add(model);
             return Json(response);
+        }
+
+        private string UploadedFile(IFormFile file)
+        {
+            if (file == null) return null;
+
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "FILES/projectReports");
+            var fileExtension = Path.GetExtension(file.FileName);
+            var fileName = Guid.NewGuid() + "." + fileExtension;
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            return fileName;
         }
     }
 }

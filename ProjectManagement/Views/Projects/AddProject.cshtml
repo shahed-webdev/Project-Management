@@ -1,4 +1,4 @@
-﻿@model ProjectAddModel
+﻿
 @{
     ViewData["Title"] = "Add Project";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -10,6 +10,8 @@
         #successMessage { display: none }
         #donor-container span { background-color: #ddd; border-radius: 5px; padding: 4px 8px; margin-right: 7px; text-align: center; margin-bottom: 6px; display: inline-block; }
         #donor-container span i { font-size: .9rem; cursor: pointer; margin-left: 5px; }
+
+        .remove { cursor: pointer }
     </style>
 }
 
@@ -36,6 +38,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
+                        <input type="hidden" id="hiddenProjectSectorId" value="@ViewBag.ProjectSectorId">
                         <input type="text" id="inputTitle" class="form-control">
                         <label for="inputTitle">Title</label>
                     </div>
@@ -47,7 +50,7 @@
                     </div>
                 </div>
             </div>
-
+           
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
@@ -196,28 +199,25 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg-8">
                     <select asp-items="@ViewBag.ReportType" id="selectReportName" class="mdb-select md-form" searchable="Search here..">
                         <option value="" disabled selected>Report Name</option>
                     </select>
                     <span id="errorReportName" class="red-text"></span>
                 </div>
 
-                <div class="col-lg-7">
+                <div class="col-lg-4">
                     <div class="md-form">
                         <div class="file-field">
                             <div class="btn btn-outline-info btn-rounded btn-sm float-left">
                                 <span>Choose Attachment</span>
                                 <input id="inputAttachment" type="file">
                             </div>
-                            <div class="file-path-wrapper">
-                                <input id="filePath2" class="file-path validate" type="text" placeholder="Upload Attachment">
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <ul id="report-list" class="list-group list-group-flush"></ul>
         </div>
 
@@ -229,7 +229,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/add-project.js"></script>
+    <script src="~/pages-js/add-project.js?v=6"></script>
     <script>
         $(function () {
             $('.mdb-select').materialSelect();

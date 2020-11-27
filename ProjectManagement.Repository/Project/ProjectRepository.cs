@@ -17,6 +17,8 @@ namespace ProjectManagement.Repository
         public void Add(ProjectAddModel model)
         {
             var project = _mapper.Map<Project>(model);
+            project.ReportName = model.Title;
+            project.ProjectName = model.Title;
             Db.Project.Add(project);
         }
 
