@@ -1,6 +1,7 @@
 ﻿
 //global model
 const model = {
+    FilePhoto: null,
     ProjectDonors: [],
     ProjectBeneficiaries: [],
     ProjectReports: []
@@ -129,7 +130,7 @@ inputAttachment.addEventListener("change", function (e) {
 
     const reports = {
         ReportTypeId: id,
-        Attachment: e.target.files[0] 
+        Attachment: e.target.files[0]
     }
 
     model.ProjectReports.push(reports);
@@ -371,7 +372,7 @@ btnPrevious.addEventListener("click", function (evt) {
     stepChange(false);
 });
 
-//post project
+//submit project
 formAdd.addEventListener("submit", function (evt) {
     evt.preventDefault();
 
@@ -385,14 +386,17 @@ formAdd.addEventListener("submit", function (evt) {
     }
 
     const formData = new FormData();
-    formData.append('ProjectSectorId',formStep.hiddenProjectSectorId.value);
+    formData.append('ProjectSectorId', formStep.hiddenProjectSectorId.value);
     formData.append('ProjectStatusId', formStep.selectStatus.value);
     formData.append('CityId', formStep.selectCity.value);
     formData.append('Title', formStep.inputTitle.value);
     formData.append('Description', formStep.inputDescription.value);
     formData.append('TotalBudget', formStep.inputTotalBudget.value);
     formData.append('TotalExpenditure', formStep.inputTotalExpenditure.value);
-    formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
+
+    if (model.FilePhoto)
+        formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
+
     formData.append('StartDate', formStep.inputStartDate.value);
     formData.append('EndDate', formStep.inputEndDate.value);
     formData.append('SubmissionDate', formAdd.inputSubmissionDate.value);
@@ -418,10 +422,12 @@ formAdd.addEventListener("submit", function (evt) {
         data: formData,
         processData: false,
         contentType: false,
-        success: res => {
-            console.log(res)
-            document.getElementById("successMessage").style.display = "block";
-            this.style.display = "none";
+        success: response => {
+            console.log(response)
+            if (response.IsSuccess) {
+                document.getElementById("successMessage").style.display = "block";
+                this.style.display = "none";
+            }
         },
         error: function (err) {
             console.log(err)

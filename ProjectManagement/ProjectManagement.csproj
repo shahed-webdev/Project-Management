@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ProjectManagement.BusinessLogic\ProjectManagement.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\FILES\projectReports\" />
+  </ItemGroup>
+
 </Project>

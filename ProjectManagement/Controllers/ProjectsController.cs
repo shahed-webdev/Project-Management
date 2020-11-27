@@ -88,19 +88,21 @@ namespace ProjectManagement.Controllers
         {
             foreach (var report in model.ProjectReports)
             {
-                report.FileName = UploadedFile(report.Attachment);
+                report.FileName = UploadedFile(report.Attachment, "projectReports");
                 report.FileUrl = "~/FILES/projectReports";
             }
             
+            model.Photo = UploadedFile(model.FilePhoto, "projectReports");
+
             var response = _project.Add(model);
             return Json(response);
         }
 
-        private string UploadedFile(IFormFile file)
+        private string UploadedFile(IFormFile file, string subPath)
         {
             if (file == null) return null;
 
-            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "FILES/projectReports");
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, $"FILES/{subPath}");
             var fileExtension = Path.GetExtension(file.FileName);
             var fileName = Guid.NewGuid() + "." + fileExtension;
             var filePath = Path.Combine(uploadsFolder, fileName);
