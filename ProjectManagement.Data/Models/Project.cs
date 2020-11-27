@@ -21,7 +21,7 @@ namespace ProjectManagement.Data
         public string Description { get; set; }
         public decimal TotalBudget { get; set; }
         public decimal TotalExpenditure { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? SubmissionDate { get; set; }

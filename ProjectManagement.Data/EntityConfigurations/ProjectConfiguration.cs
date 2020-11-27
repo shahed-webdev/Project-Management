@@ -25,6 +25,9 @@ namespace ProjectManagement.Data
             builder.Property(p => p.TotalExpenditure)
                 .HasColumnType("decimal(18, 2)");
 
+            builder.Property(p => p.Photo)
+                .HasMaxLength(128);
+
             builder.Property(p => p.StartDate)
                 .HasColumnType("date");
 

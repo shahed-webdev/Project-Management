@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 
 
 namespace ProjectManagement.ViewModel
@@ -19,7 +19,7 @@ namespace ProjectManagement.ViewModel
         public string Description { get; set; }
         public decimal TotalBudget { get; set; }
         public decimal TotalExpenditure { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public IFormFile FilePhoto { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
