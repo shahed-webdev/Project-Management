@@ -15,12 +15,8 @@ namespace ProjectManagement.BusinessLogic
         {
             try
             {
-                if (!_db.LogFrame.IsExist(model.ProjectId))
-                    return new DbResponse(false, $"Not Found");
-
                 _db.LogFrame.AddorUpdate(model);
                 _db.SaveChanges();
-
 
                 return new DbResponse(true, "Success");
             }
