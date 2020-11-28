@@ -28,6 +28,7 @@ namespace ProjectManagement.Data
         public ProjectStatus ProjectStatus { get; set; }
         public ProjectSector ProjectSector { get; set; }
         public City City { get; set; }
+        public LogFrame LogFrame { get; set; }
         public ICollection<ProjectDonor> ProjectDonors { get; set; }
         public ICollection<ProjectReports> ProjectReports { get; set; }
         public ICollection<ProjectBeneficiary> ProjectBeneficiaries { get; set; }
