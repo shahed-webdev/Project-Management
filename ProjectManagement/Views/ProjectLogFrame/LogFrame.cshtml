@@ -4,5 +4,271 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>LogFrame</h1>
+@section Styles{
+    <link href="~/pages-css/steper-style.css" rel="stylesheet" />
+    <style>
+        .progressbar li { width: 33.33%; }
+        #step2, #step3 { display: none }
+    </style>
+}
 
+<div class="container">
+    <h4 class="page-header my-3">Log Frame</h4>
+
+    <form id="formAdd">
+        <div id="step1">
+            <div class="card card-body">
+                <ul class="progressbar">
+                    <li class="active">Step 1</li>
+                    <li>Step 2</li>
+                    <li>Step 3</li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <select id="selectProjectName" asp-items="@ViewBag.ProjectName" class="mdb-select md-form" searchable="Search here.." required>
+                            <option value="0" disabled selected>Choose Project Name</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="md-form">
+                            <input type="text" id="inputProjectGoal" class="form-control">
+                            <label for="inputProjectGoal">Project Goal</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="md-form">
+                            <input type="text" id="inputResultIndirector" class="form-control">
+                            <label for="inputResultIndirector">Result Base Indirector</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="md-form">
+                            <input type="text" id="inputOutcome" class="form-control">
+                            <label for="inputOutcome">Outcome</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="md-form">
+                            <input type="text" id="inputOutcomeIndirector" class="form-control">
+                            <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right mt-4">
+                <button id="btnStep1" class="btn btn-custom-bg">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+
+        <div id="step2">
+            <div class="card card-body">
+                <ul class="progressbar">
+                    <li class="active">Step 1</li>
+                    <li class="active">Step 2</li>
+                    <li>Step 3</li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="md-form">
+                            <input type="text" id="inputOutputIndirector" class="form-control">
+                            <label for="inputOutputIndirector">Output Base Indirector</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="md-form">
+                            <input type="text" id="inputOutput" class="form-control">
+                            <label for="inputOutput">Output</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <button id="btnPrevious1" type="button" class="btn btn-grey"><i class="far fa-long-arrow-alt-left mr-1"></i>Previous</button>
+                <button id="btnStep2" class="btn btn-custom-bg">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+
+        <div id="step3">
+            <div class="card card-body">
+                <ul class="progressbar">
+                    <li class="active">Step 1</li>
+                    <li class="active">Step 2</li>
+                    <li class="active">Step 3</li>
+                </ul>
+
+                <div class="md-form">
+                    <input type="text" id="inputActivity" class="form-control">
+                    <label for="inputActivity">Activity</label>
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <button id="btnPrevious2" type="button" class="btn btn-grey"><i class="far fa-long-arrow-alt-left mr-1"></i>Previous</button>
+                <button id="btnSubmit" type="submit" class="btn btn-custom-bg">Submit</button>
+            </div>
+            <p id="submitError" class="red-text text-right"></p>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(function() {
+            $('.mdb-select').materialSelect();
+        });
+
+        const formAdd = document.getElementById("formAdd");
+        const submitError = document.getElementById("submitError");
+
+        const step1 = document.getElementById("step1");
+        const step2 = document.getElementById("step2");
+        const step3 = document.getElementById("step3");
+
+        //step next 1 click
+        formAdd.btnStep1.addEventListener("click", function(evt) {
+            evt.preventDefault();
+
+            step1.style.display = "none";
+            step2.style.display = "block";
+        });
+
+        //step next 2 click
+        formAdd.btnStep2.addEventListener("click", function(evt) {
+            evt.preventDefault();
+
+            step1.style.display = "none";
+            step2.style.display = "none";
+            step3.style.display = "block";
+        });
+
+        //step prev 1 click
+        formAdd.btnPrevious1.addEventListener("click", function(evt) {
+            evt.preventDefault();
+
+            step1.style.display = "block";
+            step2.style.display = "none";
+        });
+
+        //step prev 2 click
+        formAdd.btnPrevious2.addEventListener("click", function(evt) {
+            evt.preventDefault();
+
+            step2.style.display = "block";
+            step3.style.display = "none";
+        });
+
+        //submit form
+        formAdd.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = {
+                ProjectId: this.selectProjectName.value,
+                ProjectGoal: this.inputProjectGoal.value,
+                ResultBaseIndicator: this.inputResultIndirector.value,
+                Outcome: this.inputOutcome.value,
+                OutcomeBaseIndicator: this.inputOutcomeIndirector.value,
+                Output: this.inputOutput.value,
+                OutputBaseIndicator: this.inputOutputIndirector.value,
+                Activity: this.inputActivity.value
+            }
+
+            this.btnSubmit.disabled = true;
+            this.btnSubmit.textContent = "Submitting..";
+
+            $.ajax({
+                url: "/ProjectLogFrame/PostLogFrame",
+                type: "POST",
+                data: model,
+                success: response => {
+                    this.btnSubmit.disabled = false;
+                    this.btnSubmit.textContent = "Submit";
+
+                    if (response.IsSuccess) {
+                        $.notify("Log frame submitted successfully!", "success");
+                        return;
+                    }
+
+                    submitError.textContent = response.Message;
+                },
+                error: err => {
+                    console.log(err);
+                    this.btnSubmit.disabled = false;
+                    this.btnSubmit.textContent = "Submit";
+                }
+            });
+        });
+
+        //on change Project Name
+        formAdd.selectProjectName.addEventListener("change", function(evt) {
+            const id = this.value;
+
+            setProjectData({}, false);
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/GetLogFrame",
+                data: { id },
+                success: response => {
+                    setProjectData(response.Data, response.IsSuccess);
+                },
+                error: err => console.log(err)
+            });
+        });
+
+        function setProjectData(item, isData) {
+            if (isData) {
+                formAdd.inputProjectGoal.value = item.ProjectGoal;
+                item.ProjectGoal && formAdd.inputProjectGoal.nextElementSibling.classList.add("active");
+
+                formAdd.inputResultIndirector.value = item.ResultBaseIndicator;
+                item.ResultBaseIndicator && formAdd.inputResultIndirector.nextElementSibling.classList.add("active");
+
+                formAdd.inputOutcome.value = item.Outcome;
+                item.Outcome && formAdd.inputOutcome.nextElementSibling.classList.add("active");
+
+                formAdd.inputOutcomeIndirector.value = item.OutcomeBaseIndicator;
+                item.OutcomeBaseIndicator && formAdd.inputOutcomeIndirector.nextElementSibling.classList.add("active");
+
+                formAdd.inputOutput.value = item.Output;
+                item.Output && formAdd.inputOutput.nextElementSibling.classList.add("active");
+
+                formAdd.inputOutputIndirector.value = item.OutputBaseIndicator;
+                item.OutputBaseIndicator && formAdd.inputOutputIndirector.nextElementSibling.classList.add("active");
+
+                formAdd.inputActivity.value = item.Activity;
+                item.Activity && formAdd.inputActivity.nextElementSibling.classList.add("active");
+
+            } else {
+                formAdd.inputProjectGoal.value = "";
+                formAdd.inputProjectGoal.nextElementSibling.classList.remove("active");
+
+                formAdd.inputResultIndirector.value = "";
+                formAdd.inputResultIndirector.nextElementSibling.classList.remove("active");
+
+                formAdd.inputOutcome.value = "";
+                formAdd.inputOutcome.nextElementSibling.classList.remove("active");
+
+                formAdd.inputOutcomeIndirector.value = "";
+                formAdd.inputOutcomeIndirector.nextElementSibling.classList.remove("active");
+
+                formAdd.inputOutput.value = "";
+                formAdd.inputOutput.nextElementSibling.classList.remove("active");
+
+                formAdd.inputOutputIndirector.value = "";
+                formAdd.inputOutputIndirector.nextElementSibling.classList.remove("active");
+
+                formAdd.inputActivity.value = "";
+                formAdd.inputActivity.nextElementSibling.classList.remove("active");
+            }
+        }
+    </script>
+}

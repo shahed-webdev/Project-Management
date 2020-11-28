@@ -137,7 +137,12 @@ inputAttachment.addEventListener("change", function (e) {
 
     const li = document.createElement("li");
     li.className = "list-group-item d-flex justify-content-between align-items-center";
-    li.innerHTML = `<span>${text}</span><i data-id="${id}" class="remove fas fa-trash-alt red-text"></i>`;
+    li.innerHTML = `
+            <div class="report-tems">
+              <span>${text}</span>
+              <i>${e.target.files[0].name}</i>
+            </div>
+            <i data-id="${id}" class="remove fas fa-trash-alt red-text"></i>`;
     reportList.appendChild(li);
 
     this.value = "";
@@ -422,7 +427,7 @@ formAdd.addEventListener("submit", function (evt) {
     });
 
 
-    this.btnSubmit.disable = true;
+    this.btnSubmit.disabled = true;
     this.btnSubmit.textContent = "submitting..";
 
     $.ajax({
@@ -432,7 +437,7 @@ formAdd.addEventListener("submit", function (evt) {
         processData: false,
         contentType: false,
         success: response => {
-            this.btnSubmit.disable = false;
+            this.btnSubmit.disabled = false;
             this.btnSubmit.textContent = "Submit";
 
             if (response.IsSuccess) {
@@ -446,9 +451,9 @@ formAdd.addEventListener("submit", function (evt) {
 
             submitError.textContent = response.Message;
         },
-        error: function (err) {
+        error: err=> {
             console.log(err);
-            this.btnSubmit.disable = false;
+            this.btnSubmit.disabled = false;
             this.btnSubmit.textContent = "Submit";
         }
     });
