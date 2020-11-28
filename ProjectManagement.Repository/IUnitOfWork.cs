@@ -7,6 +7,7 @@ namespace ProjectManagement.Repository
         ICityRepository City { get; }
         ICountryRepository Country { get; }
         IDonorRepository Donor { get; }
+        ILogFrameRepository LogFrame { get; }
         IRegistrationRepository Registration { get; }
         IProjectRepository Project { get; }
         IProjectSectorRepository ProjectSector { get; }

@@ -16,6 +16,7 @@ namespace ProjectManagement.Repository
             City = new CityRepository(_db, _mapper);
             Country = new CountryRepository(_db, _mapper);
             Donor = new DonorRepository(_db, _mapper);
+            LogFrame = new LogFrameRepository(_db, _mapper);
             Project = new ProjectRepository(_db, _mapper);
             ProjectBeneficiaryType = new ProjectBeneficiaryTypeRepository(_db, _mapper);
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
@@ -28,6 +29,7 @@ namespace ProjectManagement.Repository
         public ICityRepository City { get; }
         public ICountryRepository Country { get; }
         public IDonorRepository Donor { get; }
+        public ILogFrameRepository LogFrame { get; }
         public IProjectRepository Project { get; }
         public IProjectSectorRepository ProjectSector { get; }
         public IProjectStatusRepository ProjectStatus { get; }
