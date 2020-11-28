@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ProjectListViewModel>
+@{
+    ViewData["Title"] = "Project List";
+    Layout = "_AdminLayout";
+}
+@section Styles{
+    <style>
+        .add { color: #0096c1; cursor: pointer; font-size: 1rem; margin-left: 5px; }
+    </style>
+}
+
+<div class="m-md-3">
+    <h4 class="page-header my-3">Project List</h4>
+
+    <div class="card card-body">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th><strong>Title</strong></th>
+                    <th><strong>Description</strong></th>
+                    <th><strong>Total Budget</strong></th>
+                    <th><strong>Total Expenditure</strong></th>
+                    <th><strong>Submission Date</strong></th>
+                </tr>
+            </thead>
+            <tbody id="tBody">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Description</td>
+                        <td>@item.TotalBudget.ToString("N")</td>
+                        <td>
+                            @item.TotalExpenditure.ToString("N")
+                            <i data-id="@item.ProjectId" class="add fas fa-plus-circle"></i>
+                        </td>
+                        <td>
+                            @if (item.SubmissionDate != null)
+                            {
+                                @item.SubmissionDate.Value.ToString("d MMM yyyy")
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--add modal-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-notify modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold">Add Expenditure</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formAdd">
+                    <input type="hidden" id="hiddenId">
+                    <div class="md-form">
+                        <label for="inputExpenditure" class="active">Expenditure</label>
+                        <input type="number" id="inputExpenditure" class="form-control" required>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-outline-info waves-effect">Add <i class="fas fa-paper-plane-o ml-1"></i></button>
+                    </div>
+                </form>
+                <span id="error" class="red-text"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const tBody = document.getElementById("tBody");
+        const modalContainer = $("#addModal");
+
+        //show modal
+        tBody.addEventListener("click", function (evt) {
+            evt.preventDefault();
+
+            const element = evt.target;
+            const onAdd = element.classList.contains("add");
+
+            if (!onAdd) return;
+
+            const id = +element.getAttribute("data-id");
+            formAdd.hiddenId.value = id;
+
+            modalContainer.modal("show");
+        });
+
+        //submit 
+        const formAdd = document.getElementById("formAdd");
+        const error = document.getElementById("error");
+
+        formAdd.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const model = {
+                ProjectId: this.hiddenId.value,
+                Expenditure: this.inputExpenditure.value
+            }
+
+            $.ajax({
+                url: "/Projects/AddExpense",
+                type: "POST",
+                data: model,
+                success: function(response) {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+
+                    error.textContent = response.Message;
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+}

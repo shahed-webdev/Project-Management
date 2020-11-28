@@ -39,7 +39,7 @@ namespace ProjectManagement.Repository
 
         public bool IsNull(int projectId)
         {
-            return Db.Project.Any(c => c.ProjectId == projectId);
+            return !Db.Project.Any(c => c.ProjectId == projectId);
         }
 
         public List<ProjectListViewModel> List(int sectorId)

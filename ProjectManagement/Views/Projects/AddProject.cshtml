@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
@@ -92,13 +92,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="number" id="inputTotalBudget" class="form-control">
+                        <input type="text" id="inputTotalBudget" class="form-control number-mask">
                         <label for="inputTotalBudget">Total Budget</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="number" id="inputTotalExpenditure" class="form-control">
+                        <input type="text" id="inputTotalExpenditure" class="form-control number-mask">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
                     </div>
                 </div>
@@ -223,17 +223,36 @@
 
         <div class="d-flex justify-content-between align-items-center mt-4">
             <button id="btnPrevious" type="button" class="btn btn-grey"><i class="far fa-long-arrow-alt-left mr-1"></i>Previous</button>
-            <button type="submit" class="btn btn-custom-bg">Submit</button>
+            <button id="btnSubmit" type="submit" class="btn btn-custom-bg">Submit</button>
         </div>
+        <p id="submitError" class="red-text text-right"></p>
     </form>
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/add-project.js?v=7"></script>
+    <script src="~/pages-js/add-project.js"></script>
     <script>
         $(function () {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
+
+        var elements = document.getElementsByClassName("number-mask");
+        const options = {
+            mask: Number, // enable number mask
+            scale: 2, // digits after point, 0 for integers
+            signed: false, // disallow negative
+            thousandsSeparator: ',', // any single char
+            padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
+            normalizeZeros: true, // appends or removes zeros at ends
+            radix: ',', // fractional delimiter
+            mapToRadix: ['.'], // symbols to process as radix
+            min: -10000,
+            max: 1000000000
+        }
+
+        for (var i = 0; i < elements.length; i++) {
+            IMask(elements[i], options);
+        }
     </script>
 }

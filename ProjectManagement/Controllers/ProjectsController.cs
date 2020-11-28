@@ -40,12 +40,14 @@ namespace ProjectManagement.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        //features
         public IActionResult Features()
         {
             var model = _sector.List();
             return View(model.Data);
         }
 
+        //add project
         public IActionResult AddProject(int? id)
         {
             if (!id.HasValue) return RedirectToAction("Features");
@@ -61,28 +63,7 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
-        //get state by country
-        public IActionResult GetStateByCountry(int id)
-        {
-            var response = _location.StateDdl(id);
-            return Json(response);
-        }
-
-        //get city by State
-        public IActionResult GetCityByState(int id)
-        {
-            var response = _location.CityDdl(id);
-            return Json(response);
-        }
-
-        //find donors
-        public async Task<IActionResult> FindDonors(string name)
-        {
-            var response = await _donor.SearchAsync(name);
-            return Json(response.Data);
-        }
-
-        //POST: Add Project
+        //POST: add project
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
         {
@@ -113,6 +94,45 @@ namespace ProjectManagement.Controllers
             }
 
             return fileName;
+        }
+
+        //get state by country
+        public IActionResult GetStateByCountry(int id)
+        {
+            var response = _location.StateDdl(id);
+            return Json(response);
+        }
+
+        //get city by State
+        public IActionResult GetCityByState(int id)
+        {
+            var response = _location.CityDdl(id);
+            return Json(response);
+        }
+
+        //find donors
+        public async Task<IActionResult> FindDonors(string name)
+        {
+            var response = await _donor.SearchAsync(name);
+            return Json(response.Data);
+        }
+
+
+        /***project list**/
+        public IActionResult List(int? id)
+        {
+            if (!id.HasValue) return RedirectToAction("Features");
+
+            var model = _project.List(id.GetValueOrDefault());
+            return View(model.Data);
+        }
+
+        //add expense
+        [HttpPost]
+        public IActionResult AddExpense(ProjectExpediterAddModel model)
+        {
+            var response = _project.AddExpediter(model);
+            return Json(response);
         }
     }
 }

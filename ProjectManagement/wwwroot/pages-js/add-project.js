@@ -11,7 +11,7 @@ const model = {
 //set image file
 const inputPhoto = document.getElementById("inputPhoto");
 
-//image file
+//image file change
 inputPhoto.addEventListener("change", function (e) {
     const imageError = document.getElementById("imageError");
     const pathInput = document.getElementById("filePath");
@@ -44,7 +44,7 @@ inputPhoto.addEventListener("change", function (e) {
     //resize image
     const img = new Image();
     img.onload = function () {
-        const width = 200;
+        const width = 400;
         resizeImage(img, width, 0.5, file.name);
     }
 
@@ -243,7 +243,7 @@ const donorContainer = document.getElementById("donor-container");
 $('#inputDonors').typeahead({
     minLength: 1,
     displayText: function (item) {
-        return item.Name;
+        return `${item.Name}, ${item.Email}`;
     },
     afterSelect: function (item) {
         this.$element[0].value = "";
@@ -258,7 +258,6 @@ $('#inputDonors').typeahead({
     },
     updater: function (item) {
         appendDonor(item);
-        console.log(item)
         return item;
     }
 });
@@ -334,6 +333,8 @@ btnBeneficiaryAdd.addEventListener("click", function (evt) {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
     beneficiaryTypeBody.appendChild(tr);
+
+    inputBeneficiaryCount.value = "";
 });
 
 //remove
@@ -373,8 +374,13 @@ btnPrevious.addEventListener("click", function (evt) {
 });
 
 //submit project
+const submitError = document.getElementById("submitError");
+const successMessage = document.getElementById("successMessage")
+
 formAdd.addEventListener("submit", function (evt) {
     evt.preventDefault();
+
+    submitError.textContent = "";
 
     if (!formStep.inputTitle.value) {
         stepChange(false);
@@ -416,6 +422,9 @@ formAdd.addEventListener("submit", function (evt) {
     });
 
 
+    this.btnSubmit.disable = true;
+    this.btnSubmit.textContent = "submitting..";
+
     $.ajax({
         url: "/Projects/PostAddProject",
         type: "POST",
@@ -423,14 +432,24 @@ formAdd.addEventListener("submit", function (evt) {
         processData: false,
         contentType: false,
         success: response => {
-            console.log(response)
+            this.btnSubmit.disable = false;
+            this.btnSubmit.textContent = "Submit";
+
             if (response.IsSuccess) {
-                document.getElementById("successMessage").style.display = "block";
+                successMessage.style.display = "block";
                 this.style.display = "none";
+
+                //reset model
+                model = {};
+                return;
             }
+
+            submitError.textContent = response.Message;
         },
         error: function (err) {
-            console.log(err)
+            console.log(err);
+            this.btnSubmit.disable = false;
+            this.btnSubmit.textContent = "Submit";
         }
     });
 });
