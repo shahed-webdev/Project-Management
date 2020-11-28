@@ -35,6 +35,10 @@ namespace ProjectManagement.BusinessLogic
             try
             {
                 var data = _db.LogFrame.Get(projectId);
+
+                if (data == null)
+                    return new DbResponse<LogFrameModel>(false, "No Data Found");
+
                 return new DbResponse<LogFrameModel>(true, "Success", data);
             }
             catch (Exception e)
