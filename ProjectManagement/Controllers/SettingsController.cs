@@ -107,7 +107,6 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
-
         //state
         public IActionResult State()
         {

@@ -6,23 +6,19 @@
 
 @section Styles{
     <link href="~/pages-css/steper-style.css" rel="stylesheet" />
-    <link href="~/pages-css/add-project.css" rel="stylesheet" />
+    <link href="~/pages-css/add-project.css?v=1" rel="stylesheet" />
 }
 
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h4 class="page-header mt-2">Add Project</h4>
-            <p class="mb-3">@ViewBag.linkTitle</p>
-        </div>
-        <a href="/Projects/Features"><i class="fas fa-long-arrow-alt-left mr-1"></i> Back to Features</a>
-    </div>
+    <h4 class="page-header mt-3">Add Project</h4>
+    <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
+
 
     <div id="successMessage" class="alert alert-success text-center" role="alert">
         Project Submitted Successfully!
     </div>
 
-    <form id="formStep">
+    <form id="formStep1">
         <div class="card card-body">
             <ul class="progressbar">
                 <li class="active">Step 1</li>
@@ -32,8 +28,8 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="hidden" id="hiddenProjectSectorId" value="@ViewBag.ProjectSectorId">
-                        <input type="text" id="inputTitle" class="form-control">
+                        <input type="hidden" id="hiddenProjectSectorId" value="@ViewBag.ProjectSector.ProjectSectorId">
+                        <input type="text" id="inputTitle" class="form-control" required>
                         <label for="inputTitle">Title</label>
                     </div>
                 </div>
@@ -71,13 +67,13 @@
                 <div class="col-lg-5">
                     <div class="md-form mb-0">
                         <input type="text" id="inputDonors" autocomplete="off" class="form-control">
-                        <label for="inputDonors">Donor</label>
+                        <label for="inputDonors">Find Donor</label>
                     </div>
                     <div id="donor-container" class="mb-4"></div>
                 </div>
                 <div class="col-lg-7">
                     <div class="md-form">
-                        <input type="text" id="inputSectors" class="form-control" disabled value="@ViewBag.linkTitle">
+                        <input type="text" id="inputSectors" class="form-control" disabled value="@ViewBag.ProjectSector.Sector">
                         <label for="inputSectors">Sector</label>
                     </div>
                 </div>
@@ -86,13 +82,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputTotalBudget" class="form-control number-mask">
+                        <input type="text" id="inputTotalBudget" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalBudget">Total Budget</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputTotalExpenditure" class="form-control number-mask">
+                        <input type="text" id="inputTotalExpenditure" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
                     </div>
                 </div>
@@ -161,33 +157,28 @@
         </div>
 
         <div class="text-right mt-4">
-            <button class="btn btn-custom-bg">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            <button id="btnSubmit1" type="submit" class="btn btn-custom-bg">Submit</button>
+            <button id="btnNext" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
         </div>
     </form>
 
-    <form id="formAdd">
+    <form id="formStep2">
         <div class="card card-body">
             <ul class="progressbar">
                 <li class="active">Step 1</li>
                 <li class="active">Step 2</li>
             </ul>
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <input type="text" id="inputProjectName" class="form-control" disabled>
                         <label for="inputProjectName">Project Name</label>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@DateTime.Now.ToString("d MMMM, yyyy")">
                         <label for="inputSubmissionDate">Submission Date</label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="md-form">
-                        <input type="text" id="inputReportName" disabled class="form-control">
-                        <label for="inputReportName">Report Name</label>
                     </div>
                 </div>
             </div>

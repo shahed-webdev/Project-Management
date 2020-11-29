@@ -50,10 +50,12 @@ namespace ProjectManagement.Controllers
         //add project
         public IActionResult AddProject(int? id)
         {
-            if (!id.HasValue) return RedirectToAction("Features");
+            if (!id.HasValue) return RedirectToAction($"Features");
 
-            ViewBag.linkTitle = _sector.Get(id.GetValueOrDefault()).Data.Sector;
-            ViewBag.ProjectSectorId = _sector.Get(id.GetValueOrDefault()).Data.ProjectSectorId;
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features");
+
+            ViewBag.ProjectSector = response.Data;
 
             ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label");
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
@@ -63,7 +65,7 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
-        //POST: add project
+        //POST: add project(ajax)
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
         {
@@ -121,7 +123,12 @@ namespace ProjectManagement.Controllers
         /***project list**/
         public IActionResult List(int? id)
         {
-            if (!id.HasValue) return RedirectToAction("Features");
+            if (!id.HasValue) return RedirectToAction($"Features");
+
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features");
+
+            ViewBag.ProjectSector = response.Data;
 
             var model = _project.List(id.GetValueOrDefault());
             return View(model.Data);

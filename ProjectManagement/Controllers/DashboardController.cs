@@ -16,8 +16,12 @@ namespace ProjectManagement.Controllers
 
         public IActionResult Index(int? id)
         {
-            if (!id.HasValue) return RedirectToAction("Features", "Projects");
-            ViewBag.linkTitle = _sector.Get(id.GetValueOrDefault()).Data.Sector;
+            if (!id.HasValue) return RedirectToAction($"Features", $"Projects");
+
+            var response = _sector.Get(id.GetValueOrDefault());
+            if(!response.IsSuccess) return RedirectToAction($"Features", $"Projects");
+
+            ViewBag.ProjectSector = response.Data;
 
             return View();
         }

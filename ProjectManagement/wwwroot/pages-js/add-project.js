@@ -163,9 +163,11 @@ reportList.addEventListener("click", function (evt) {
 
 
 //selectors
-const formStep = document.getElementById("formStep");
+const formStep1 = document.getElementById("formStep1");
+const formStep2 = document.getElementById("formStep2");
+const btnNext = document.getElementById("btnNext");
 const btnPrevious = document.getElementById("btnPrevious");
-const formAdd = document.getElementById("formAdd");
+
 //location
 const selectCountry = document.getElementById("selectCountry");
 const selectState = document.getElementById("selectState");
@@ -356,74 +358,132 @@ beneficiaryTypeBody.addEventListener("click", function (evt) {
 });
 
 
-//first step
-formStep.addEventListener("submit", function (evt) {
+//submit first step
+const submitError2 = document.getElementById("submitError2");
+formStep1.addEventListener("submit", function (evt) {
     evt.preventDefault();
-
-    stepChange(true);
-
-    if (this.inputTitle.value) {
-        formAdd.inputProjectName.value = this.inputTitle.value;
-        formAdd.inputProjectName.nextElementSibling.classList.add("active");
-
-        formAdd.inputReportName.value = this.inputTitle.value;
-        formAdd.inputReportName.nextElementSibling.classList.add("active");
-    }
-});
-
-//Previous
-btnPrevious.addEventListener("click", function (evt) {
-    evt.preventDefault();
-
-    stepChange(false);
-});
-
-//submit project
-const submitError = document.getElementById("submitError");
-const successMessage = document.getElementById("successMessage")
-
-formAdd.addEventListener("submit", function (evt) {
-    evt.preventDefault();
-
-    submitError.textContent = "";
-
-    if (!formStep.inputTitle.value) {
-        stepChange(false);
-
-        formStep.inputTitle.setAttribute("required", "required");
-        formStep.inputTitle.focus();
-
-        return;
-    }
 
     const formData = new FormData();
-    formData.append('ProjectSectorId', formStep.hiddenProjectSectorId.value);
-    formData.append('ProjectStatusId', formStep.selectStatus.value);
-    formData.append('CityId', formStep.selectCity.value);
-    formData.append('Title', formStep.inputTitle.value);
-    formData.append('Description', formStep.inputDescription.value);
-    formData.append('TotalBudget', formStep.inputTotalBudget.value);
-    formData.append('TotalExpenditure', formStep.inputTotalExpenditure.value);
+    formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
+    formData.append('ProjectStatusId', formStep1.selectStatus.value);
+    formData.append('CityId', formStep1.selectCity.value);
+    formData.append('Title', formStep1.inputTitle.value);
+    formData.append('Description', formStep1.inputDescription.value);
+    formData.append('TotalBudget', formStep1.inputTotalBudget.value);
+    formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
 
     if (model.FilePhoto)
         formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
 
-    formData.append('StartDate', formStep.inputStartDate.value);
-    formData.append('EndDate', formStep.inputEndDate.value);
-    formData.append('SubmissionDate', formAdd.inputSubmissionDate.value);
+    formData.append('StartDate', formStep1.inputStartDate.value);
+    formData.append('EndDate', formStep1.inputEndDate.value);
 
     model.ProjectDonors.forEach((item, i) => {
         formData.append(`ProjectDonors[${i}]`, item);
     });
 
+    model.ProjectBeneficiaries.forEach((item, i) => {
+        formData.append(`ProjectBeneficiaries[${i}].ProjectBeneficiaryTypeId`, item.ProjectBeneficiaryTypeId);
+        formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
+    });
+
+    formData.append('SubmissionDate', formStep2.inputSubmissionDate.value);
     model.ProjectReports.forEach((item, i) => {
         formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
         formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
     });
 
+    this.btnSubmit1.disabled = true;
+    this.btnSubmit1.textContent = "submitting..";
+
+    $.ajax({
+        url: "/Projects/PostAddProject",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: response => {
+            this.btnSubmit1.disabled = false;
+            this.btnSubmit1.textContent = "Submit";
+
+            if (response.IsSuccess) {
+                successMessage.style.display = "block";
+                this.style.display = "none";
+
+                //reset model
+                model.FilePhoto = null;
+                model.ProjectDonors = [];
+                model.ProjectBeneficiaries = [];
+                model.ProjectReports = [];
+
+                return;
+            }
+
+            submitError.textContent = response.Message;
+        },
+        error: err => {
+            console.log(err);
+            this.btnSubmit1.disabled = false;
+            this.btnSubmit1.textContent = "Submit";
+        }
+    });
+});
+
+btnNext.addEventListener("click", function (evt) {
+    evt.preventDefault();
+
+    stepChange(true);
+
+    if (formStep1.inputTitle.value) {
+        formStep2.inputProjectName.value = formStep1.inputTitle.value;
+        formStep2.inputProjectName.nextElementSibling.classList.add("active");
+    }
+});
+
+//submit second step
+const submitError = document.getElementById("submitError");
+const successMessage = document.getElementById("successMessage");
+
+formStep2.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+
+    submitError.textContent = "";
+
+    if (!formStep1.inputTitle.value) {
+        stepChange(false);
+        formStep1.inputTitle.focus();
+
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
+    formData.append('ProjectStatusId', formStep1.selectStatus.value);
+    formData.append('CityId', formStep1.selectCity.value);
+    formData.append('Title', formStep1.inputTitle.value);
+    formData.append('Description', formStep1.inputDescription.value);
+    formData.append('TotalBudget', formStep1.inputTotalBudget.value);
+    formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
+
+    if (model.FilePhoto)
+        formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
+
+    formData.append('StartDate', formStep1.inputStartDate.value);
+    formData.append('EndDate', formStep1.inputEndDate.value);
+
+    model.ProjectDonors.forEach((item, i) => {
+        formData.append(`ProjectDonors[${i}]`, item);
+    });
+
     model.ProjectBeneficiaries.forEach((item, i) => {
         formData.append(`ProjectBeneficiaries[${i}].ProjectBeneficiaryTypeId`, item.ProjectBeneficiaryTypeId);
         formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
+    });
+
+    formData.append('SubmissionDate', formStep2.inputSubmissionDate.value);
+    model.ProjectReports.forEach((item, i) => {
+        formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
+        formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
     });
 
 
@@ -445,13 +505,17 @@ formAdd.addEventListener("submit", function (evt) {
                 this.style.display = "none";
 
                 //reset model
-                model = {};
+                model.FilePhoto = null;
+                model.ProjectDonors = [];
+                model.ProjectBeneficiaries = [];
+                model.ProjectReports = [];
+
                 return;
             }
 
             submitError.textContent = response.Message;
         },
-        error: err=> {
+        error: err => {
             console.log(err);
             this.btnSubmit.disabled = false;
             this.btnSubmit.textContent = "Submit";
@@ -463,11 +527,17 @@ formAdd.addEventListener("submit", function (evt) {
 //next or prev page
 function stepChange(isNext) {
     if (isNext) {
-        formStep.style.display = "none";
-        formAdd.style.display = "block";
+        formStep1.style.display = "none";
+        formStep2.style.display = "block";
     } else {
-        formStep.style.display = "block";
-        formAdd.style.display = "none";
+        formStep1.style.display = "block";
+        formStep2.style.display = "none";
     }
 }
 
+//Previous
+btnPrevious.addEventListener("click", function (evt) {
+    evt.preventDefault();
+
+    stepChange(false);
+});

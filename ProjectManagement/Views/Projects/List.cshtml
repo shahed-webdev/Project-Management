@@ -10,7 +10,8 @@
 }
 
 <div class="m-md-3">
-    <h4 class="page-header my-3">Project List</h4>
+    <h4 class="page-header mt-3">Project List</h4>
+    <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
 
     <div class="card card-body">
         <table class="table table-sm">
@@ -18,9 +19,9 @@
                 <tr>
                     <th><strong>Title</strong></th>
                     <th><strong>Description</strong></th>
-                    <th><strong>Total Budget</strong></th>
-                    <th><strong>Total Expenditure</strong></th>
-                    <th><strong>Submission Date</strong></th>
+                    <th class="text-right"><strong>Total Budget</strong></th>
+                    <th class="text-right"><strong>Total Expenditure</strong></th>
+                    <th class="text-center"><strong>Submission Date</strong></th>
                 </tr>
             </thead>
             <tbody id="tBody">
@@ -29,12 +30,12 @@
                     <tr>
                         <td>@item.Title</td>
                         <td>@item.Description</td>
-                        <td>@item.TotalBudget.ToString("N")</td>
-                        <td>
+                        <td class="text-right">@item.TotalBudget.ToString("N")</td>
+                        <td class="text-right">
                             @item.TotalExpenditure.ToString("N")
                             <i data-id="@item.ProjectId" class="add fas fa-plus-circle"></i>
                         </td>
-                        <td>
+                        <td class="text-center">
                             @if (item.SubmissionDate != null)
                             {
                                 @item.SubmissionDate.Value.ToString("d MMM yyyy")

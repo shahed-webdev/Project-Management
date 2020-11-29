@@ -14,23 +14,30 @@ namespace ProjectManagement.Controllers
     { 
         private readonly ILogFrameCore _logFrame;
         private readonly IProjectCore _project;
+        private readonly IProjectSectorCore _sector;
 
-        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project)
+        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector)
         {
             this._logFrame = logFrame;
             _project = project;
+            _sector = sector;
         }
 
         //Log Frame
         public IActionResult LogFrame(int? id)
         {
-            if (!id.HasValue) return RedirectToAction("Features", "Projects");
+            if (!id.HasValue) return RedirectToAction($"Features", $"Projects");
 
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features", $"Projects");
+
+            ViewBag.ProjectSector = response.Data;
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
+           
             return View();
         }
 
-        //POST: log frame
+        //POST: log frame(ajax)
         [HttpPost]
         public IActionResult PostLogFrame(LogFrameModel model)
         {
@@ -38,6 +45,7 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
+        //on project select(ajax)
         public IActionResult GetLogFrame(int id)
         {
             var response = _logFrame.Get(id);
@@ -47,7 +55,13 @@ namespace ProjectManagement.Controllers
         //Log Frame Indicator
         public IActionResult LogFrameIndicator(int? id)
         {
-            if (!id.HasValue) return RedirectToAction("Features", "Projects");
+            if (!id.HasValue) return RedirectToAction($"Features", $"Projects");
+
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features", $"Projects");
+
+            ViewBag.ProjectSector = response.Data;
+
             return View();
         }
     }
