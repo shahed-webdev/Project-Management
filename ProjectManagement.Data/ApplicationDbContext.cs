@@ -15,6 +15,7 @@ namespace ProjectManagement.Data
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Donor> Donor { get; set; }
         public virtual DbSet<LogFrame> LogFrame { get; set; }
+        public virtual DbSet<LogFrame1stStepIndicator> LogFrame1stStepIndicator { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectBeneficiary> ProjectBeneficiary { get; set; }
         public virtual DbSet<ProjectBeneficiaryType> ProjectBeneficiaryType { get; set; }
@@ -35,6 +36,7 @@ namespace ProjectManagement.Data
             builder.ApplyConfiguration(new CountryConfiguration());
             builder.ApplyConfiguration(new DonorConfiguration());
             builder.ApplyConfiguration(new LogFrameConfiguration());
+            builder.ApplyConfiguration(new LogFrame1stStepIndicatorConfiguration());
             builder.ApplyConfiguration(new ProjectConfiguration());
             builder.ApplyConfiguration(new ProjectBeneficiaryConfiguration());
             builder.ApplyConfiguration(new ProjectBeneficiaryTypeConfiguration());

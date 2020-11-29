@@ -8,6 +8,7 @@ namespace ProjectManagement.Repository
         ICountryRepository Country { get; }
         IDonorRepository Donor { get; }
         ILogFrameRepository LogFrame { get; }
+        ILogFrame1stStepIndicatorRepository LogFrame1stStepIndicator { get; }
         IRegistrationRepository Registration { get; }
         IProjectRepository Project { get; }
         IProjectSectorRepository ProjectSector { get; }
