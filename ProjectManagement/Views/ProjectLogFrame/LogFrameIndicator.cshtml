@@ -23,16 +23,22 @@
 
         <form id="formStep1" name="logForm" class="hide-form active-form">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <select id="selectProjectName" asp-items="@ViewBag.ProjectName" class="mdb-select md-form" searchable="Search here..">
                         <option value="" disabled selected>Choose Project Name</option>
                     </select>
                     <span id="selectProject" class="red-text"></span>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputProjectGoal" class="form-control">
+                        <input name="ProjectGoal" type="text" id="inputProjectGoal" class="form-control">
                         <label for="inputProjectGoal">Project Goal</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="ResultBaseIndicator" type="text" id="inputResultIndirector" class="form-control">
+                        <label for="inputResultIndirector">Result Base Indirector</label>
                     </div>
                 </div>
             </div>
@@ -40,21 +46,98 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputResultIndirector" class="form-control">
-                        <label for="inputResultIndirector">Result Base Indirector</label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="md-form">
-                        <input type="text" id="inputOutcome" class="form-control">
+                        <input name="Outcome" type="text" id="inputOutcome" class="form-control">
                         <label for="inputOutcome">Outcome</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputOutcomeIndirector" class="form-control">
+                        <input name="OutcomeBaseIndicator" type="text" id="inputOutcomeIndirector" class="form-control">
                         <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
                     </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="BaselineValue" type="text" id="inputBaselineValue" class="form-control">
+                        <label for="inputBaselineValue">Baseline Value</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="TargetValue" type="text" id="inputTargetValue" class="form-control">
+                        <label for="inputTargetValue">Target Value</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="AchieveValue" type="text" id="inputAchieveValue" class="form-control">
+                        <label for="inputAchieveValue">Achieve Value</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <select id="selectMeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="BaselineDate" type="text" id="inputBaselineDate" class="form-control">
+                        <label for="inputBaselineDate">Baseline Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="Date1" type="text" id="inputDate1" class="form-control">
+                        <label for="inputDate1">Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="Date2" type="text" id="inputDate2" class="form-control">
+                        <label for="inputDate2">Date</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <select id="selectPrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Primary Source of Data">Primary Source of Data</option>
+                        <option value="DHIS 2">DHIS 2</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <select id="selectFrequency1" name="Frequency1" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <select id="selectFrequency2" name="Frequency2" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+                </div>
+                
+                <div class="col-lg-4">
+                    <select id="selectLocation" name="Location" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Location</option>
+                        <option value="Quarterly">CCC</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <select id="selectParticipants" name="Participants" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Participants</option>
+                        <option value="Quarterly">Male</option>
+                        <option value="Quarterly">female</option>
+                        <option value="Quarterly">boys</option>
+                    </select>
                 </div>
             </div>
 
