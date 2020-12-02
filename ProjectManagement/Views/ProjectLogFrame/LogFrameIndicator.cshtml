@@ -44,13 +44,13 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <input name="Outcome" type="text" id="inputOutcome" class="form-control">
                         <label for="inputOutcome">Outcome</label>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <input name="OutcomeBaseIndicator" type="text" id="inputOutcomeIndirector" class="form-control">
                         <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
@@ -62,20 +62,17 @@
                         <input name="BaselineValue" type="text" id="inputBaselineValue" class="form-control">
                         <label for="inputBaselineValue">Baseline Value</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+               
                     <div class="md-form">
                         <input name="TargetValue" type="text" id="inputTargetValue" class="form-control">
                         <label for="inputTargetValue">Target Value</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+                
                     <div class="md-form">
                         <input name="AchieveValue" type="text" id="inputAchieveValue" class="form-control">
                         <label for="inputAchieveValue">Achieve Value</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+              
                     <select id="selectMeasuringUnit" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Measuring Unit</option>
                         <option value="Person">Person</option>
@@ -89,20 +86,17 @@
                         <input name="BaselineDate" type="text" id="inputBaselineDate" class="form-control">
                         <label for="inputBaselineDate">Baseline Date</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+           
                     <div class="md-form">
                         <input name="Date1" type="text" id="inputDate1" class="form-control">
                         <label for="inputDate1">Date</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+               
                     <div class="md-form">
                         <input name="Date2" type="text" id="inputDate2" class="form-control">
                         <label for="inputDate2">Date</label>
                     </div>
-                </div>
-                <div class="col-lg-4">
+             
                     <select id="selectPrimarySource" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Primary Source</option>
                         <option value="Primary Source of Data">Primary Source of Data</option>
@@ -111,38 +105,42 @@
                 </div>
 
                 <div class="col-lg-4">
+                    <div class="md-form" style="height: 16%">
+
+                    </div>
+
                     <select id="selectFrequency1" name="Frequency1" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Frequency</option>
                         <option value="Quarterly">Quarterly</option>
                         <option value="Annually">Annually</option>
                     </select>
-                </div>
-                <div class="col-lg-4">
+
                     <select id="selectFrequency2" name="Frequency2" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Frequency</option>
                         <option value="Quarterly">Quarterly</option>
                         <option value="Annually">Annually</option>
                     </select>
-                </div>
-                
-                <div class="col-lg-4">
+
                     <select id="selectLocation" name="Location" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Location</option>
                         <option value="Quarterly">CCC</option>
                     </select>
                 </div>
-                <div class="col-lg-4">
+
+         
+                <div class="col-lg-8">
                     <select id="selectParticipants" name="Participants" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Participants</option>
-                        <option value="Quarterly">Male</option>
-                        <option value="Quarterly">female</option>
-                        <option value="Quarterly">boys</option>
+                        <option value="Male">Male</option>
+                        <option value="female">female</option>
+                        <option value="boys">boys</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="text-right mt-4">
-                <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                <div class="col-lg-4">
+                    <div class="text-right md-form">
+                        <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                    </div>
+                </div>
             </div>
         </form>
 
@@ -184,6 +182,8 @@
     <script>
         $(function() {
             $('.mdb-select').materialSelect();
+
+            //$("select#selectParticipants option[value='boys']").attr("selected", true);
         });
 
         const formStep1 = document.getElementById("formStep1");
