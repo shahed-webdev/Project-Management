@@ -18,6 +18,8 @@ namespace ProjectManagement.Repository
             Donor = new DonorRepository(_db, _mapper);
             LogFrame = new LogFrameRepository(_db, _mapper);
             LogFrame1stStepIndicator = new LogFrame1stStepIndicatorRepository(_db, _mapper);
+            LogFrame2ndStepOutput = new LogFrame2ndStepOutputRepository(_db, _mapper);
+            LogFrame3rdStepActivity = new LogFrame3rdStepActivityRepository(_db, _mapper);
             Project = new ProjectRepository(_db, _mapper);
             ProjectBeneficiaryType = new ProjectBeneficiaryTypeRepository(_db, _mapper);
             ProjectSector = new ProjectSectorRepository(_db, _mapper);
@@ -32,6 +34,8 @@ namespace ProjectManagement.Repository
         public IDonorRepository Donor { get; }
         public ILogFrameRepository LogFrame { get; }
         public ILogFrame1stStepIndicatorRepository LogFrame1stStepIndicator { get; }
+        public ILogFrame2ndStepOutputRepository LogFrame2ndStepOutput { get; }
+        public ILogFrame3rdStepActivityRepository LogFrame3rdStepActivity { get; }
         public IProjectRepository Project { get; }
         public IProjectSectorRepository ProjectSector { get; }
         public IProjectStatusRepository ProjectStatus { get; }

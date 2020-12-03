@@ -1,11 +1,12 @@
 ﻿using System;
 
-namespace ProjectManagement.Data
+namespace ProjectManagement.ViewModel
 {
-    public class LogFrame3rdStepActivity
+    public class LogFrame2ndStepModel
     {
-        public int LogFrame3rdStepActivityId { get; set; }
         public int ProjectId { get; set; }
+        public string Output { get; set; }
+        public string OutputBaseIndicator { get; set; }
         public decimal? BaselineValue { get; set; }
         public decimal? TargetValue { get; set; }
         public decimal? AchieveValue { get; set; }
@@ -15,16 +16,8 @@ namespace ProjectManagement.Data
         public DateTime? Date2 { get; set; }
         public string Frequency1 { get; set; }
         public string Frequency2 { get; set; }
-        public string Frequency3 { get; set; }
         public string Location { get; set; }
         public string Participants { get; set; }
         public string PrimarySource { get; set; }
-        public decimal? Budget { get; set; }
-        public decimal? Expenditure { get; set; }
-        public string CurrencyMeasuringUnit { get; set; }
-        public string SummaryOrRemarks { get; set; }
-        public string ReasonOfDeviation { get; set; }
-        public Project Project { get; set; }
-
     }
 }

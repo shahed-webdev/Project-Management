@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace ProjectManagement.Data
+namespace ProjectManagement.ViewModel
 {
-    public class LogFrame3rdStepActivity
+    public class LogFrame3rdStepModel
     {
-        public int LogFrame3rdStepActivityId { get; set; }
         public int ProjectId { get; set; }
         public decimal? BaselineValue { get; set; }
         public decimal? TargetValue { get; set; }
@@ -24,7 +23,5 @@ namespace ProjectManagement.Data
         public string CurrencyMeasuringUnit { get; set; }
         public string SummaryOrRemarks { get; set; }
         public string ReasonOfDeviation { get; set; }
-        public Project Project { get; set; }
-
     }
 }

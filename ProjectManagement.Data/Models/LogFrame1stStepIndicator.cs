@@ -14,9 +14,9 @@ namespace ProjectManagement.Data
         public decimal? TargetValue { get; set; }
         public decimal? AchieveValue { get; set; }
         public string MeasuringUnit { get; set; }
-        public DateTime BaselineDate { get; set; }
-        public DateTime Date1 { get; set; }
-        public DateTime Date2 { get; set; }
+        public DateTime? BaselineDate { get; set; }
+        public DateTime? Date1 { get; set; }
+        public DateTime? Date2 { get; set; }
         public string Frequency1 { get; set; }
         public string Frequency2 { get; set; }
         public string Location { get; set; }

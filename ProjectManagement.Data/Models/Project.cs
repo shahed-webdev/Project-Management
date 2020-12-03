@@ -30,6 +30,8 @@ namespace ProjectManagement.Data
         public City City { get; set; }
         public LogFrame LogFrame { get; set; }
         public LogFrame1stStepIndicator LogFrame1stStepIndicator { get; set; }
+        public LogFrame2ndStepOutput LogFrame2ndStepOutput { get; set; }
+        public LogFrame3rdStepActivity LogFrame3rdStepActivity { get; set; }
         public ICollection<ProjectDonor> ProjectDonors { get; set; }
         public ICollection<ProjectReports> ProjectReports { get; set; }
         public ICollection<ProjectBeneficiary> ProjectBeneficiaries { get; set; }
