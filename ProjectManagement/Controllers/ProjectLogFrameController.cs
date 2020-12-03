@@ -61,6 +61,7 @@ namespace ProjectManagement.Controllers
             if (!response.IsSuccess) return RedirectToAction($"Features", $"Projects");
 
             ViewBag.ProjectSector = response.Data;
+            ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
 
             return View();
         }

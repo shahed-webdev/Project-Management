@@ -16,7 +16,7 @@
     <h4 class="page-header mt-3">Log Frame</h4>
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
 
-    <form id="formAdd">
+    <form id="formAdd" name="formLog">
         <div id="step1">
             <div class="card card-body">
                 <ul class="progressbar">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="md-form">
-                            <input type="text" id="inputProjectGoal" class="form-control">
+                            <input type="text" id="inputProjectGoal" name="ProjectGoal" class="form-control">
                             <label for="inputProjectGoal">Project Goal</label>
                         </div>
                     </div>
@@ -43,19 +43,19 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="md-form">
-                            <input type="text" id="inputResultIndirector" class="form-control">
+                            <input type="text" id="inputResultIndirector" name="ResultBaseIndicator" class="form-control">
                             <label for="inputResultIndirector">Result Base Indirector</label>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="md-form">
-                            <input type="text" id="inputOutcome" class="form-control">
+                            <input type="text" id="inputOutcome" name="Outcome" class="form-control">
                             <label for="inputOutcome">Outcome</label>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="md-form">
-                            <input type="text" id="inputOutcomeIndirector" class="form-control">
+                            <input type="text" id="inputOutcomeIndirector" name="OutcomeBaseIndicator" class="form-control">
                             <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
                         </div>
                     </div>
@@ -78,13 +78,13 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="md-form">
-                            <input type="text" id="inputOutputIndirector" class="form-control">
+                            <input type="text" id="inputOutputIndirector" name="OutputBaseIndicator" class="form-control">
                             <label for="inputOutputIndirector">Output Base Indirector</label>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="md-form">
-                            <input type="text" id="inputOutput" class="form-control">
+                            <input type="text" id="inputOutput" name="Output" class="form-control">
                             <label for="inputOutput">Output</label>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                 </ul>
 
                 <div class="md-form">
-                    <input type="text" id="inputActivity" class="form-control">
+                    <input type="text" id="inputActivity" name="Activity" class="form-control">
                     <label for="inputActivity">Activity</label>
                 </div>
             </div>
@@ -123,7 +123,7 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             $('.mdb-select').materialSelect();
         });
 
@@ -135,7 +135,7 @@
         const step3 = document.getElementById("step3");
 
         //step next 1 click
-        formAdd.btnStep1.addEventListener("click", function(evt) {
+        formAdd.btnStep1.addEventListener("click", function (evt) {
             evt.preventDefault();
 
             step1.style.display = "none";
@@ -143,7 +143,7 @@
         });
 
         //step next 2 click
-        formAdd.btnStep2.addEventListener("click", function(evt) {
+        formAdd.btnStep2.addEventListener("click", function (evt) {
             evt.preventDefault();
 
             step1.style.display = "none";
@@ -152,7 +152,7 @@
         });
 
         //step prev 1 click
-        formAdd.btnPrevious1.addEventListener("click", function(evt) {
+        formAdd.btnPrevious1.addEventListener("click", function (evt) {
             evt.preventDefault();
 
             step1.style.display = "block";
@@ -160,7 +160,7 @@
         });
 
         //step prev 2 click
-        formAdd.btnPrevious2.addEventListener("click", function(evt) {
+        formAdd.btnPrevious2.addEventListener("click", function (evt) {
             evt.preventDefault();
 
             step2.style.display = "block";
@@ -168,14 +168,14 @@
         });
 
         //submit form
-        formAdd.addEventListener("submit", function(evt) {
+        formAdd.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
             if (!this.selectProjectName.value) {
                 step1.style.display = "block";
                 step3.style.display = "none";
 
-                this.selectProjectName.setAttribute("required",true);
+                this.selectProjectName.setAttribute("required", true);
                 this.querySelector("#selectProject").textContent = "Select project name";
                 return;
             }
@@ -218,7 +218,7 @@
         });
 
         //on change Project Name
-        formAdd.selectProjectName.addEventListener("change", function(evt) {
+        formAdd.selectProjectName.addEventListener("change", function (evt) {
             const id = this.value;
 
             formAdd.querySelector("#selectProject").textContent = "";
@@ -237,51 +237,79 @@
             });
         });
 
-        function setProjectData(item, isData) {
-            if (isData) {
-                formAdd.inputProjectGoal.value = item.ProjectGoal;
-                item.ProjectGoal && formAdd.inputProjectGoal.nextElementSibling.classList.add("active");
+        function setProjectData(items, isData) {
+            const elements = document.forms["formLog"].elements;
 
-                formAdd.inputResultIndirector.value = item.ResultBaseIndicator;
-                item.ResultBaseIndicator && formAdd.inputResultIndirector.nextElementSibling.classList.add("active");
+            for (let i = 0; i < elements.length; i++) {
+                const input = elements[i];
 
-                formAdd.inputOutcome.value = item.Outcome;
-                item.Outcome && formAdd.inputOutcome.nextElementSibling.classList.add("active");
+                if (input.type === "text") {
+                    if (isData) {
+                        Object.entries(items).forEach(([key, val]) => {
+                            if (input.name === key) {
+                                input.value = val;
+                                if (input.nextElementSibling && input.nextElementSibling.tagName === "LABEL" && val) {
+                                    input.nextElementSibling.classList.add("active");
+                                }
+                            }
+                        })
+                    } else {
+                        if (!input.classList.contains("select-dropdown")) {
+                            input.value = "";
+                        }
 
-                formAdd.inputOutcomeIndirector.value = item.OutcomeBaseIndicator;
-                item.OutcomeBaseIndicator && formAdd.inputOutcomeIndirector.nextElementSibling.classList.add("active");
-
-                formAdd.inputOutput.value = item.Output;
-                item.Output && formAdd.inputOutput.nextElementSibling.classList.add("active");
-
-                formAdd.inputOutputIndirector.value = item.OutputBaseIndicator;
-                item.OutputBaseIndicator && formAdd.inputOutputIndirector.nextElementSibling.classList.add("active");
-
-                formAdd.inputActivity.value = item.Activity;
-                item.Activity && formAdd.inputActivity.nextElementSibling.classList.add("active");
-
-            } else {
-                formAdd.inputProjectGoal.value = "";
-                formAdd.inputProjectGoal.nextElementSibling.classList.remove("active");
-
-                formAdd.inputResultIndirector.value = "";
-                formAdd.inputResultIndirector.nextElementSibling.classList.remove("active");
-
-                formAdd.inputOutcome.value = "";
-                formAdd.inputOutcome.nextElementSibling.classList.remove("active");
-
-                formAdd.inputOutcomeIndirector.value = "";
-                formAdd.inputOutcomeIndirector.nextElementSibling.classList.remove("active");
-
-                formAdd.inputOutput.value = "";
-                formAdd.inputOutput.nextElementSibling.classList.remove("active");
-
-                formAdd.inputOutputIndirector.value = "";
-                formAdd.inputOutputIndirector.nextElementSibling.classList.remove("active");
-
-                formAdd.inputActivity.value = "";
-                formAdd.inputActivity.nextElementSibling.classList.remove("active");
+                        if (input.nextElementSibling && input.nextElementSibling.tagName === "LABEL") {
+                            input.nextElementSibling.classList.remove("active");
+                        }
+                    }
+                }
             }
+
+
+            //if (isData) {
+            //    formAdd.inputProjectGoal.value = item.ProjectGoal;
+            //    item.ProjectGoal && formAdd.inputProjectGoal.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputResultIndirector.value = item.ResultBaseIndicator;
+            //    item.ResultBaseIndicator && formAdd.inputResultIndirector.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputOutcome.value = item.Outcome;
+            //    item.Outcome && formAdd.inputOutcome.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputOutcomeIndirector.value = item.OutcomeBaseIndicator;
+            //    item.OutcomeBaseIndicator && formAdd.inputOutcomeIndirector.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputOutput.value = item.Output;
+            //    item.Output && formAdd.inputOutput.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputOutputIndirector.value = item.OutputBaseIndicator;
+            //    item.OutputBaseIndicator && formAdd.inputOutputIndirector.nextElementSibling.classList.add("active");
+
+            //    formAdd.inputActivity.value = item.Activity;
+            //    item.Activity && formAdd.inputActivity.nextElementSibling.classList.add("active");
+
+            //} else {
+            //    formAdd.inputProjectGoal.value = "";
+            //    formAdd.inputProjectGoal.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputResultIndirector.value = "";
+            //    formAdd.inputResultIndirector.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputOutcome.value = "";
+            //    formAdd.inputOutcome.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputOutcomeIndirector.value = "";
+            //    formAdd.inputOutcomeIndirector.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputOutput.value = "";
+            //    formAdd.inputOutput.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputOutputIndirector.value = "";
+            //    formAdd.inputOutputIndirector.nextElementSibling.classList.remove("active");
+
+            //    formAdd.inputActivity.value = "";
+            //    formAdd.inputActivity.nextElementSibling.classList.remove("active");
+            //}
         }
     </script>
 }

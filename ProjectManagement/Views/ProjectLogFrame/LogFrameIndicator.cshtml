@@ -5,6 +5,277 @@
 }
 
 
-<h4 class="page-header mt-3">Log Indicator</h4>
-<p class="mb-3">@ViewBag.ProjectSector.Sector</p>
+@section Styles{
+    <link href="~/pages-css/steper-style.css" rel="stylesheet" />
+    <link href="~/pages-css/log-frame-indicator.css" rel="stylesheet" />
+}
 
+<div class="container">
+    <h4 class="page-header mt-3">Log Indicator</h4>
+    <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
+
+    <div class="card card-body">
+        <ul class="progressbar">
+            <li onclick="stepClick(1,this)" class="active">Step 1</li>
+            <li onclick="stepClick(2,this)">Step 2</li>
+            <li onclick="stepClick(3,this)">Step 3</li>
+        </ul>
+
+        <form id="formStep1" name="logForm" class="hide-form active-form">
+            <div class="row">
+                <div class="col-lg-4">
+                    <select id="selectProjectName" asp-items="@ViewBag.ProjectName" class="mdb-select md-form" searchable="Search here..">
+                        <option value="" disabled selected>Choose Project Name</option>
+                    </select>
+                    <span id="selectProject" class="red-text"></span>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="ProjectGoal" type="text" id="inputProjectGoal" class="form-control">
+                        <label for="inputProjectGoal">Project Goal</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="ResultBaseIndicator" type="text" id="inputResultIndirector" class="form-control">
+                        <label for="inputResultIndirector">Result Base Indirector</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input name="Outcome" type="text" id="inputOutcome" class="form-control">
+                        <label for="inputOutcome">Outcome</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input name="OutcomeBaseIndicator" type="text" id="inputOutcomeIndirector" class="form-control">
+                        <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="BaselineValue" type="text" id="inputBaselineValue" class="form-control">
+                        <label for="inputBaselineValue">Baseline Value</label>
+                    </div>
+               
+                    <div class="md-form">
+                        <input name="TargetValue" type="text" id="inputTargetValue" class="form-control">
+                        <label for="inputTargetValue">Target Value</label>
+                    </div>
+                
+                    <div class="md-form">
+                        <input name="AchieveValue" type="text" id="inputAchieveValue" class="form-control">
+                        <label for="inputAchieveValue">Achieve Value</label>
+                    </div>
+              
+                    <select id="selectMeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <input name="BaselineDate" type="text" id="inputBaselineDate" class="form-control">
+                        <label for="inputBaselineDate">Baseline Date</label>
+                    </div>
+           
+                    <div class="md-form">
+                        <input name="Date1" type="text" id="inputDate1" class="form-control">
+                        <label for="inputDate1">Date</label>
+                    </div>
+               
+                    <div class="md-form">
+                        <input name="Date2" type="text" id="inputDate2" class="form-control">
+                        <label for="inputDate2">Date</label>
+                    </div>
+             
+                    <select id="selectPrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Primary Source of Data">Primary Source of Data</option>
+                        <option value="DHIS 2">DHIS 2</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form" style="height: 16%">
+
+                    </div>
+
+                    <select id="selectFrequency1" name="Frequency1" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+
+                    <select id="selectFrequency2" name="Frequency2" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+
+                    <select id="selectLocation" name="Location" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Location</option>
+                        <option value="Quarterly">CCC</option>
+                    </select>
+                </div>
+
+         
+                <div class="col-lg-8">
+                    <select id="selectParticipants" name="Participants" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Participants</option>
+                        <option value="Male">Male</option>
+                        <option value="female">female</option>
+                        <option value="boys">boys</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-right md-form">
+                        <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form id="formStep2" name="logForm" class="hide-form">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="text" id="inputOutputIndirector" class="form-control">
+                        <label for="inputOutputIndirector">Output Base Indirector</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <input type="text" id="inputOutput" class="form-control">
+                        <label for="inputOutput">Output</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right mt-4">
+                <button id="btnStep2" type="submit" class="btn btn-custom-bg">Submit</button>
+            </div>
+        </form>
+
+        <form id="formStep3" name="logForm" class="hide-form">
+            <div class="md-form">
+                <input type="text" id="inputActivity" class="form-control">
+                <label for="inputActivity">Activity</label>
+            </div>
+
+            <div class="text-right mt-4">
+                <button id="btnStep3" type="submit" class="btn btn-custom-bg">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function() {
+            $('.mdb-select').materialSelect();
+
+            //$("select#selectParticipants option[value='boys']").attr("selected", true);
+        });
+
+        const formStep1 = document.getElementById("formStep1");
+        const formStep2 = document.getElementById("formStep2");
+        const formStep3 = document.getElementById("formStep3");
+
+        //submit form Step1
+        formStep1.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            if (!this.selectProjectName.value) {
+                step1.style.display = "block";
+                step3.style.display = "none";
+
+                this.selectProjectName.setAttribute("required", true);
+                this.querySelector("#selectProject").textContent = "Select project name";
+                return;
+            }
+
+            const model = {
+                ProjectId: this.selectProjectName.value,
+                ProjectGoal: this.inputProjectGoal.value,
+                ResultBaseIndicator: this.inputResultIndirector.value,
+                Outcome: this.inputOutcome.value,
+                OutcomeBaseIndicator: this.inputOutcomeIndirector.value,
+                Output: this.inputOutput.value,
+                OutputBaseIndicator: this.inputOutputIndirector.value,
+                Activity: this.inputActivity.value
+            }
+
+            this.btnSubmit.disabled = true;
+            this.btnSubmit.textContent = "Submitting..";
+
+            $.ajax({
+                url: "/ProjectLogFrame/PostLogFrame",
+                type: "POST",
+                data: model,
+                success: response => {
+                    this.btnSubmit.disabled = false;
+                    this.btnSubmit.textContent = "Submit";
+
+                    if (response.IsSuccess) {
+                        $.notify("Log frame submitted successfully!", "success");
+                        return;
+                    }
+
+                    submitError.textContent = response.Message;
+                },
+                error: err => {
+                    console.log(err);
+                    this.btnSubmit.disabled = false;
+                    this.btnSubmit.textContent = "Submit";
+                }
+            });
+        });
+
+        //on change Project Name
+        formStep1.selectProjectName.addEventListener("change", function(evt) {
+            const id = this.value;
+
+            formStep1.querySelector("#selectProject").textContent = "";
+
+            setProjectData({}, false);
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/GetLogFrame",
+                data: { id },
+                success: response => {
+                    setProjectData(response.Data, response.IsSuccess);
+                },
+                error: err => console.log(err)
+            });
+        });
+
+        //on step change
+        function stepClick(step,self) {
+            const forms = document.getElementsByName("logForm");
+
+            //add active class
+            const actives = document.querySelector(".progressbar .active");
+            actives.classList.remove("active");
+            self.className = "active";
+
+            for (let i = 0; i < forms.length; i++) {
+                if (i+1 === step) {
+                    forms[i].classList.add("active-form");
+                } else {
+                    forms[i].classList.remove("active-form");
+                }
+            }
+        }
+    </script>
+}

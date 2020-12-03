@@ -1,0 +1,17 @@
+﻿
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.progressbar li { width: 33.33%; }
+.progressbar li::before { cursor: pointer; }
+.progressbar li::before:hover { cursor: pointer; background: #33b5e5; }
+
+.hide-form{ display: none }
+.active-form{ display: block; -webkit-animation: fadeIn 2s; animation: fadeIn 1s; }​
