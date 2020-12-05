@@ -48,12 +48,12 @@ namespace ProjectManagement.Repository
 
         public bool IsExist(int projectId)
         {
-            return Db.LogFrame1stStepIndicator.Any(l => l.ProjectId == projectId);
+            return Db.LogFrame3rdStepActivity.Any(l => l.ProjectId == projectId);
         }
 
         public LogFrame3rdStepModel Get(int projectId)
         {
-            var log = Db.LogFrame
+            var log = Db.LogFrame3rdStepActivity
                 .Where(l => l.ProjectId == projectId)
                 .ProjectTo<LogFrame3rdStepModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();

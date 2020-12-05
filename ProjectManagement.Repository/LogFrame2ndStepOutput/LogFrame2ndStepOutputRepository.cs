@@ -51,7 +51,7 @@ namespace ProjectManagement.Repository
 
         public LogFrame2ndStepModel Get(int projectId)
         {
-            var log = Db.LogFrame
+            var log = Db.LogFrame2ndStepOutput
                 .Where(l => l.ProjectId == projectId)
                 .ProjectTo<LogFrame2ndStepModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();

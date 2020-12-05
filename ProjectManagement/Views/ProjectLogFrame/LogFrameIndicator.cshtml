@@ -17,25 +17,26 @@
     <div class="card card-body">
         <ul class="progressbar" id="stepProgress">
             <li onclick="stepClick(1,this)" class="active">Indicator</li>
-            <li onclick="stepClick(2,this)">Name Output</li>
-            <li onclick="stepClick(3,this)">Name Activity </li>
+            <li onclick="stepClick(2,this)">Output</li>
+            <li onclick="stepClick(3,this)">Activity </li>
         </ul>
 
-        <form id="formStep1" name="logForm" class="hide-form active-form">
+        <div class="md-form">
+            <select id="selectProjectName" name="ProjectId" asp-items="@ViewBag.ProjectName" class="mdb-select" searchable="Search here.." required>
+                <option value="" disabled selected>Choose Project Name</option>
+            </select>
+            <span id="selectProject" class="red-text"></span>
+        </div>
+
+        <form id="formStep1" name="form1" class="hide-form active-form">
             <div class="row">
-                <div class="col-lg-4">
-                    <select id="selectProjectName" name="ProjectId" asp-items="@ViewBag.ProjectName" class="mdb-select md-form" searchable="Search here.." required>
-                        <option value="" disabled selected>Choose Project Name</option>
-                    </select>
-                    <span id="selectProject" class="red-text"></span>
-                </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <label for="inputProjectGoal">Project Goal</label>
                         <input name="ProjectGoal" type="text" id="inputProjectGoal" class="form-control">
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="md-form">
                         <label for="inputResultIndirector">Result Base Indirector</label>
                         <input name="ResultBaseIndicator" type="text" id="inputResultIndirector" class="form-control">
@@ -129,10 +130,13 @@
 
             <div class="md-form">
                 <select id="selectParticipant" name="Participants" class="mdb-select">
-                    <option value="" disabled selected>Choose Participants</option>
+                    <option value="" disabled selected>Choose Participant</option>
                     <option value="Male">Male</option>
-                    <option value="female">female</option>
-                    <option value="boys">boys</option>
+                    <option value="Female">Female</option>
+                    <option value="Boys">Boys</option>
+                    <option value="Girls">Girls</option>
+                    <option value="Adolescent">Adolescent</option>
+                    <option value="Adolescent">Physically Challenged</option>
                 </select>
             </div>
 
@@ -142,18 +146,18 @@
             </div>
         </form>
 
-        <form id="formStep2" name="logForm" class="hide-form">
+        <form id="formStep2" name="form2" class="hide-form">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input name="OutputBaseIndicator" type="text" id="inputOutputIndirector" class="form-control">
                         <label for="inputOutputIndirector">Output Base Indirector</label>
+                        <input name="OutputBaseIndicator" type="text" id="inputOutputIndirector" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input name="Output" type="text" id="inputOutput" class="form-control">
                         <label for="inputOutput">Output</label>
+                        <input name="Output" type="text" id="inputOutput" class="form-control">
                     </div>
                 </div>
             </div>
@@ -179,7 +183,6 @@
                         <option value="" disabled selected>Choose Measuring Unit</option>
                         <option value="Person">Person</option>
                         <option value="KM">KM</option>
-                        <option value="%">%</option>
                     </select>
                 </div>
 
@@ -195,14 +198,14 @@
                     </div>
 
                     <div class="md-form">
-                        <label for="inputDate2">Date</label>
+                        <label for="inputDate2-0">Date</label>
                         <input name="Date2" type="text" id="inputDate2-0" class="form-control datepicker">
                     </div>
 
                     <select id="selectPrimarySource2" name="PrimarySource" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Primary Source</option>
-                        <option value="Primary Source of Data">Primary Source of Data</option>
-                        <option value="DHIS 2">DHIS 2</option>
+                        <option value="Project Progress Report">Project Progress Report</option>
+                        <option value="Programmatic Visit Report">Programmatic Visit Report</option>
                     </select>
                 </div>
 
@@ -222,7 +225,7 @@
                     </select>
 
                     <div class="md-form">
-                        <label for="inputLocation">Location</label>
+                        <label for="inputLocation2">Location</label>
                         <input id="inputLocation2" name="Location" type="text" class="form-control">
                     </div>
                 </div>
@@ -230,10 +233,13 @@
 
             <div class="md-form">
                 <select id="selectParticipant2" name="Participants" class="mdb-select">
-                    <option value="" disabled selected>Choose Participants</option>
+                    <option value="" disabled selected>Choose Participant</option>
                     <option value="Male">Male</option>
-                    <option value="female">female</option>
-                    <option value="boys">boys</option>
+                    <option value="Female">Female</option>
+                    <option value="Boys">Boys</option>
+                    <option value="Girls">Girls</option>
+                    <option value="Adolescent">Adolescent</option>
+                    <option value="Adolescent">Physically Challenged</option>
                 </select>
             </div>
 
@@ -243,10 +249,138 @@
             </div>
         </form>
 
-        <form id="formStep3" name="logForm" class="hide-form">
-            <div class="md-form">
-                <input type="text" id="inputActivity" class="form-control">
-                <label for="inputActivity">Activity</label>
+        <form id="formStep3" name="form3" class="hide-form">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputBaselineValue">Baseline Value</label>
+                        <input name="BaselineValue" type="number" id="inputBaselineValue3" class="form-control">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputTargetValue">Target Value</label>
+                        <input name="TargetValue" type="number" id="inputTargetValue3" class="form-control">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputAchieveValue">Achieve Value</label>
+                        <input name="AchieveValue" type="number" id="inputAchieveValue3" class="form-control">
+                    </div>
+
+                    <select id="selectMeasuringUnit3" name="MeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputBaselineDate3">Baseline Date</label>
+                        <input name="BaselineDate" type="text" id="inputBaselineDate3" class="form-control datepicker">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputDate1-1">Date</label>
+                        <input name="Date1" type="text" id="inputDate1-1" class="form-control datepicker">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputDate2-1">Date</label>
+                        <input name="Date2" type="text" id="inputDate2-1" class="form-control datepicker">
+                    </div>
+
+                    <select id="selectPrimarySource3" name="PrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Primary Source of Data">Primary Source of Data</option>
+                        <option value="DHIS 2">MOV</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form" style="height: 16%"></div>
+
+                    <select id="selectFrequency1-1" name="Frequency1" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Total">Total</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+
+                    <select id="selectFrequency2-1" name="Frequency2" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                        <option value="Cumulative">Cumulative</option>
+                        <option value="Total">Total</option>
+                    </select>
+                    <select id="selectFrequency3-1" name="Frequency3" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                        <option value="Cumulative">Cumulative</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <select id="selectParticipant3" name="Participants" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Participant</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Boys">Boys</option>
+                        <option value="Girls">Girls</option>
+                        <option value="Adolescent">Adolescent</option>
+                        <option value="Adolescent">Physically Challenged</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <label for="inputLocation3">Location</label>
+                        <input id="inputLocation3" name="Location" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputBudget">Budget</label>
+                        <input id="inputBudget" name="Budget" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputExpenditure">Expenditure</label>
+                        <input id="inputExpenditure" name="Expenditure" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <select id="selectCurrencyMeasuringUnit" name="CurrencyMeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Currency Measuring Unit</option>
+                        <option value="BDT">BDT</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <label for="inputSummaryOrRemarks">Summary Or Remarks</label>
+                        <input id="inputSummaryOrRemarks" name="SummaryOrRemarks" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="md-form">
+                        <label for="inputReasonOfDeviation">Reason Of Deviation</label>
+                        <input id="inputReasonOfDeviation" name="ReasonOfDeviation" type="text" class="form-control">
+                    </div>
+                </div>
             </div>
 
             <div class="text-right mt-4">
@@ -258,7 +392,7 @@
 
 @section Scripts{
     <script>
-        $(function () {
+        $(function() {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
@@ -266,10 +400,13 @@
         const formStep1 = document.getElementById("formStep1");
         const formStep2 = document.getElementById("formStep2");
         const formStep3 = document.getElementById("formStep3");
+        const selectProjectName = document.getElementById("selectProjectName");
+        const selectProjectError = document.getElementById("selectProject");
 
 
         //on change Project Name
-        formStep1.selectProjectName.addEventListener("change", function (evt) {
+        selectProjectName.addEventListener("change", function(evt) {
+            selectProjectError.textContent = "";
             const id = this.value;
             const steps = { first: 1, second: 2, third: 3 }
 
@@ -296,19 +433,19 @@
             });
 
             //3nd step
-            //$.ajax({
-            //    url: "/ProjectLogFrame/GetLogFrameIndicatorStep",
-            //    data: { id, step: steps.third },
-            //    success: response => {
-            //        setProjectData(response.Data, response.IsSuccess, formStep3.name);
-            //    },
-            //    error: err => console.log(err)
-            //});
+            $.ajax({
+                url: "/ProjectLogFrame/GetLogFrameIndicatorStep",
+                data: { id, step: steps.third },
+                success: response => {
+                    setProjectData(response.Data, response.IsSuccess, formStep3.name);
+                },
+                error: err => console.log(err)
+            });
         });
 
 
         //get form data as object
-        var serializeForm = function (form) {
+        var serializeForm = function(form) {
             const obj = {};
             const formData = new FormData(form);
             for (let key of formData.keys()) {
@@ -318,11 +455,15 @@
         };
 
         //submit form Step1
-        formStep1.addEventListener("submit", function (evt) {
+        formStep1.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
+            const projectId = selectProject();
+
+            if (!projectId) return;
+
             const data = serializeForm(evt.target);
-            console.log(data)
+            data.ProjectId = projectId;
 
             this.btnStep1.disabled = true;
             this.btnStep1.textContent = "Submitting..";
@@ -336,7 +477,7 @@
                     this.btnStep1.textContent = "Submit";
 
                     if (response.IsSuccess) {
-                        $.notify("Successfully submitted!", "success");
+                        $.notify("Indicator Successfully submitted!", "success");
                         return;
                     }
                     $.notify(response.Message, "error");
@@ -350,11 +491,15 @@
         });
 
         //submit form Step2
-        formStep2.addEventListener("submit", function (evt) {
+        formStep2.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
+            const projectId = selectProject();
+
+            if (!projectId) return;
+
             const data = serializeForm(evt.target);
-            console.log(data)
+            data.ProjectId = projectId;
 
             this.btnStep2.disabled = true;
             this.btnStep2.textContent = "Submitting..";
@@ -368,7 +513,7 @@
                     this.btnStep2.textContent = "Submit";
 
                     if (response.IsSuccess) {
-                        $.notify("Successfully submitted!", "success");
+                        $.notify("Output Successfully submitted!", "success");
                         return;
                     }
                     $.notify(response.Message, "error");
@@ -381,9 +526,47 @@
             });
         });
 
+        //submit form Step2
+        formStep3.addEventListener("submit", function(evt) {
+            evt.preventDefault();
+
+            const projectId = selectProject();
+
+            if (!projectId) return;
+
+            const data = serializeForm(evt.target);
+            data.ProjectId = projectId;
+
+            this.btnStep3.disabled = true;
+            this.btnStep3.textContent = "Submitting..";
+
+            $.ajax({
+                url: "/ProjectLogFrame/PostLogFrameIndicatorStep3",
+                type: "POST",
+                data: data,
+                success: response => {
+                    this.btnStep3.disabled = false;
+                    this.btnStep3.textContent = "Submit";
+
+                    if (response.IsSuccess) {
+                        $.notify("Activity Successfully submitted!", "success");
+                        return;
+                    }
+                    $.notify(response.Message, "error");
+                },
+                error: err => {
+                    console.log(err);
+                    this.btnStep3.disabled = false;
+                    this.btnStep3.textContent = "Submit";
+                }
+            });
+        });
+
+
         //check is valid date
         function isValidDate(dateStr) {
-            return !isNaN(new Date(dateStr).getDate());
+            const dateFormat = 'DD-MM-YYYY';
+            return moment(moment(dateStr).format(dateFormat), dateFormat, true).isValid();
         }
 
         //set already inserted data
@@ -397,13 +580,11 @@
                     Object.entries(items).forEach(([key, val]) => {
                         if (input.name === key) {
                             if (input.type === "text" || input.type === "number" || input.type === "select-one") {
-                                if (input.name !== "ProjectId") {
-                                    $(`select#${input.id} option[value='${val}']`).attr("selected", true);
-                                    $(`select#${input.id}`).val(`${items.Participants}`).change();
-                                }
+                                $(`select#${input.id} option[value='${val}']`).attr("selected", true);
+                                $(`select#${input.id}`).val(`${val}`).change();
 
-                                if (isValidDate(val)) {
-                                    input.value = moment(val).format("DD MMM YYYY");
+                                if (input.classList.contains("datepicker")) {
+                                    input.value = moment(val).format("DD MMMM, YYYY");
                                 } else {
                                     input.value = val;
                                 }
@@ -424,9 +605,7 @@
                     }
 
                     if (input.classList.contains("mdb-select")) {
-                        if (input.name !== "ProjectId") {
-                            $(`select#${input.id}`).val('0').change();
-                        }
+                        $(`select#${input.id}`).val('0').change();
                     }
                 }
             }
@@ -436,22 +615,23 @@
 
         //select project check
         function selectProject() {
-            if (!formStep1.selectProjectName.value) {
-                formStep1.selectProjectName.focus();
-                formStep1.querySelector("#selectProject").textContent = "Select project name";
-                return;
+            if (!selectProjectName.value) {
+                selectProjectError.textContent = "Select project name";
+                return false;
             }
+
+            return selectProjectName.value;
         }
 
         //on step change
         function stepClick(step, self) {
-            const forms = document.getElementsByName("logForm");
+            const forms = document.querySelectorAll(".hide-form");
 
             //add active class
             const actives = document.querySelector(".progressbar .active");
             actives.classList.remove("active");
             self.className = "active";
-            console.log(self)
+
             for (let i = 0; i < forms.length; i++) {
                 if (i + 1 === step) {
                     forms[i].classList.add("active-form");
