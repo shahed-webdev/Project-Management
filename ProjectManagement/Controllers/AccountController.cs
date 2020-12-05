@@ -129,9 +129,9 @@ namespace ProjectManagement.Controllers
                 await _userManager.AddToRoleAsync(user, model.Type.ToString()).ConfigureAwait(false);
 
                 // _RegistrationCore.AddSubAdmin(model);
-
                 return RedirectToAction("List", "SubAdmin");
             }
+
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);

@@ -1,4 +1,4 @@
-﻿
+﻿@model SubAdminRegisterViewModel
 @{
     ViewData["Title"] = "Create Sub-Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,14 +9,13 @@
     <h4 class="page-header mt-3">Create Sub-Admin</h4>
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
 
-    <form id="formSignup">
+    <form asp-action="CreateSubAdmin">
         <div class="card card-body">
+           
             <div class="row">
                 <div class="col-lg-4">
-                    <select id="selectUserType" name="Type" class="mdb-select md-form" required>
+                    <select asp-items="@ViewBag.UserType" name="Type" class="mdb-select md-form" required>
                         <option value="" disabled selected>Choose User Type</option>
-                        <option value="Person">Admin</option>
-                        <option value="KM">Sub -Admin</option>
                     </select>
                 </div>
                 <div class="col-lg-8">
@@ -52,20 +51,23 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <label for="inputUserName">User Name</label>
-                        <input id="inputUserName" name="UserName" type="text" class="form-control" required>
+                        <label asp-for="UserName">User Name</label>
+                        <input asp-for="UserName" class="form-control" required>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <label for="inputPassword">Password</label>
-                        <input id="inputPassword" name="Password" type="password" class="form-control" required>
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <label for="inputConfirmPassword">Confirm Password</label>
-                        <input id="inputConfirmPassword" name="ConfirmPassword" type="password" class="form-control" required>
+                        <label asp-for="ConfirmPassword">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" required>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -75,7 +77,8 @@
                 <input id="inputAddress" name="Address" type="text" class="form-control">
             </div>
             <div class="text-right mt-4">
-                <button id="btnStep3" type="submit" class="btn btn-custom-bg">Create Sub-admin</button>
+                <button type="submit" class="btn btn-custom-bg">Create Sub-admin</button>
+                <div asp-validation-summary="All"></div>
             </div>
         </div>
     </form>
