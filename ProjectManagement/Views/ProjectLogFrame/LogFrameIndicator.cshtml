@@ -15,7 +15,7 @@
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
 
     <div class="card card-body">
-        <ul class="progressbar">
+        <ul class="progressbar" id="stepProgress">
             <li onclick="stepClick(1,this)" class="active">Step 1</li>
             <li onclick="stepClick(2,this)">Step 2</li>
             <li onclick="stepClick(3,this)">Step 3</li>
@@ -136,6 +136,7 @@
                 <div class="col-lg-4">
                     <div class="text-right md-form">
                         <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                        <button type="button" onclick="stepClick(2, document.getElementById('stepProgress').children[1])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -159,6 +160,7 @@
 
             <div class="text-right mt-4">
                 <button id="btnStep2" type="submit" class="btn btn-custom-bg">Submit</button>
+                <button type="button" onclick="stepClick(3, document.getElementById('stepProgress').children[2])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
             </div>
         </form>
 
@@ -177,7 +179,7 @@
 
 @section Scripts{
     <script>
-        $(function () {
+        $(function() {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
@@ -186,8 +188,23 @@
         const formStep2 = document.getElementById("formStep2");
         const formStep3 = document.getElementById("formStep3");
 
+        //on change Project Name
+        formStep1.selectProjectName.addEventListener("change", function(evt) {
+            const id = this.value;
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/GetLogFrameIndicator",
+                data: { id },
+                success: response => {
+                    setProjectData(response.Data, response.IsSuccess, formStep1.name);
+                },
+                error: err => console.log(err)
+            });
+        });
+
         //get form data as object
-        var serializeForm = function (form) {
+        var serializeForm = function(form) {
             const obj = {};
             const formData = new FormData(form);
             for (let key of formData.keys()) {
@@ -197,7 +214,7 @@
         };
 
         //submit form Step1
-        formStep1.addEventListener("submit", function (evt) {
+        formStep1.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const data = serializeForm(evt.target);
@@ -228,21 +245,10 @@
             });
         });
 
-        //on change Project Name
-        formStep1.selectProjectName.addEventListener("change", function (evt) {
-            const id = this.value;
-            if (!id) return;
-
-            $.ajax({
-                url: "/ProjectLogFrame/GetLogFrameIndicator",
-                data: { id },
-                success: response => {
-                    console.log(response)
-                    setProjectData(response.Data, response.IsSuccess, formStep1.name);
-                },
-                error: err => console.log(err)
-            });
-        });
+        //check is valid date
+        function isValidDate(dateStr) {
+            return !isNaN(new Date(dateStr).getDate());
+        }
 
         function setProjectData(items, isData, form) {
             const elements = document.forms[form].elements;
@@ -254,9 +260,16 @@
                     Object.entries(items).forEach(([key, val]) => {
                         if (input.name === key) {
                             if (input.type === "text" || input.type === "number" || input.type === "select-one") {
-                                $(`select#${input.id} option[value='${val}']`).attr("selected", true);
+                                if (input.name !== "ProjectId") {
+                                    $(`select#${input.id} option[value='${val}']`).attr("selected", true);
+                                    $(`select#${input.id}`).val(`${items.Participants}`).change();
+                                }
+                                if (isValidDate(val)) {
+                                    input.value = moment(val).format("DD MMM YYYY");
+                                } else {
+                                    input.value = val;
+                                }
 
-                                input.value = val;
                                 if (input.previousElementSibling && input.previousElementSibling.tagName === "LABEL" && val) {
                                     input.previousElementSibling.classList.add("active");
                                 }
@@ -273,10 +286,14 @@
                     }
 
                     if (input.classList.contains("mdb-select")) {
-                        $(`select#${input.id}`).val('0').change();
+                        if (input.name !== "ProjectId") {
+                            $(`select#${input.id}`).val('0').change();
+                        }
                     }
                 }
             }
+
+
         }
 
         //select project check
@@ -296,7 +313,7 @@
             const actives = document.querySelector(".progressbar .active");
             actives.classList.remove("active");
             self.className = "active";
-
+            console.log(self)
             for (let i = 0; i < forms.length; i++) {
                 if (i + 1 === step) {
                     forms[i].classList.add("active-form");
