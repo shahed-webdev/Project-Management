@@ -27,9 +27,7 @@ namespace ProjectManagement.Repository
         public void AddSubAdmin(SubAdminRegisterViewModel model)
         {
             var registration = _mapper.Map<Registration>(model);
-
             Db.Registration.Add(registration);
-            Db.SaveChanges();
         }
 
         public List<UserViewModel> UserList()
