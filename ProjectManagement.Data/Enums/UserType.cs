@@ -10,7 +10,7 @@ namespace ProjectManagement.Data
         [Description("Read Only")]
         ReadOnly,
 
-        [Description("Full Exist")]
-        FullExist,
+        [Description("Full Access")]
+        FullAccess,
     }
 }

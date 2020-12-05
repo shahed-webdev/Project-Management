@@ -28,8 +28,8 @@ namespace ProjectManagement.Data
                 new IdentityRole
                 {
                     Id = "B6ED309F-4F39-4862-B488-B27669C202C5",
-                    Name = UserType.FullExist.ToString(),
-                    NormalizedName = UserType.FullExist.ToString().ToUpper(),
+                    Name = UserType.FullAccess.ToString(),
+                    NormalizedName = UserType.FullAccess.ToString().ToUpper(),
                     ConcurrencyStamp = "B6ED309F-4F39-4862-B488-B27669C202C5"
                 }
             );
