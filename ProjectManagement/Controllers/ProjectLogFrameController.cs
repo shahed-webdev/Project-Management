@@ -91,6 +91,13 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
+        //POST: Step3 log frame(ajax)
+        [HttpPost]
+        public IActionResult PostLogFrameIndicatorStep3(LogFrame3rdStepModel model)
+        {
+            var response = _logFrameStep3.AddorUpdate(model);
+            return Json(response);
+        }
 
         //on project select(ajax)
         public IActionResult GetLogFrameIndicatorStep(int id, int step)
@@ -118,3 +125,4 @@ namespace ProjectManagement.Controllers
         }
     }
 }
+
