@@ -17,6 +17,8 @@ namespace ProjectManagement.BusinessLogic
             services.AddTransient<IReportTypeCore, ReportTypeCore>();
             services.AddTransient<ILogFrameCore, LogFrameCore>();
             services.AddTransient<ILogFrame1stStepCore, LogFrame1stStepCore>();
+            services.AddTransient<ILogFrame2ndStepOutputCore, LogFrame2ndStepOutputCore>();
+            services.AddTransient<ILogFrame3rdStepActivityCore, LogFrame3rdStepActivityCore>();
 
             return services;
         }
