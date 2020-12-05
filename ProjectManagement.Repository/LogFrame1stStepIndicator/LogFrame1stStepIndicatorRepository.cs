@@ -52,7 +52,7 @@ namespace ProjectManagement.Repository
 
         public LogFrame1stStepModel Get(int projectId)
         {
-            var log = Db.LogFrame
+            var log = Db.LogFrame1stStepIndicator
                 .Where(l => l.ProjectId == projectId)
                 .ProjectTo<LogFrame1stStepModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();
