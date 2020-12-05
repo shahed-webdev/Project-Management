@@ -9,20 +9,24 @@ using ProjectManagement.ViewModel;
 
 namespace ProjectManagement.Controllers
 {
-   
+
     public class ProjectLogFrameController : Controller
-    { 
+    {
         private readonly ILogFrameCore _logFrame;
         private readonly ILogFrame1stStepCore _logFrameStep1;
+        private readonly ILogFrame2ndStepOutputCore _logFrameStep2;
+        private readonly ILogFrame3rdStepActivityCore _logFrameStep3;
         private readonly IProjectCore _project;
         private readonly IProjectSectorCore _sector;
 
-        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1)
+        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1, ILogFrame2ndStepOutputCore logFrameStep2, ILogFrame3rdStepActivityCore logFrameStep3)
         {
             this._logFrame = logFrame;
             _project = project;
             _sector = sector;
             _logFrameStep1 = logFrameStep1;
+            _logFrameStep2 = logFrameStep2;
+            _logFrameStep3 = logFrameStep3;
         }
 
         //****Log Frame****
@@ -35,7 +39,7 @@ namespace ProjectManagement.Controllers
 
             ViewBag.ProjectSector = response.Data;
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
-           
+
             return View();
         }
 
@@ -70,19 +74,47 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
-        //POST: log frame(ajax)
+        //POST: Step1 log frame(ajax)
         [HttpPost]
-        public IActionResult PostLogFrameIndicator(LogFrame1stStepModel model)
+        public IActionResult PostLogFrameIndicatorStep1(LogFrame1stStepModel model)
         {
             var response = _logFrameStep1.AddorUpdate(model);
             return Json(response);
         }
 
-        //on project select(ajax)
-        public IActionResult GetLogFrameIndicator(int id)
+
+        //POST: Step2 log frame(ajax)
+        [HttpPost]
+        public IActionResult PostLogFrameIndicatorStep2(LogFrame2ndStepModel model)
         {
-            var response = _logFrameStep1.Get(id);
+            var response = _logFrameStep2.AddorUpdate(model);
             return Json(response);
+        }
+
+
+        //on project select(ajax)
+        public IActionResult GetLogFrameIndicatorStep(int id, int step)
+        {
+            switch (step)
+            {
+                case 1:
+                {
+                    var response = _logFrameStep1.Get(id);
+                    return Json(response);
+                }
+                case 2:
+                {
+                    var response = _logFrameStep2.Get(id);
+                    return Json(response);
+                }
+                case 3:
+                {
+                    var response = _logFrameStep3.Get(id);
+                    return Json(response);
+                }
+                default:
+                    return Json("");
+            }
         }
     }
 }

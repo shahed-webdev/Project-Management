@@ -6,8 +6,8 @@
 
 
 @section Styles{
-    <link href="~/pages-css/steper-style.css" rel="stylesheet" />
-    <link href="~/pages-css/log-frame-indicator.css" rel="stylesheet" />
+    <link href="~/pages-css/steper-style.css" rel="stylesheet">
+    <link href="~/pages-css/log-frame-indicator.css" rel="stylesheet">
 }
 
 <div class="container">
@@ -16,9 +16,9 @@
 
     <div class="card card-body">
         <ul class="progressbar" id="stepProgress">
-            <li onclick="stepClick(1,this)" class="active">Step 1</li>
-            <li onclick="stepClick(2,this)">Step 2</li>
-            <li onclick="stepClick(3,this)">Step 3</li>
+            <li onclick="stepClick(1,this)" class="active">Indicator</li>
+            <li onclick="stepClick(2,this)">Name Output</li>
+            <li onclick="stepClick(3,this)">Name Activity </li>
         </ul>
 
         <form id="formStep1" name="logForm" class="hide-form active-form">
@@ -50,6 +50,7 @@
                         <input name="Outcome" type="text" id="inputOutcome" class="form-control">
                     </div>
                 </div>
+
                 <div class="col-lg-6">
                     <div class="md-form">
                         <label for="inputOutcomeIndirector">Outcome Base Indirector</label>
@@ -124,21 +125,20 @@
                         <input id="inputLocation" name="Location" type="text" class="form-control">
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-8">
-                    <select id="selectParticipant" name="Participants" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Participants</option>
-                        <option value="Male">Male</option>
-                        <option value="female">female</option>
-                        <option value="boys">boys</option>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    <div class="text-right md-form">
-                        <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
-                        <button type="button" onclick="stepClick(2, document.getElementById('stepProgress').children[1])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
-                    </div>
-                </div>
+            <div class="md-form">
+                <select id="selectParticipant" name="Participants" class="mdb-select">
+                    <option value="" disabled selected>Choose Participants</option>
+                    <option value="Male">Male</option>
+                    <option value="female">female</option>
+                    <option value="boys">boys</option>
+                </select>
+            </div>
+
+            <div class="text-right md-form">
+                <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                <button type="button" onclick="stepClick(2, document.getElementById('stepProgress').children[1])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
             </div>
         </form>
 
@@ -146,16 +146,95 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputOutputIndirector" class="form-control">
+                        <input name="OutputBaseIndicator" type="text" id="inputOutputIndirector" class="form-control">
                         <label for="inputOutputIndirector">Output Base Indirector</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputOutput" class="form-control">
+                        <input name="Output" type="text" id="inputOutput" class="form-control">
                         <label for="inputOutput">Output</label>
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputBaselineValue">Baseline Value</label>
+                        <input name="BaselineValue" type="number" id="inputBaselineValue1" class="form-control">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputTargetValue">Target Value</label>
+                        <input name="TargetValue" type="number" id="inputTargetValue1" class="form-control">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputAchieveValue">Achieve Value</label>
+                        <input name="AchieveValue" type="number" id="inputAchieveValue1" class="form-control">
+                    </div>
+
+                    <select id="selectMeasuringUnit1" name="MeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form">
+                        <label for="inputBaselineDate">Baseline Date</label>
+                        <input name="BaselineDate" type="text" id="inputBaselineDate1" class="form-control datepicker">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputDate1">Date</label>
+                        <input name="Date1" type="text" id="inputDate1-0" class="form-control datepicker">
+                    </div>
+
+                    <div class="md-form">
+                        <label for="inputDate2">Date</label>
+                        <input name="Date2" type="text" id="inputDate2-0" class="form-control datepicker">
+                    </div>
+
+                    <select id="selectPrimarySource2" name="PrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Primary Source of Data">Primary Source of Data</option>
+                        <option value="DHIS 2">DHIS 2</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="md-form" style="height: 16%"></div>
+
+                    <select id="selectFrequency1-0" name="Frequency1" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+
+                    <select id="selectFrequency2-0" name="Frequency2" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Frequency</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                    </select>
+
+                    <div class="md-form">
+                        <label for="inputLocation">Location</label>
+                        <input id="inputLocation2" name="Location" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="md-form">
+                <select id="selectParticipant2" name="Participants" class="mdb-select">
+                    <option value="" disabled selected>Choose Participants</option>
+                    <option value="Male">Male</option>
+                    <option value="female">female</option>
+                    <option value="boys">boys</option>
+                </select>
             </div>
 
             <div class="text-right mt-4">
@@ -179,7 +258,7 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
@@ -188,23 +267,48 @@
         const formStep2 = document.getElementById("formStep2");
         const formStep3 = document.getElementById("formStep3");
 
+
         //on change Project Name
-        formStep1.selectProjectName.addEventListener("change", function(evt) {
+        formStep1.selectProjectName.addEventListener("change", function (evt) {
             const id = this.value;
+            const steps = { first: 1, second: 2, third: 3 }
+
             if (!id) return;
 
+            //1st step
             $.ajax({
-                url: "/ProjectLogFrame/GetLogFrameIndicator",
-                data: { id },
+                url: "/ProjectLogFrame/GetLogFrameIndicatorStep",
+                data: { id, step: steps.first },
                 success: response => {
                     setProjectData(response.Data, response.IsSuccess, formStep1.name);
                 },
                 error: err => console.log(err)
             });
+
+            //2nd step
+            $.ajax({
+                url: "/ProjectLogFrame/GetLogFrameIndicatorStep",
+                data: { id, step: steps.second },
+                success: response => {
+                    setProjectData(response.Data, response.IsSuccess, formStep2.name);
+                },
+                error: err => console.log(err)
+            });
+
+            //3nd step
+            //$.ajax({
+            //    url: "/ProjectLogFrame/GetLogFrameIndicatorStep",
+            //    data: { id, step: steps.third },
+            //    success: response => {
+            //        setProjectData(response.Data, response.IsSuccess, formStep3.name);
+            //    },
+            //    error: err => console.log(err)
+            //});
         });
 
+
         //get form data as object
-        var serializeForm = function(form) {
+        var serializeForm = function (form) {
             const obj = {};
             const formData = new FormData(form);
             for (let key of formData.keys()) {
@@ -214,7 +318,7 @@
         };
 
         //submit form Step1
-        formStep1.addEventListener("submit", function(evt) {
+        formStep1.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
             const data = serializeForm(evt.target);
@@ -224,7 +328,7 @@
             this.btnStep1.textContent = "Submitting..";
 
             $.ajax({
-                url: "/ProjectLogFrame/PostLogFrameIndicator",
+                url: "/ProjectLogFrame/PostLogFrameIndicatorStep1",
                 type: "POST",
                 data: data,
                 success: response => {
@@ -245,11 +349,44 @@
             });
         });
 
+        //submit form Step2
+        formStep2.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
+            const data = serializeForm(evt.target);
+            console.log(data)
+
+            this.btnStep2.disabled = true;
+            this.btnStep2.textContent = "Submitting..";
+
+            $.ajax({
+                url: "/ProjectLogFrame/PostLogFrameIndicatorStep2",
+                type: "POST",
+                data: data,
+                success: response => {
+                    this.btnStep2.disabled = false;
+                    this.btnStep2.textContent = "Submit";
+
+                    if (response.IsSuccess) {
+                        $.notify("Successfully submitted!", "success");
+                        return;
+                    }
+                    $.notify(response.Message, "error");
+                },
+                error: err => {
+                    console.log(err);
+                    this.btnStep2.disabled = false;
+                    this.btnStep2.textContent = "Submit";
+                }
+            });
+        });
+
         //check is valid date
         function isValidDate(dateStr) {
             return !isNaN(new Date(dateStr).getDate());
         }
 
+        //set already inserted data
         function setProjectData(items, isData, form) {
             const elements = document.forms[form].elements;
 
@@ -264,6 +401,7 @@
                                     $(`select#${input.id} option[value='${val}']`).attr("selected", true);
                                     $(`select#${input.id}`).val(`${items.Participants}`).change();
                                 }
+
                                 if (isValidDate(val)) {
                                     input.value = moment(val).format("DD MMM YYYY");
                                 } else {
@@ -299,7 +437,7 @@
         //select project check
         function selectProject() {
             if (!formStep1.selectProjectName.value) {
-                formStep1.selectProjectName.setAttribute("required", true);
+                formStep1.selectProjectName.focus();
                 formStep1.querySelector("#selectProject").textContent = "Select project name";
                 return;
             }
