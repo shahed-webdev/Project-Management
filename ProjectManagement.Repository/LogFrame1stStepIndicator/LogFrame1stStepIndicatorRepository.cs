@@ -28,8 +28,8 @@ namespace ProjectManagement.Repository
                 log.AchieveValue = model.AchieveValue;
                 log.MeasuringUnit = model.MeasuringUnit;
                 log.BaselineDate = model.BaselineDate;
-                log.Date1 = model.BaselineDate;
-                log.Date2 = model.BaselineDate;
+                log.Date1 = model.Date1;
+                log.Date2 = model.Date2;
                 log.Frequency1 = model.Frequency1;
                 log.Frequency2 = model.Frequency2;
                 log.Location = model.Location;
