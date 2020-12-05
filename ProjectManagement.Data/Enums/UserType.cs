@@ -7,9 +7,6 @@ namespace ProjectManagement.Data
         [Description("Admin")]
         Admin,
 
-        [Description("Sub-Admin")]
-        SubAdmin,
-
         [Description("Read Only")]
         ReadOnly,
 

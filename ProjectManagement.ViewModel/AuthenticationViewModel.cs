@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjectManagement.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectManagement.ViewModel
 {
@@ -69,5 +70,25 @@ namespace ProjectManagement.ViewModel
     public class ForgotPasswordViewModel
     {
         [Required] [EmailAddress] public string Email { get; set; }
+    }
+
+    public class SubAdminRegisterViewModel : RegisterViewModel
+    {
+        public UserType Type { get; set; }
+        public int? ProjectSectorId { get; set; }
+    }
+
+    public class UserViewModel
+    {
+        public int RegistrationId { get; set; }
+        public int? ProjectSectorId { get; set; }
+        public string Sector { get; set; }
+        public string UserName { get; set; }
+        public UserType Type { get; set; }
+        public string Name { get; set; }
+        public string DateofBirth { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public bool IsDeactivated { get; set; }
     }
 }

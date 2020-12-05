@@ -14,6 +14,7 @@ namespace ProjectManagement.Data
         public string Email { get; set; }
         public byte[] Image { get; set; }
         public DateTime CreatedOnUtc { get; set; }
+        public bool IsDeactivated { get; set; }
         public ProjectSector ProjectSector { get; set; }
     }
 }

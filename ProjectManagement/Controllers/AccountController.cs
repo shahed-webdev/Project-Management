@@ -28,7 +28,7 @@ namespace ProjectManagement.Controllers
             ViewBag.ReturnUrl = returnUrl;
 
             if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Dashboard");
-            
+
             return View();
         }
 
@@ -50,7 +50,6 @@ namespace ProjectManagement.Controllers
                 return type switch
                 {
                     UserType.Admin => LocalRedirect(returnUrl ??= Url.Content("~/Dashboard/Index")),
-                    UserType.SubAdmin => LocalRedirect(returnUrl ??= Url.Content("~/Dashboard/Index")),
                     _ => LocalRedirect(returnUrl ??= Url.Content("~/Account/Index"))
                 };
             }
@@ -108,5 +107,39 @@ namespace ProjectManagement.Controllers
 
             return RedirectToAction("Index", "Account");
         }
+
+
+        // GET: SubAdminSignUp
+        public IActionResult SubAdminSignUp()
+        {
+            return View();
+        }
+
+        // POST: SubAdminSignUp
+        [HttpPost]
+        public async Task<IActionResult> SubAdminSignUp(SubAdminRegisterViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "sub-admin").ConfigureAwait(false);
+
+                _db.Registration.AddSubAdmin(model);
+
+                return RedirectToAction("List", "SubAdmin");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
     }
 }
