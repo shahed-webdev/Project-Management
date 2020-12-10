@@ -21,7 +21,7 @@ header { z-index: 5; transition: left 0.2s; }
 .sub-menu { display: none; transition: opacity 1s ease-out; opacity: 0; }
 .sub-menu.active { display: block; opacity: 1; }
 #sidedrawer ul li a.link-active { color: #79e1f9 !important; pointer-events: none }
-#sidedrawer .fa-caret-right { float: right; color: #b0b0b0; margin-top: 4px; }
+#sidedrawer .fa-caret-right { float: right; color: #b0b0b0; margin-top: 5px; }
 #sidedrawer strong.open .fas.fa-caret-right::before { content: "\f0d7"; font-family: 'Font Awesome 5 Pro'; }
 
 #sidedrawer ul { list-style: none; }
