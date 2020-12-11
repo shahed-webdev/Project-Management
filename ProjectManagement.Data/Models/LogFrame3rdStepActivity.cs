@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectManagement.Data
 {
     public class LogFrame3rdStepActivity
     {
+        public LogFrame3rdStepActivity()
+        {
+            LogFrame3rdStepParticipants = new HashSet<LogFrame3rdStepParticipant>();
+        }
         public int LogFrame3rdStepActivityId { get; set; }
         public int ProjectId { get; set; }
         public decimal? BaselineValue { get; set; }
@@ -25,6 +30,7 @@ namespace ProjectManagement.Data
         public string SummaryOrRemarks { get; set; }
         public string ReasonOfDeviation { get; set; }
         public Project Project { get; set; }
-
+        public ICollection<LogFrame3rdStepParticipant> LogFrame3rdStepParticipants { get; set; }
     }
+
 }

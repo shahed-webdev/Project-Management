@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectManagement.Data
 {
     public class LogFrame1stStepIndicator
     {
+        public LogFrame1stStepIndicator()
+        {
+            LogFrame1stStepParticipants = new HashSet<LogFrame1stStepParticipant>();
+        }
         public int LogFrame1stStepIndicatorId { get; set; }
         public int ProjectId { get; set; }
         public string ProjectGoal { get; set; }
@@ -23,6 +28,7 @@ namespace ProjectManagement.Data
         public string Participants { get; set; }
         public string PrimarySource { get; set; }
         public Project Project { get; set; }
+        public ICollection<LogFrame1stStepParticipant> LogFrame1stStepParticipants { get; set; }
 
     }
 }

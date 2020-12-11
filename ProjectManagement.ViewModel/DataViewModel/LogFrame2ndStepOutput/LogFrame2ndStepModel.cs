@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectManagement.ViewModel
 {
@@ -19,5 +20,6 @@ namespace ProjectManagement.ViewModel
         public string Location { get; set; }
         public string Participants { get; set; }
         public string PrimarySource { get; set; }
+        public ICollection<LogFrameParticipantsModel> ProjectParticipants { get; set; }
     }
 }

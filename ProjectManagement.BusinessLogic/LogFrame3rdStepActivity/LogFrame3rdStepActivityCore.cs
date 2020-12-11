@@ -26,7 +26,21 @@ namespace ProjectManagement.BusinessLogic
                 return new DbResponse(false, e.Message);
             }
         }
+        public DbResponse Delete(int projectId)
+        {
+            try
+            {
+                _db.LogFrame3rdStepActivity.Delete(projectId);
+                _db.SaveChanges();
 
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
         public DbResponse<LogFrame3rdStepModel> Get(int projectId)
         {
             try

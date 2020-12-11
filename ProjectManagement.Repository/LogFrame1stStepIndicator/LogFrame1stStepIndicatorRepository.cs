@@ -33,8 +33,9 @@ namespace ProjectManagement.Repository
                 log.Frequency1 = model.Frequency1;
                 log.Frequency2 = model.Frequency2;
                 log.Location = model.Location;
-                log.Participants = model.Participants;
                 log.PrimarySource = model.PrimarySource;
+                log.LogFrame1stStepParticipants = model.ProjectParticipants
+                    .Select(p => _mapper.Map<LogFrame1stStepParticipant>(p)).ToList();
 
                 Db.LogFrame1stStepIndicator.Update(log);
             }
@@ -43,6 +44,12 @@ namespace ProjectManagement.Repository
                 var log = _mapper.Map<LogFrame1stStepIndicator>(model);
                 Db.LogFrame1stStepIndicator.Add(log);
             }
+        }
+
+        public void Delete(int projectId)
+        {
+            var logs = Db.LogFrame1stStepIndicator.Where(l => l.ProjectId == projectId).ToList();
+            Db.LogFrame1stStepIndicator.RemoveRange(logs);
         }
 
         public bool IsExist(int projectId)

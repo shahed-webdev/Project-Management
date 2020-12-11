@@ -7,7 +7,13 @@ namespace ProjectManagement.ViewModel
     {
         public LogFrame1stStepIndicatorMappingProfile()
         {
-            CreateMap<LogFrame1stStepIndicator, LogFrame1stStepModel>().ReverseMap();
+            CreateMap<LogFrame1stStepIndicator, LogFrame1stStepModel>()
+                .ForMember(d => d.ProjectParticipants, opt => opt.MapFrom(c => c.LogFrame1stStepParticipants))
+                .ReverseMap();
+
+            CreateMap<LogFrame1stStepParticipant, LogFrameParticipantsModel>()
+                .ForMember(d => d.BeneficiaryType, opt => opt.MapFrom(c => c.ProjectBeneficiaryType.BeneficiaryType))
+                .ReverseMap();
         }
     }
 }

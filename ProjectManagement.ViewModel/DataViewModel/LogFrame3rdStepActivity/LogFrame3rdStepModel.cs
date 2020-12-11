@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectManagement.ViewModel
 {
@@ -23,5 +24,6 @@ namespace ProjectManagement.ViewModel
         public string CurrencyMeasuringUnit { get; set; }
         public string SummaryOrRemarks { get; set; }
         public string ReasonOfDeviation { get; set; }
+        public ICollection<LogFrameParticipantsModel> ProjectParticipants { get; set; }
     }
 }

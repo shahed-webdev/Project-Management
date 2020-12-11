@@ -46,6 +46,11 @@ namespace ProjectManagement.Repository
             }
         }
 
+        public void Delete(int projectId)
+        {
+            var logs = Db.LogFrame3rdStepActivity.Where(l => l.ProjectId == projectId).ToList();
+            Db.LogFrame3rdStepActivity.RemoveRange(logs);
+        }
         public bool IsExist(int projectId)
         {
             return Db.LogFrame3rdStepActivity.Any(l => l.ProjectId == projectId);

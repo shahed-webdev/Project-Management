@@ -7,7 +7,13 @@ namespace ProjectManagement.ViewModel
     {
         public LogFrame3rdStepActivityMappingProfile()
         {
-            CreateMap<LogFrame3rdStepActivity, LogFrame3rdStepModel>().ReverseMap();
+            CreateMap<LogFrame3rdStepActivity, LogFrame3rdStepModel>()
+                .ForMember(d => d.ProjectParticipants, opt => opt.MapFrom(c => c.LogFrame3rdStepParticipants))
+                .ReverseMap();
+
+            CreateMap<LogFrame3rdStepParticipant, LogFrameParticipantsModel>()
+                .ForMember(d => d.BeneficiaryType, opt => opt.MapFrom(c => c.ProjectBeneficiaryType.BeneficiaryType))
+                .ReverseMap();
         }
     }
 }
