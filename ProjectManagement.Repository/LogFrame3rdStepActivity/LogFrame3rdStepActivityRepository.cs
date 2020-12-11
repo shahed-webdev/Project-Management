@@ -30,13 +30,16 @@ namespace ProjectManagement.Repository
                 log.Frequency2 = model.Frequency2;
                 log.Frequency3 = model.Frequency3;
                 log.Location = model.Location;
-                log.Participants = model.Participants;
                 log.PrimarySource = model.PrimarySource;
                 log.Budget = model.Budget;
                 log.Expenditure = model.Expenditure;
                 log.CurrencyMeasuringUnit = model.CurrencyMeasuringUnit;
                 log.SummaryOrRemarks = model.SummaryOrRemarks;
                 log.ReasonOfDeviation = model.ReasonOfDeviation;
+                log.LogFrame3rdStepParticipants = model.ProjectParticipants
+                    .Select(p => _mapper.Map<LogFrame3rdStepParticipant>(p)).ToList();
+
+
                 Db.LogFrame3rdStepActivity.Update(log);
             }
             else

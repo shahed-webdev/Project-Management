@@ -25,7 +25,6 @@ namespace ProjectManagement.Data
         public string Frequency1 { get; set; }
         public string Frequency2 { get; set; }
         public string Location { get; set; }
-        public string Participants { get; set; }
         public string PrimarySource { get; set; }
         public Project Project { get; set; }
         public ICollection<LogFrame1stStepParticipant> LogFrame1stStepParticipants { get; set; }
