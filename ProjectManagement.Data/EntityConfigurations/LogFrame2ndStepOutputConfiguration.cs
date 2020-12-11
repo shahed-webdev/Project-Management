@@ -49,10 +49,6 @@ namespace ProjectManagement.Data
             builder.Property(l => l.MeasuringUnit)
                 .HasMaxLength(50);
 
-            builder.Property(l => l.Participants)
-                .HasMaxLength(50);
-
-
             builder.Property(l => l.PrimarySource)
                 .HasMaxLength(50);
         }

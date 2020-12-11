@@ -17,7 +17,6 @@ namespace ProjectManagement.ViewModel
         public string Frequency2 { get; set; }
         public string Frequency3 { get; set; }
         public string Location { get; set; }
-        public string Participants { get; set; }
         public string PrimarySource { get; set; }
         public decimal? Budget { get; set; }
         public decimal? Expenditure { get; set; }

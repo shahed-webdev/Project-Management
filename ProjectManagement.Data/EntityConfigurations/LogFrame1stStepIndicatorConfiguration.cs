@@ -48,12 +48,8 @@ namespace ProjectManagement.Data
             builder.Property(l => l.OutcomeBaseIndicator)
                 .HasMaxLength(255);
 
-            builder.Property(l => l.Participants)
-                .HasMaxLength(50);
-
             builder.Property(l => l.ProjectGoal)
                 .HasMaxLength(255);
-
 
             builder.Property(l => l.ResultBaseIndicator)
                 .HasMaxLength(255);
