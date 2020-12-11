@@ -12,8 +12,8 @@ namespace ProjectManagement.ViewModel
                 .ReverseMap();
 
             CreateMap<LogFrame3rdStepParticipant, LogFrameParticipantsModel>()
-                .ForMember(d => d.BeneficiaryType, opt => opt.MapFrom(c => c.ProjectBeneficiaryType.BeneficiaryType))
-                .ReverseMap();
+                .ForMember(d => d.BeneficiaryType, opt => opt.MapFrom(c => c.ProjectBeneficiaryType.BeneficiaryType));
+            CreateMap<LogFrameParticipantsModel, LogFrame3rdStepParticipant>();
         }
     }
 }

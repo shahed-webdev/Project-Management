@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Data;
 using ProjectManagement.ViewModel;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ProjectManagement.Repository
         {
             if (IsExist(model.ProjectId))
             {
-                var log = Db.LogFrame1stStepIndicator.FirstOrDefault(l => l.ProjectId == model.ProjectId);
+                var log = Db.LogFrame1stStepIndicator.Include(l => l.LogFrame1stStepParticipants).FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
                 log.ProjectGoal = model.ProjectGoal;
