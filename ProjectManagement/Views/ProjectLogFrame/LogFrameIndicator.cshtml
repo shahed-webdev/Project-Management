@@ -249,22 +249,22 @@
             <label id="beneficiaryError2" class="red-text d-inline-block"></label>
             <table class="table table-sm">
                 <thead class="grey lighten-5">
-                <tr>
-                    <th>
-                        <select asp-items="@ViewBag.Participants" id="selectParticipant2" class="mdb-select md-form m-0">
-                            <option value="" disabled selected>Participants</option>
-                        </select>
-                    </th>
-                    <th>
-                        <div class="md-form m-0">
-                            <input type="text" id="inputParticipant2" class="form-control">
-                            <label for="inputParticipant2">Participant Count</label>
-                        </div>
-                    </th>
-                    <th class="text-right" style="width: 130px">
-                        <button id="btnBeneficiaryAdd2" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
-                    </th>
-                </tr>
+                    <tr>
+                        <th>
+                            <select asp-items="@ViewBag.Participants" id="selectParticipant2" class="mdb-select md-form m-0">
+                                <option value="" disabled selected>Participants</option>
+                            </select>
+                        </th>
+                        <th>
+                            <div class="md-form m-0">
+                                <input type="text" id="inputParticipant2" class="form-control">
+                                <label for="inputParticipant2">Participant Count</label>
+                            </div>
+                        </th>
+                        <th class="text-right" style="width: 130px">
+                            <button id="btnBeneficiaryAdd2" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody id="participantBody2"></tbody>
             </table>
@@ -400,26 +400,26 @@
                     </div>
                 </div>
             </div>
-            
+
             <label id="beneficiaryError3" class="red-text d-inline-block"></label>
             <table class="table table-sm">
                 <thead class="grey lighten-5">
-                <tr>
-                    <th>
-                        <select asp-items="@ViewBag.Participants" id="selectParticipant3" class="mdb-select md-form m-0">
-                            <option value="" disabled selected>Participants</option>
-                        </select>
-                    </th>
-                    <th>
-                        <div class="md-form m-0">
-                            <input type="text" id="inputParticipant3" class="form-control">
-                            <label for="inputParticipant3">Participant Count</label>
-                        </div>
-                    </th>
-                    <th class="text-right" style="width: 130px">
-                        <button id="btnBeneficiaryAdd3" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
-                    </th>
-                </tr>
+                    <tr>
+                        <th>
+                            <select asp-items="@ViewBag.Participants" id="selectParticipant3" class="mdb-select md-form m-0">
+                                <option value="" disabled selected>Participants</option>
+                            </select>
+                        </th>
+                        <th>
+                            <div class="md-form m-0">
+                                <input type="text" id="inputParticipant3" class="form-control">
+                                <label for="inputParticipant3">Participant Count</label>
+                            </div>
+                        </th>
+                        <th class="text-right" style="width: 130px">
+                            <button id="btnBeneficiaryAdd3" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody id="participantBody3"></tbody>
             </table>
@@ -469,6 +469,11 @@
                 data: { id, step: steps.first },
                 success: response => {
                     setProjectData(response.Data, response.IsSuccess, formStep1.name);
+
+                    //re assign inserted value
+                    tempModel.beneficiaries1 = [];
+                    tempModel.beneficiaries1.push(...response.Data.ProjectParticipants);
+                    appendParticipants(tempModel.beneficiaries1, participantBody1);
                 },
                 error: err => console.log(err)
             });
@@ -479,6 +484,11 @@
                 data: { id, step: steps.second },
                 success: response => {
                     setProjectData(response.Data, response.IsSuccess, formStep2.name);
+
+                    //re assign inserted value
+                    tempModel.beneficiaries2 = [];
+                    tempModel.beneficiaries2.push(...response.Data.ProjectParticipants);
+                    appendParticipants(tempModel.beneficiaries2, participantBody2);
                 },
                 error: err => console.log(err)
             });
@@ -489,6 +499,11 @@
                 data: { id, step: steps.third },
                 success: response => {
                     setProjectData(response.Data, response.IsSuccess, formStep3.name);
+
+                    //re assign inserted value
+                    tempModel.beneficiaries3 = [];
+                    tempModel.beneficiaries3.push(...response.Data.ProjectParticipants);
+                    appendParticipants(tempModel.beneficiaries3, participantBody3);
                 },
                 error: err => console.log(err)
             });
@@ -717,6 +732,7 @@
 
             const obj = {
                 ProjectBeneficiaryTypeId: id,
+                BeneficiaryType: type,
                 Count: count
             }
 
@@ -728,12 +744,12 @@
 
             tempModel.beneficiaries1.push(obj);
 
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
-            participantBody1.appendChild(tr);
+            //append to participant
+            appendParticipants(tempModel.beneficiaries1, participantBody1);
 
             inputParticipant1.value = "";
         });
+
         //remove
         participantBody1.addEventListener("click", function(evt) {
             const element = evt.target;
@@ -748,7 +764,7 @@
         });
 
 
-        //**Add Participant 2 ***
+        //**Add Participant 2***
         const selectParticipant2 = document.getElementById("selectParticipant2");
         const inputParticipant2 = document.getElementById("inputParticipant2");
 
@@ -777,6 +793,7 @@
 
             const obj = {
                 ProjectBeneficiaryTypeId: id,
+                BeneficiaryType: type,
                 Count: count
             }
 
@@ -788,12 +805,12 @@
 
             tempModel.beneficiaries2.push(obj);
 
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
-            participantBody2.appendChild(tr);
+            //append to participant
+            appendParticipants(tempModel.beneficiaries2, participantBody2);
 
             inputParticipant2.value = "";
         });
+
         //remove
         participantBody2.addEventListener("click", function(evt) {
             const element = evt.target;
@@ -837,6 +854,7 @@
 
             const obj = {
                 ProjectBeneficiaryTypeId: id,
+                BeneficiaryType: type,
                 Count: count
             }
 
@@ -848,12 +866,12 @@
 
             tempModel.beneficiaries3.push(obj);
 
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
-            participantBody3.appendChild(tr);
+            //append to participant
+            appendParticipants(tempModel.beneficiaries3, participantBody3);
 
             inputParticipant3.value = "";
         });
+
         //remove
         participantBody3.addEventListener("click", function(evt) {
             const element = evt.target;
@@ -867,6 +885,19 @@
             element.parentElement.parentElement.remove();
         });
 
+        //append participant to table
+        function appendParticipants(items, tBody) {
+            tBody.innerHTML = "";
+            const fragment = document.createDocumentFragment();
+
+            items.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${item.BeneficiaryType}</td><td>${item.Count}</td><td><i data-id="${item.ProjectBeneficiaryTypeId}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+                fragment.appendChild(tr);
+            });
+            tBody.appendChild(fragment);
+        }
+
 
         //***DELETE***
         const btnDeleteStep1 = document.getElementById("btnDeleteStep1");
@@ -879,7 +910,7 @@
             $.ajax({
                 url: "/ProjectLogFrame/DeleteStep1",
                 type: "POST",
-                data: {id},
+                data: { id },
                 success: response => {
                     if (response.IsSuccess) {
                         location.reload();
@@ -903,7 +934,7 @@
             $.ajax({
                 url: "/ProjectLogFrame/DeleteStep2",
                 type: "POST",
-                data: {id},
+                data: { id },
                 success: response => {
                     if (response.IsSuccess) {
                         location.reload();
@@ -927,7 +958,7 @@
             $.ajax({
                 url: "/ProjectLogFrame/DeleteStep3",
                 type: "POST",
-                data: {id},
+                data: { id },
                 success: response => {
                     if (response.IsSuccess) {
                         location.reload();
