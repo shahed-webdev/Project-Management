@@ -18,8 +18,9 @@ namespace ProjectManagement.Controllers
         private readonly ILogFrame3rdStepActivityCore _logFrameStep3;
         private readonly IProjectCore _project;
         private readonly IProjectSectorCore _sector;
+        private readonly IProjectBeneficiaryTypeCore _type;
 
-        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1, ILogFrame2ndStepOutputCore logFrameStep2, ILogFrame3rdStepActivityCore logFrameStep3)
+        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1, ILogFrame2ndStepOutputCore logFrameStep2, ILogFrame3rdStepActivityCore logFrameStep3, IProjectBeneficiaryTypeCore type)
         {
             this._logFrame = logFrame;
             _project = project;
@@ -27,6 +28,7 @@ namespace ProjectManagement.Controllers
             _logFrameStep1 = logFrameStep1;
             _logFrameStep2 = logFrameStep2;
             _logFrameStep3 = logFrameStep3;
+            _type = type;
         }
 
         //****Log Frame****
@@ -70,6 +72,7 @@ namespace ProjectManagement.Controllers
 
             ViewBag.ProjectSector = response.Data;
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
+            ViewBag.Participants = new SelectList(_type.Ddl().Data, "value", "label");
 
             return View();
         }
@@ -123,6 +126,28 @@ namespace ProjectManagement.Controllers
                     return Json("");
             }
         }
+
+        //***Delete***
+        //[HttpPost]
+        //public IActionResult DeleteStep1(int id)
+        //{
+        //    var response = _logFrameStep3.AddorUpdate(id);
+        //    return Json(response);
+        //}
+
+        //[HttpPost]
+        //public IActionResult DeleteStep2(int id)
+        //{
+        //    var response = _logFrameStep3.AddorUpdate(id);
+        //    return Json(response);
+        //}
+
+        //[HttpPost]
+        //public IActionResult DeleteStep3(int id)
+        //{
+        //    var response = _logFrameStep3.AddorUpdate(id);
+        //    return Json(response);
+        //}
     }
 }
 

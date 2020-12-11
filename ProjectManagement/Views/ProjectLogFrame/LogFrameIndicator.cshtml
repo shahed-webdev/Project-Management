@@ -7,7 +7,7 @@
 
 @section Styles{
     <link href="~/pages-css/steper-style.css" rel="stylesheet">
-    <link href="~/pages-css/log-frame-indicator.css" rel="stylesheet">
+    <link href="~/pages-css/log-frame-indicator.css?v=1" rel="stylesheet">
 }
 
 <div class="container">
@@ -128,21 +128,36 @@
                 </div>
             </div>
 
-            <div class="md-form">
-                <select id="selectParticipant" name="Participants" class="mdb-select">
-                    <option value="" disabled selected>Choose Participant</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Boys">Boys</option>
-                    <option value="Girls">Girls</option>
-                    <option value="Adolescent">Adolescent</option>
-                    <option value="Adolescent">Physically Challenged</option>
-                </select>
-            </div>
 
-            <div class="text-right md-form">
-                <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
-                <button type="button" onclick="stepClick(2, document.getElementById('stepProgress').children[1])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            <label id="beneficiaryError" class="red-text d-inline-block"></label>
+            <table class="table table-sm">
+                <thead class="grey lighten-5">
+                    <tr>
+                        <th>
+                            <select asp-items="@ViewBag.Participants" id="selectParticipant1" class="mdb-select md-form m-0">
+                                <option value="" disabled selected>Participants</option>
+                            </select>
+                        </th>
+                        <th>
+                            <div class="md-form m-0">
+                                <input type="text" id="inputParticipant1" class="form-control">
+                                <label for="inputParticipant1">Participant Count</label>
+                            </div>
+                        </th>
+                        <th class="text-right" style="width: 130px">
+                            <button id="btnBeneficiaryAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="participantBody1"></tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <button id="btnDeleteStep1" class="btn btn-danger">Delete</button>
+                <div class="text-right">
+                    <button id="btnStep1" type="submit" class="btn btn-custom-bg">Submit</button>
+                    <button type="button" onclick="stepClick(2, document.getElementById('stepProgress').children[1])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
             </div>
         </form>
 
@@ -231,21 +246,35 @@
                 </div>
             </div>
 
-            <div class="md-form">
-                <select id="selectParticipant2" name="Participants" class="mdb-select">
-                    <option value="" disabled selected>Choose Participant</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Boys">Boys</option>
-                    <option value="Girls">Girls</option>
-                    <option value="Adolescent">Adolescent</option>
-                    <option value="Adolescent">Physically Challenged</option>
-                </select>
-            </div>
+            <label id="beneficiaryError2" class="red-text d-inline-block"></label>
+            <table class="table table-sm">
+                <thead class="grey lighten-5">
+                <tr>
+                    <th>
+                        <select asp-items="@ViewBag.Participants" id="selectParticipant2" class="mdb-select md-form m-0">
+                            <option value="" disabled selected>Participants</option>
+                        </select>
+                    </th>
+                    <th>
+                        <div class="md-form m-0">
+                            <input type="text" id="inputParticipant2" class="form-control">
+                            <label for="inputParticipant2">Participant Count</label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 130px">
+                        <button id="btnBeneficiaryAdd2" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="participantBody2"></tbody>
+            </table>
 
-            <div class="text-right mt-4">
-                <button id="btnStep2" type="submit" class="btn btn-custom-bg">Submit</button>
-                <button type="button" onclick="stepClick(3, document.getElementById('stepProgress').children[2])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <button id="btnDeleteStep2" class="btn btn-danger">Delete</button>
+                <div class="text-right">
+                    <button id="btnStep2" type="submit" class="btn btn-custom-bg">Submit</button>
+                    <button type="button" onclick="stepClick(3, document.getElementById('stepProgress').children[2])" class="btn btn-outline-info">Next Step <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
             </div>
         </form>
 
@@ -325,20 +354,9 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="row">
-                <div class="col-lg-6">
-                    <select id="selectParticipant3" name="Participants" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Participant</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Boys">Boys</option>
-                        <option value="Girls">Girls</option>
-                        <option value="Adolescent">Adolescent</option>
-                        <option value="Adolescent">Physically Challenged</option>
-                    </select>
-                </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="md-form">
                         <label for="inputLocation3">Location</label>
                         <input id="inputLocation3" name="Location" type="text" class="form-control">
@@ -382,9 +400,35 @@
                     </div>
                 </div>
             </div>
+            
+            <label id="beneficiaryError3" class="red-text d-inline-block"></label>
+            <table class="table table-sm">
+                <thead class="grey lighten-5">
+                <tr>
+                    <th>
+                        <select asp-items="@ViewBag.Participants" id="selectParticipant3" class="mdb-select md-form m-0">
+                            <option value="" disabled selected>Participants</option>
+                        </select>
+                    </th>
+                    <th>
+                        <div class="md-form m-0">
+                            <input type="text" id="inputParticipant3" class="form-control">
+                            <label for="inputParticipant3">Participant Count</label>
+                        </div>
+                    </th>
+                    <th class="text-right" style="width: 130px">
+                        <button id="btnBeneficiaryAdd3" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="participantBody3"></tbody>
+            </table>
 
-            <div class="text-right mt-4">
-                <button id="btnStep3" type="submit" class="btn btn-custom-bg">Submit</button>
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <button id="btnDeleteStep3" class="btn btn-danger">Delete</button>
+                <div class="text-right">
+                    <button id="btnStep3" type="submit" class="btn btn-custom-bg">Submit</button>
+                </div>
             </div>
         </form>
     </div>
@@ -400,9 +444,16 @@
         const formStep1 = document.getElementById("formStep1");
         const formStep2 = document.getElementById("formStep2");
         const formStep3 = document.getElementById("formStep3");
+
         const selectProjectName = document.getElementById("selectProjectName");
         const selectProjectError = document.getElementById("selectProject");
 
+        //global obj
+        const tempModel = {
+            beneficiaries1: [],
+            beneficiaries2: [],
+            beneficiaries3: []
+        }
 
         //on change Project Name
         selectProjectName.addEventListener("change", function(evt) {
@@ -442,7 +493,6 @@
                 error: err => console.log(err)
             });
         });
-
 
         //get form data as object
         var serializeForm = function(form) {
@@ -563,12 +613,6 @@
         });
 
 
-        //check is valid date
-        function isValidDate(dateStr) {
-            const dateFormat = 'DD-MM-YYYY';
-            return moment(moment(dateStr).format(dateFormat), dateFormat, true).isValid();
-        }
-
         //set already inserted data
         function setProjectData(items, isData, form) {
             const elements = document.forms[form].elements;
@@ -584,7 +628,7 @@
                                 $(`select#${input.id}`).val(`${val}`).change();
 
                                 if (input.classList.contains("datepicker")) {
-                                    input.value = moment(val).format("DD MMMM, YYYY");
+                                    input.value = val ? moment(val).format("DD MMMM, YYYY") : "";
                                 } else {
                                     input.value = val;
                                 }
@@ -640,5 +684,258 @@
                 }
             }
         }
+
+        //**Add Participant 1 ***
+        const selectParticipant1 = document.getElementById("selectParticipant1");
+        const inputParticipant1 = document.getElementById("inputParticipant1");
+
+        const btnBeneficiaryAdd = document.getElementById("btnBeneficiaryAdd");
+        const beneficiaryError = document.getElementById("beneficiaryError");
+        const participantBody1 = document.getElementById("participantBody1");
+
+        //add
+        btnBeneficiaryAdd.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            beneficiaryError.textContent = "";
+
+            const id = +selectParticipant1.value;
+            const type = selectParticipant1.options[selectParticipant1.selectedIndex].text;
+            const count = +inputParticipant1.value;
+
+            if (!id) {
+                beneficiaryError.textContent = "Select Participant";
+                return;
+            }
+
+            if (!count) {
+                beneficiaryError.textContent = "Add Participant Count";
+                return;
+            }
+
+            const obj = {
+                ProjectBeneficiaryTypeId: id,
+                Count: count
+            }
+
+            const isAdded = tempModel.beneficiaries1.some(function(el) {
+                return el.ProjectBeneficiaryTypeId === id;
+            });
+
+            if (isAdded) return;
+
+            tempModel.beneficiaries1.push(obj);
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+            participantBody1.appendChild(tr);
+
+            inputParticipant1.value = "";
+        });
+        //remove
+        participantBody1.addEventListener("click", function(evt) {
+            const element = evt.target;
+            const onDelete = element.classList.contains("remove");
+
+            if (!onDelete) return;
+
+            const id = +element.getAttribute("data-id");
+
+            tempModel.beneficiaries1 = tempModel.beneficiaries1.filter(el => el.ProjectBeneficiaryTypeId !== id);
+            element.parentElement.parentElement.remove();
+        });
+
+
+        //**Add Participant 2 ***
+        const selectParticipant2 = document.getElementById("selectParticipant2");
+        const inputParticipant2 = document.getElementById("inputParticipant2");
+
+        const btnBeneficiaryAdd2 = document.getElementById("btnBeneficiaryAdd2");
+        const beneficiaryError2 = document.getElementById("beneficiaryError2");
+        const participantBody2 = document.getElementById("participantBody2");
+
+        //add
+        btnBeneficiaryAdd2.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            beneficiaryError.textContent = "";
+
+            const id = +selectParticipant2.value;
+            const type = selectParticipant2.options[selectParticipant2.selectedIndex].text;
+            const count = +inputParticipant2.value;
+
+            if (!id) {
+                beneficiaryError2.textContent = "Select Participant";
+                return;
+            }
+
+            if (!count) {
+                beneficiaryError2.textContent = "Add Participant Count";
+                return;
+            }
+
+            const obj = {
+                ProjectBeneficiaryTypeId: id,
+                Count: count
+            }
+
+            const isAdded = tempModel.beneficiaries2.some(function(el) {
+                return el.ProjectBeneficiaryTypeId === id;
+            });
+
+            if (isAdded) return;
+
+            tempModel.beneficiaries2.push(obj);
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+            participantBody2.appendChild(tr);
+
+            inputParticipant2.value = "";
+        });
+        //remove
+        participantBody2.addEventListener("click", function(evt) {
+            const element = evt.target;
+            const onDelete = element.classList.contains("remove");
+
+            if (!onDelete) return;
+
+            const id = +element.getAttribute("data-id");
+
+            tempModel.beneficiaries2 = tempModel.beneficiaries2.filter(el => el.ProjectBeneficiaryTypeId !== id);
+            element.parentElement.parentElement.remove();
+        });
+
+
+        //**Add Participant 3 ***
+        const selectParticipant3 = document.getElementById("selectParticipant3");
+        const inputParticipant3 = document.getElementById("inputParticipant3");
+
+        const btnBeneficiaryAdd3 = document.getElementById("btnBeneficiaryAdd3");
+        const beneficiaryError3 = document.getElementById("beneficiaryError3");
+        const participantBody3 = document.getElementById("participantBody3");
+
+        //add
+        btnBeneficiaryAdd3.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            beneficiaryError.textContent = "";
+
+            const id = +selectParticipant3.value;
+            const type = selectParticipant3.options[selectParticipant3.selectedIndex].text;
+            const count = +inputParticipant3.value;
+
+            if (!id) {
+                beneficiaryError3.textContent = "Select Participant";
+                return;
+            }
+
+            if (!count) {
+                beneficiaryError3.textContent = "Add Participant Count";
+                return;
+            }
+
+            const obj = {
+                ProjectBeneficiaryTypeId: id,
+                Count: count
+            }
+
+            const isAdded = tempModel.beneficiaries3.some(function(el) {
+                return el.ProjectBeneficiaryTypeId === id;
+            });
+
+            if (isAdded) return;
+
+            tempModel.beneficiaries3.push(obj);
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+            participantBody3.appendChild(tr);
+
+            inputParticipant3.value = "";
+        });
+        //remove
+        participantBody3.addEventListener("click", function(evt) {
+            const element = evt.target;
+            const onDelete = element.classList.contains("remove");
+
+            if (!onDelete) return;
+
+            const id = +element.getAttribute("data-id");
+
+            tempModel.beneficiaries3 = tempModel.beneficiaries3.filter(el => el.ProjectBeneficiaryTypeId !== id);
+            element.parentElement.parentElement.remove();
+        });
+
+
+        //***DELETE***
+        const btnDeleteStep1 = document.getElementById("btnDeleteStep1");
+        btnDeleteStep1.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            const id = selectProjectName.value;
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/DeleteStep1",
+                type: "POST",
+                data: {id},
+                success: response => {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+                    $.notify(response.Message, "error");
+                },
+                error: err => {
+                    console.log(err);
+                }
+            });
+        });
+
+        const btnDeleteStep2 = document.getElementById("btnDeleteStep2");
+        btnDeleteStep2.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            const id = selectProjectName.value;
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/DeleteStep2",
+                type: "POST",
+                data: {id},
+                success: response => {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+                    $.notify(response.Message, "error");
+                },
+                error: err => {
+                    console.log(err);
+                }
+            });
+        });
+
+        const btnDeleteStep3 = document.getElementById("btnDeleteStep3");
+        btnDeleteStep3.addEventListener("click", function(evt) {
+            evt.preventDefault();
+            const id = selectProjectName.value;
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/ProjectLogFrame/DeleteStep3",
+                type: "POST",
+                data: {id},
+                success: response => {
+                    if (response.IsSuccess) {
+                        location.reload();
+                        return;
+                    }
+                    $.notify(response.Message, "error");
+                },
+                error: err => {
+                    console.log(err);
+                }
+            });
+        });
     </script>
 }
