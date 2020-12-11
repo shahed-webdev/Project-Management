@@ -514,6 +514,7 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
+            data.ProjectParticipants = tempModel.beneficiaries1;
 
             this.btnStep1.disabled = true;
             this.btnStep1.textContent = "Submitting..";
@@ -550,6 +551,7 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
+            data.ProjectParticipants = tempModel.beneficiaries2;
 
             this.btnStep2.disabled = true;
             this.btnStep2.textContent = "Submitting..";
@@ -586,6 +588,7 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
+            data.ProjectParticipants = tempModel.beneficiaries3;
 
             this.btnStep3.disabled = true;
             this.btnStep3.textContent = "Submitting..";

@@ -77,6 +77,7 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
+
         //POST: Step1 log frame(ajax)
         [HttpPost]
         public IActionResult PostLogFrameIndicatorStep1(LogFrame1stStepModel model)
@@ -84,7 +85,6 @@ namespace ProjectManagement.Controllers
             var response = _logFrameStep1.AddorUpdate(model);
             return Json(response);
         }
-
 
         //POST: Step2 log frame(ajax)
         [HttpPost]
@@ -128,26 +128,26 @@ namespace ProjectManagement.Controllers
         }
 
         //***Delete***
-        //[HttpPost]
-        //public IActionResult DeleteStep1(int id)
-        //{
-        //    var response = _logFrameStep3.AddorUpdate(id);
-        //    return Json(response);
-        //}
+        [HttpPost]
+        public IActionResult DeleteStep1(int id)
+        {
+            var response = _logFrameStep1.Delete(id);
+            return Json(response);
+        }
 
-        //[HttpPost]
-        //public IActionResult DeleteStep2(int id)
-        //{
-        //    var response = _logFrameStep3.AddorUpdate(id);
-        //    return Json(response);
-        //}
+        [HttpPost]
+        public IActionResult DeleteStep2(int id)
+        {
+            var response = _logFrameStep2.Delete(id);
+            return Json(response);
+        }
 
-        //[HttpPost]
-        //public IActionResult DeleteStep3(int id)
-        //{
-        //    var response = _logFrameStep3.AddorUpdate(id);
-        //    return Json(response);
-        //}
+        [HttpPost]
+        public IActionResult DeleteStep3(int id)
+        {
+            var response = _logFrameStep3.Delete(id);
+            return Json(response);
+        }
     }
 }
 
