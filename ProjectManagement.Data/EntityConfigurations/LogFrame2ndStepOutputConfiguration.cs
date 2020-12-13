@@ -51,6 +51,11 @@ namespace ProjectManagement.Data
 
             builder.Property(l => l.PrimarySource)
                 .HasMaxLength(50);
+
+            builder.HasOne(p => p.City)
+                .WithMany(c => c.LogFrame2ndStepOutputs)
+                .HasForeignKey(p => p.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -63,6 +63,11 @@ namespace ProjectManagement.Data
 
             builder.Property(p => p.Expenditure)
                 .HasColumnType("decimal(18, 2)");
+
+            builder.HasOne(p => p.City)
+                .WithMany(c => c.LogFrame3rdStepActivities)
+                .HasForeignKey(p => p.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

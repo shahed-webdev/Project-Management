@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Data;
 using ProjectManagement.ViewModel;
 using System.Collections.Generic;
@@ -66,6 +67,20 @@ namespace ProjectManagement.Repository
             city.CityName = model.CityName;
             city.StateId = model.StateId;
             Db.City.Update(city);
+        }
+
+        public CountryStateByCityModel GetCountryStateByCity(int cityId)
+        {
+            var countryState = Db.City
+                .Include(c => c.State)
+                .Where(c => c.CityId == cityId)
+                .Select(c => new CountryStateByCityModel
+                {
+                    CountryId = c.State.CountryId,
+                    StateId = c.StateId,
+                    CityId = c.CityId
+                }).FirstOrDefault();
+            return countryState;
         }
     }
 }

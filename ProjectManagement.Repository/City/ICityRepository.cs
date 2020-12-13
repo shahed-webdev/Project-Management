@@ -12,5 +12,6 @@ namespace ProjectManagement.Repository
         List<CityViewModel> List(int stateId);
         List<DDL> Ddl(int stateId);
         void Edit(CityEditModel model);
+        CountryStateByCityModel GetCountryStateByCity(int cityId);
     }
 }

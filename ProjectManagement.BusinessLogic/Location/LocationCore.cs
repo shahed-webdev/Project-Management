@@ -228,5 +228,23 @@ namespace ProjectManagement.BusinessLogic
                 return new DbResponse<List<DDL>>(false, e.Message);
             }
         }
+
+        public DbResponse<CountryStateByCityModel> GetCountryStateByCity(int cityId)
+        {
+            try
+            {
+                var data = _db.City.GetCountryStateByCity(cityId);
+                data.Countries = _db.Country.Ddl();
+                data.States = _db.State.Ddl(data.CountryId);
+                data.Cities = _db.City.Ddl(data.StateId);
+
+
+                return new DbResponse<CountryStateByCityModel>(true, "Success", data);
+            }
+            catch (Exception e)
+            {
+                return new DbResponse<CountryStateByCityModel>(false, e.Message);
+            }
+        }
     }
 }

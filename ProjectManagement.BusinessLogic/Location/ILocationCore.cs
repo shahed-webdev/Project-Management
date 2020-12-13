@@ -21,5 +21,7 @@ namespace ProjectManagement.BusinessLogic
         DbResponse CityEdit(CityEditModel model);
         DbResponse<List<CityViewModel>> CityList(int stateId);
         DbResponse<List<DDL>> CityDdl(int stateId);
+
+        DbResponse<CountryStateByCityModel> GetCountryStateByCity(int cityId);
     }
 }

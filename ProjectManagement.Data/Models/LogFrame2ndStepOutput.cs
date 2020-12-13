@@ -11,6 +11,8 @@ namespace ProjectManagement.Data
         }
         public int LogFrame2ndStepOutputId { get; set; }
         public int ProjectId { get; set; }
+        public int? CityId { get; set; }
+        public City City { get; set; }
         public string Output { get; set; }
         public string OutputBaseIndicator { get; set; }
         public decimal? BaselineValue { get; set; }

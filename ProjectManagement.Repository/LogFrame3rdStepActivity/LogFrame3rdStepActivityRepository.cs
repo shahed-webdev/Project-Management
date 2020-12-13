@@ -20,6 +20,7 @@ namespace ProjectManagement.Repository
                 var log = Db.LogFrame3rdStepActivity.Include(l => l.LogFrame3rdStepParticipants).FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
+                log.CityId = model.CityId;
                 log.BaselineValue = model.BaselineValue;
                 log.TargetValue = model.TargetValue;
                 log.AchieveValue = model.AchieveValue;
