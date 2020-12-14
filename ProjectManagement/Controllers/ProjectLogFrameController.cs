@@ -19,8 +19,9 @@ namespace ProjectManagement.Controllers
         private readonly IProjectCore _project;
         private readonly IProjectSectorCore _sector;
         private readonly IProjectBeneficiaryTypeCore _type;
+        private readonly ILocationCore _location;
 
-        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1, ILogFrame2ndStepOutputCore logFrameStep2, ILogFrame3rdStepActivityCore logFrameStep3, IProjectBeneficiaryTypeCore type)
+        public ProjectLogFrameController(ILogFrameCore logFrame, IProjectCore project, IProjectSectorCore sector, ILogFrame1stStepCore logFrameStep1, ILogFrame2ndStepOutputCore logFrameStep2, ILogFrame3rdStepActivityCore logFrameStep3, IProjectBeneficiaryTypeCore type, ILocationCore location)
         {
             this._logFrame = logFrame;
             _project = project;
@@ -29,6 +30,7 @@ namespace ProjectManagement.Controllers
             _logFrameStep2 = logFrameStep2;
             _logFrameStep3 = logFrameStep3;
             _type = type;
+            _location = location;
         }
 
         //****Log Frame****
@@ -73,6 +75,7 @@ namespace ProjectManagement.Controllers
             ViewBag.ProjectSector = response.Data;
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
             ViewBag.Participants = new SelectList(_type.Ddl().Data, "value", "label");
+            ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
 
             return View();
         }

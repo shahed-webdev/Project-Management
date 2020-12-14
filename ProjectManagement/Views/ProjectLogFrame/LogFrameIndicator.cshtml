@@ -74,13 +74,6 @@
                         <label for="inputAchieveValue">Achieve Value</label>
                         <input name="AchieveValue" type="number" id="inputAchieveValue" class="form-control">
                     </div>
-
-                    <select id="selectMeasuringUnit" name="MeasuringUnit" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Measuring Unit</option>
-                        <option value="Person">Person</option>
-                        <option value="KM">KM</option>
-                        <option value="%">%</option>
-                    </select>
                 </div>
 
                 <div class="col-lg-4">
@@ -98,16 +91,10 @@
                         <label for="inputDate2">Date</label>
                         <input name="Date2" type="text" id="inputDate2" class="form-control datepicker">
                     </div>
-
-                    <select id="selectPrimarySource" name="PrimarySource" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Primary Source</option>
-                        <option value="Primary Source of Data">Primary Source of Data</option>
-                        <option value="DHIS 2">DHIS 2</option>
-                    </select>
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="md-form" style="height: 16%"></div>
+                    <div class="md-form" style="height: 20%"></div>
 
                     <select id="selectFrequency1" name="Frequency1" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Frequency</option>
@@ -120,14 +107,47 @@
                         <option value="Quarterly">Quarterly</option>
                         <option value="Annually">Annually</option>
                     </select>
-
-                    <div class="md-form">
-                        <label for="inputLocation">Location</label>
-                        <input id="inputLocation" name="Location" type="text" class="form-control">
-                    </div>
                 </div>
             </div>
-
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <select id="selectPrimarySource" name="PrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Primary Source of Data">Primary Source of Data</option>
+                        <option value="DHIS 2">DHIS 2</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <select id="selectMeasuringUnit" name="MeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+            </div>
+            
+            <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
+                <legend class="w-auto m-0">Location</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectState" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Sub-District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectCity" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Village</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
 
             <label id="beneficiaryError" class="red-text d-inline-block"></label>
             <table class="table table-sm">
@@ -193,12 +213,6 @@
                         <label for="inputAchieveValue">Achieve Value</label>
                         <input name="AchieveValue" type="number" id="inputAchieveValue1" class="form-control">
                     </div>
-
-                    <select id="selectMeasuringUnit1" name="MeasuringUnit" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Measuring Unit</option>
-                        <option value="Person">Person</option>
-                        <option value="KM">KM</option>
-                    </select>
                 </div>
 
                 <div class="col-lg-4">
@@ -216,16 +230,10 @@
                         <label for="inputDate2-0">Date</label>
                         <input name="Date2" type="text" id="inputDate2-0" class="form-control datepicker">
                     </div>
-
-                    <select id="selectPrimarySource2" name="PrimarySource" class="mdb-select md-form">
-                        <option value="" disabled selected>Choose Primary Source</option>
-                        <option value="Project Progress Report">Project Progress Report</option>
-                        <option value="Programmatic Visit Report">Programmatic Visit Report</option>
-                    </select>
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="md-form" style="height: 16%"></div>
+                    <div class="md-form" style="height: 20%"></div>
 
                     <select id="selectFrequency1-0" name="Frequency1" class="mdb-select md-form">
                         <option value="" disabled selected>Choose Frequency</option>
@@ -238,13 +246,46 @@
                         <option value="Quarterly">Quarterly</option>
                         <option value="Annually">Annually</option>
                     </select>
-
-                    <div class="md-form">
-                        <label for="inputLocation2">Location</label>
-                        <input id="inputLocation2" name="Location" type="text" class="form-control">
-                    </div>
                 </div>
             </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <select id="selectMeasuringUnit1" name="MeasuringUnit" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Measuring Unit</option>
+                        <option value="Person">Person</option>
+                        <option value="KM">KM</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <select id="selectPrimarySource2" name="PrimarySource" class="mdb-select md-form">
+                        <option value="" disabled selected>Choose Primary Source</option>
+                        <option value="Project Progress Report">Project Progress Report</option>
+                        <option value="Programmatic Visit Report">Programmatic Visit Report</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
+                <legend class="w-auto m-0">Location</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <select asp-items="@ViewBag.Country" id="selectCountry2" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectState2" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Sub-District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectCity2" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Village</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
 
             <label id="beneficiaryError2" class="red-text d-inline-block"></label>
             <table class="table table-sm">
@@ -355,14 +396,26 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="md-form">
-                        <label for="inputLocation3">Location</label>
-                        <input id="inputLocation3" name="Location" type="text" class="form-control">
+            <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
+                <legend class="w-auto m-0">Location</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <select asp-items="@ViewBag.Country" id="selectCountry3" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectState3" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Sub-District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectCity3" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
+                            <option value="" disabled selected>Village</option>
+                        </select>
                     </div>
                 </div>
-            </div>
+            </fieldset>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -448,6 +501,242 @@
         const selectProjectName = document.getElementById("selectProjectName");
         const selectProjectError = document.getElementById("selectProject");
 
+
+        //***location step 1****
+        const selectCountry = document.getElementById("selectCountry");
+        const selectState = document.getElementById("selectState");
+        const selectCity = document.getElementById("selectCity");
+
+        //on change country step 1
+        selectCountry.addEventListener("change", function() {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetStateByCountry",
+                data: { id },
+                success: function(response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Sub-District";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectState.innerHTML = "";
+                    selectState.appendChild(fragment);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //on change state step 1
+        selectState.addEventListener("change", function() {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetCityByState",
+                data: { id },
+                success: function(response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Village";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectCity.innerHTML = "";
+                    selectCity.appendChild(fragment);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+
+
+
+        //***location step 2****
+        const selectCountry2 = document.getElementById("selectCountry2");
+        const selectState2 = document.getElementById("selectState2");
+        const selectCity2 = document.getElementById("selectCity2");
+
+        //on change country step 2
+        selectCountry2.addEventListener("change", function () {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetStateByCountry",
+                data: { id },
+                success: function (response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Sub-District";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectState2.innerHTML = "";
+                    selectState2.appendChild(fragment);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //on change state step 2
+        selectState2.addEventListener("change", function () {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetCityByState",
+                data: { id },
+                success: function (response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Village";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectCity2.innerHTML = "";
+                    selectCity2.appendChild(fragment);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+
+        //***location step 3****
+        const selectCountry3 = document.getElementById("selectCountry3");
+        const selectState3 = document.getElementById("selectState3");
+        const selectCity3 = document.getElementById("selectCity3");
+
+        //on change country step 3
+        selectCountry3.addEventListener("change", function () {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetStateByCountry",
+                data: { id },
+                success: function (response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Sub-District";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectState3.innerHTML = "";
+                    selectState3.appendChild(fragment);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //on change state step 3
+        selectState3.addEventListener("change", function () {
+            const id = +this.value
+
+            if (!id) return;
+
+            $.ajax({
+                url: "/Projects/GetCityByState",
+                data: { id },
+                success: function (response) {
+                    if (!response.IsSuccess) return;
+
+                    const fragment = document.createDocumentFragment();
+                    const option1 = document.createElement("option");
+                    option1.value = "";
+                    option1.text = "Village";
+                    option1.setAttribute("disabled", "disabled");
+                    option1.setAttribute("selected", true);
+                    fragment.appendChild(option1);
+
+                    response.Data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.value;
+                        option.text = item.label;
+                        fragment.appendChild(option);
+                    });
+
+                    selectCity3.innerHTML = "";
+                    selectCity3.appendChild(fragment);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+
         //global obj
         const tempModel = {
             beneficiaries1: [],
@@ -472,8 +761,11 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries1 = [];
-                    tempModel.beneficiaries1.push(...response.Data.ProjectParticipants);
-                    appendParticipants(tempModel.beneficiaries1, participantBody1);
+
+                    if (response.IsSuccess) {
+                        tempModel.beneficiaries1.push(...response.Data.ProjectParticipants);
+                        appendParticipants(tempModel.beneficiaries1, participantBody1);
+                    }
                 },
                 error: err => console.log(err)
             });
@@ -487,8 +779,11 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries2 = [];
-                    tempModel.beneficiaries2.push(...response.Data.ProjectParticipants);
-                    appendParticipants(tempModel.beneficiaries2, participantBody2);
+
+                    if (response.IsSuccess) {
+                        tempModel.beneficiaries2.push(...response.Data.ProjectParticipants);
+                        appendParticipants(tempModel.beneficiaries2, participantBody2);
+                    }
                 },
                 error: err => console.log(err)
             });
@@ -502,8 +797,11 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries3 = [];
-                    tempModel.beneficiaries3.push(...response.Data.ProjectParticipants);
-                    appendParticipants(tempModel.beneficiaries3, participantBody3);
+
+                    if (response.IsSuccess) {
+                        tempModel.beneficiaries3.push(...response.Data.ProjectParticipants);
+                        appendParticipants(tempModel.beneficiaries3, participantBody3);
+                    }
                 },
                 error: err => console.log(err)
             });
