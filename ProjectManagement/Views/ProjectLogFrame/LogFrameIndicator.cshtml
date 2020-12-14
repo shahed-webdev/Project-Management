@@ -580,14 +580,13 @@
         });
 
 
-
         //***location step 2****
         const selectCountry2 = document.getElementById("selectCountry2");
         const selectState2 = document.getElementById("selectState2");
         const selectCity2 = document.getElementById("selectCity2");
 
         //on change country step 2
-        selectCountry2.addEventListener("change", function () {
+        selectCountry2.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -595,7 +594,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -616,14 +615,14 @@
                     selectState2.innerHTML = "";
                     selectState2.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state step 2
-        selectState2.addEventListener("change", function () {
+        selectState2.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -631,7 +630,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -652,7 +651,7 @@
                     selectCity2.innerHTML = "";
                     selectCity2.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -665,7 +664,7 @@
         const selectCity3 = document.getElementById("selectCity3");
 
         //on change country step 3
-        selectCountry3.addEventListener("change", function () {
+        selectCountry3.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -673,7 +672,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -694,14 +693,14 @@
                     selectState3.innerHTML = "";
                     selectState3.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state step 3
-        selectState3.addEventListener("change", function () {
+        selectState3.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -709,7 +708,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -730,7 +729,7 @@
                     selectCity3.innerHTML = "";
                     selectCity3.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -827,7 +826,10 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
-            data.ProjectParticipants = tempModel.beneficiaries1;
+
+            if (tempModel.beneficiaries1.length) {
+                data.ProjectParticipants = tempModel.beneficiaries1;
+            }
 
             this.btnStep1.disabled = true;
             this.btnStep1.textContent = "Submitting..";
@@ -864,7 +866,10 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
-            data.ProjectParticipants = tempModel.beneficiaries2;
+
+            if (tempModel.beneficiaries2.length) {
+                data.ProjectParticipants = tempModel.beneficiaries2;
+            }
 
             this.btnStep2.disabled = true;
             this.btnStep2.textContent = "Submitting..";
@@ -901,7 +906,10 @@
 
             const data = serializeForm(evt.target);
             data.ProjectId = projectId;
-            data.ProjectParticipants = tempModel.beneficiaries3;
+
+            if (tempModel.beneficiaries3.length) {
+                data.ProjectParticipants = tempModel.beneficiaries3;
+            }
 
             this.btnStep3.disabled = true;
             this.btnStep3.textContent = "Submitting..";
