@@ -6,6 +6,7 @@ namespace ProjectManagement.ViewModel
     public class LogFrame2ndStepModel
     {
         public int ProjectId { get; set; }
+        public int? CityId { get; set; }
         public string Output { get; set; }
         public string OutputBaseIndicator { get; set; }
         public decimal? BaselineValue { get; set; }

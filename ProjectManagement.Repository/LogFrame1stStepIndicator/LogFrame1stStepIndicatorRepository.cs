@@ -20,6 +20,7 @@ namespace ProjectManagement.Repository
                 var log = Db.LogFrame1stStepIndicator.Include(l => l.LogFrame1stStepParticipants).FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
+                log.CityId = model.CityId;
                 log.ProjectGoal = model.ProjectGoal;
                 log.ResultBaseIndicator = model.ResultBaseIndicator;
                 log.Outcome = model.Outcome;

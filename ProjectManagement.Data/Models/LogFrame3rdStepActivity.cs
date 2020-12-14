@@ -11,6 +11,8 @@ namespace ProjectManagement.Data
         }
         public int LogFrame3rdStepActivityId { get; set; }
         public int ProjectId { get; set; }
+        public int? CityId { get; set; }
+        public City City { get; set; }
         public decimal? BaselineValue { get; set; }
         public decimal? TargetValue { get; set; }
         public decimal? AchieveValue { get; set; }

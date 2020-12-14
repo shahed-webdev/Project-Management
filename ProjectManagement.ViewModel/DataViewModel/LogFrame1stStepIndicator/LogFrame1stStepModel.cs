@@ -6,6 +6,7 @@ namespace ProjectManagement.ViewModel
     public class LogFrame1stStepModel
     {
         public int ProjectId { get; set; }
+        public int? CityId { get; set; }
         public string ProjectGoal { get; set; }
         public string ResultBaseIndicator { get; set; }
         public string Outcome { get; set; }
