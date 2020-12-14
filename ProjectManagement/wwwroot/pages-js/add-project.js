@@ -188,7 +188,7 @@ selectCountry.addEventListener("change", function () {
             const fragment = document.createDocumentFragment();
             const option1 = document.createElement("option");
             option1.value = "";
-            option1.text = "State";
+            option1.text = "Sub-District";
             option1.setAttribute("disabled", "disabled");
             option1.setAttribute("selected", true);
             fragment.appendChild(option1);
@@ -224,7 +224,7 @@ selectState.addEventListener("change", function () {
             const fragment = document.createDocumentFragment();
             const option1 = document.createElement("option");
             option1.value = "";
-            option1.text = "City";
+            option1.text = "Village";
             option1.setAttribute("disabled", "disabled");
             option1.setAttribute("selected", true);
             fragment.appendChild(option1);

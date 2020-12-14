@@ -5,24 +5,24 @@
 }
 
 <div class="container">
-    <h4 class="page-header mb-3">City</h4>
+    <h4 class="page-header mb-3">Village</h4>
     <div class="card mb-3 px-3 py-2">
         <form id="formAdd">
             <div class="row">
                 <div class="col">
                     <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form" searchable="Search here.." required>
-                        <option value="" disabled selected>Country</option>
+                        <option value="" disabled selected>District</option>
                     </select>
                 </div>
                 <div class="col">
                     <select id="selectState" class="mdb-select md-form" searchable="Search here.." required>
-                        <option value="" disabled selected>State</option>
+                        <option value="" disabled selected>Sub-District</option>
                     </select>
                 </div>
                 <div class="col">
                     <div class="md-form input-group">
                         <input id="inputCityName" type="text" class="form-control" required>
-                        <label for="inputCityName">City Name</label>
+                        <label for="inputCityName">Village</label>
 
                         <div class="input-group-append">
                             <button class="btn btn-md btn-custom-bg m-0 px-3" type="submit">Add</button>
@@ -70,7 +70,7 @@
 
                     const option1 = document.createElement("option");
                     option1.value = "";
-                    option1.text = "State";
+                    option1.text = "Sub-District";
                     option1.setAttribute("disabled", "disabled");
                     option1.setAttribute("selected", true);
                     fragment.appendChild(option1);
