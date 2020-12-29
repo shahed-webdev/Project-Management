@@ -10,6 +10,5 @@ namespace ProjectManagement.ViewModel
         public ICollection<DDL> Cities { get; set; }
         public ICollection<DDL> States { get; set; }
         public ICollection<DDL> Countries { get; set; }
-
     }
 }

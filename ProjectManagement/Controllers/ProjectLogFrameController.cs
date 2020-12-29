@@ -130,6 +130,14 @@ namespace ProjectManagement.Controllers
             }
         }
 
+        //location
+        public IActionResult GetSelectedLocations(int id)
+        {
+            var response = _location.GetCountryStateByCity(id);
+            return Json(response);
+        }
+
+
         //***Delete***
         [HttpPost]
         public IActionResult DeleteStep1(int id)
