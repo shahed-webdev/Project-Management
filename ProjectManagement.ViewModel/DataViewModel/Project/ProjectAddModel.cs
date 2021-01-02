@@ -14,11 +14,18 @@ namespace ProjectManagement.ViewModel
         }
         public int ProjectSectorId { get; set; }
         public int? ProjectStatusId { get; set; }
-        public int? CityId { get; set; }
+        public int[] CityIds { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public decimal TotalBudget { get; set; }
+        public string KeyWord { get; set; }
+        public decimal TotalBudgetBdt { get; set; }
+        public decimal TotalBudgetUsd { get; set; }
         public decimal TotalExpenditure { get; set; }
+        public string DonorType { get; set; }
+        public string DirectIndirectType { get; set; }
+        public string IndividualHouseholdType { get; set; }
+        public int Count { get; set; }
+        public int TotalCount { get; set; }
         public string Photo { get; set; }
         public IFormFile FilePhoto { get; set; }
         public DateTime? StartDate { get; set; }
