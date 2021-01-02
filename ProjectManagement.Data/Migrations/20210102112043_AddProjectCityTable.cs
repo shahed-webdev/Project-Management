@@ -79,8 +79,8 @@ namespace ProjectManagement.Data.Migrations
                 {
                     table.PrimaryKey("PK_ProjectCity", x => x.ProjectCityId);
                     table.ForeignKey(
-                        name: "FK_ProjectCity_City_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_ProjectCity_City_CityId",
+                        column: x => x.CityId,
                         principalTable: "City",
                         principalColumn: "CityId");
                     table.ForeignKey(
@@ -90,6 +90,11 @@ namespace ProjectManagement.Data.Migrations
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectCity_CityId",
+                table: "ProjectCity",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectCity_ProjectId",

@@ -10,7 +10,7 @@ using ProjectManagement.Data;
 namespace ProjectManagement.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210102105244_AddProjectCityTable")]
+    [Migration("20210102112043_AddProjectCityTable")]
     partial class AddProjectCityTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -855,6 +855,8 @@ namespace ProjectManagement.Data.Migrations
 
                     b.HasKey("ProjectCityId");
 
+                    b.HasIndex("CityId");
+
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectCity");
@@ -1283,7 +1285,7 @@ namespace ProjectManagement.Data.Migrations
                 {
                     b.HasOne("ProjectManagement.Data.City", "City")
                         .WithMany("ProjectCities")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
