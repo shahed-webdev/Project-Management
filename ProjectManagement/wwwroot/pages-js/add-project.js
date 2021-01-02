@@ -3,6 +3,7 @@
 const model = {
     FilePhoto: null,
     ProjectDonors: [],
+    CityIds: [],
     ProjectBeneficiaries: [],
     ProjectReports: []
 };
@@ -173,6 +174,18 @@ const selectCountry = document.getElementById("selectCountry");
 const selectState = document.getElementById("selectState");
 const selectCity = document.getElementById("selectCity");
 
+//create dropdown options
+function createDropdownOption(item, disabled, selected) {
+    const option = document.createElement("option");
+    option.value = item.value;
+    option.text = item.label;
+    option.disabled = disabled;
+    option.selected = selected;
+
+    return option;
+}
+
+
 //on change country
 selectCountry.addEventListener("change", function () {
     const id = +this.value
@@ -186,19 +199,14 @@ selectCountry.addEventListener("change", function () {
             if (!response.IsSuccess) return;
 
             const fragment = document.createDocumentFragment();
-            const option1 = document.createElement("option");
-            option1.value = "";
-            option1.text = "Sub-District";
-            option1.setAttribute("disabled", "disabled");
-            option1.setAttribute("selected", true);
-            fragment.appendChild(option1);
+            fragment.appendChild(createDropdownOption({ value: "", label: "Sub-District" }, true, true));
 
             response.Data.forEach(item => {
-                const option = document.createElement("option");
-                option.value = item.value;
-                option.text = item.label;
-                fragment.appendChild(option);
+                fragment.appendChild(createDropdownOption(item, false, false));
             });
+
+            selectCity.innerHTML = "";
+            selectCity.appendChild(createDropdownOption({ value: "", label: "Village" }, true, true));
 
             selectState.innerHTML = "";
             selectState.appendChild(fragment);
@@ -222,18 +230,10 @@ selectState.addEventListener("change", function () {
             if (!response.IsSuccess) return;
 
             const fragment = document.createDocumentFragment();
-            const option1 = document.createElement("option");
-            option1.value = "";
-            option1.text = "Village";
-            option1.setAttribute("disabled", "disabled");
-            option1.setAttribute("selected", true);
-            fragment.appendChild(option1);
+            fragment.appendChild(createDropdownOption({ value: "", label: "Village" }, true, true));
 
             response.Data.forEach(item => {
-                const option = document.createElement("option");
-                option.value = item.value;
-                option.text = item.label;
-                fragment.appendChild(option);
+                fragment.appendChild(createDropdownOption(item, false, false));
             });
 
             selectCity.innerHTML = "";
@@ -298,6 +298,47 @@ donorContainer.addEventListener("click", function (evt) {
 });
 
 
+/***Location****/
+const btnLocationAdd = document.getElementById("btnLocationAdd");
+const bodyLocation = document.getElementById("bodyLocation");
+
+btnLocationAdd.addEventListener("click", function () {
+    const cityId = +selectCity.value;
+    if (!cityId) return;
+
+    if (model.CityIds.indexOf(cityId) !== -1) return;
+    
+    model.CityIds.push(cityId);
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+            <td>${getSelectedText(selectCountry)}</td>
+            <td>${getSelectedText(selectState)}</td>
+            <td>${getSelectedText(selectCity)}</td>
+            <td><i data-id="${cityId}" class="remove fas fa-trash-alt"></i></td>`;
+
+    bodyLocation.appendChild(tr);
+});
+
+//get dropdown selected text
+function getSelectedText(select) {
+    return select.options[select.selectedIndex].text;
+}
+
+//remove location
+bodyLocation.addEventListener("click", function (evt) {
+    const element = evt.target;
+    const onDelete = element.classList.contains("remove");
+
+    if (!onDelete) return;
+
+    const id = +element.getAttribute("data-id");
+
+    model.CityIds = model.CityIds.filter(el => el !== id);
+    element.parentElement.parentElement.remove();
+});
+
+
 //**Beneficiary Add***
 const btnBeneficiaryAdd = document.getElementById("btnBeneficiaryAdd");
 const beneficiaryError = document.getElementById("beneficiaryError");
@@ -338,7 +379,7 @@ btnBeneficiaryAdd.addEventListener("click", function (evt) {
     model.ProjectBeneficiaries.push(obj);
 
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt red-text" style="cursor: pointer"></i></td>`;
+    tr.innerHTML = `<td>${type}</td><td>${count}</td><td><i data-id="${id}" class="remove fas fa-trash-alt"></i></td>`;
     beneficiaryTypeBody.appendChild(tr);
 
     inputBeneficiaryCount.value = "";
@@ -366,11 +407,20 @@ formStep1.addEventListener("submit", function (evt) {
     const formData = new FormData();
     formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
     formData.append('ProjectStatusId', formStep1.selectStatus.value);
-    formData.append('CityId', formStep1.selectCity.value);
     formData.append('Title', formStep1.inputTitle.value);
     formData.append('Description', formStep1.inputDescription.value);
+    formData.append('Keyword', formStep1.inputKeyword.value);
+    formData.append('DonorType', formStep1.inputDonorType.value);
+
     formData.append('TotalBudget', formStep1.inputTotalBudget.value);
     formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
+    formData.append('TotalBudgetBdt', formStep1.inputTotalBudgetBdt.value);
+    formData.append('TotalBudgetUsd', formStep1.inputTotalBudgetUsd.value);
+
+    formData.append('DirectIndirectType', formStep1.selectDirectIndirectType.value);
+    formData.append('IndividualHouseholdType', formStep1.selectIndividualHouseholdType.value);
+    formData.append('Count', formStep1.inputCount.value);
+    formData.append('TotalCount', formStep1.inputTotalCount.value);
 
     if (model.FilePhoto)
         formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
@@ -380,6 +430,10 @@ formStep1.addEventListener("submit", function (evt) {
 
     model.ProjectDonors.forEach((item, i) => {
         formData.append(`ProjectDonors[${i}]`, item);
+    });
+
+    model.CityIds.forEach((item, i) => {
+        formData.append(`CityIds[${i}]`, item);
     });
 
     model.ProjectBeneficiaries.forEach((item, i) => {

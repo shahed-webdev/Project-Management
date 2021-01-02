@@ -27,9 +27,41 @@
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <strong>@item.CountryName</strong>
+                    <div>
+                        <a data-id="@item.CountryId" class="far fa-trash red-text mr-3 delete"></a>
+                        <a data-id="@item.CountryId" data-value="@item.CountryName" class="far fa-edit btnUpdate"></a>
+                    </div>
                 </li>
             }
         </ul>
+    </div>
+</div>
+
+<!--update modal-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-notify modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold">Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formUpdate">
+                    <input type="hidden" id="hiddenUpdateId">
+                    <div class="form-group">
+                        <label for="inputUpdatedData">Country</label>
+                        <input type="text" id="inputUpdatedData" class="form-control" required>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-outline-info waves-effect">Update <i class="fas fa-paper-plane-o ml-1"></i></button>
+                    </div>
+                </form>
+                <span id="error2" class="red-text"></span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -39,9 +71,12 @@
         //selectors
         const formAdd = document.getElementById("formAdd");
         const error = document.getElementById("error");
+        const formUpdate = document.getElementById("formUpdate");
+        const listContainer = document.querySelector(".list-group");
+        const modalContainer = $("#updateModal");
 
         //insert
-        formAdd.addEventListener("submit", function(evt) {
+        formAdd.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
             const model = { CountryName: this.inputCountryName.value }
@@ -50,7 +85,7 @@
                 url: "/Settings/PostCountry",
                 type: "POST",
                 data: model,
-                success: function(response) {
+                success: function (response) {
                     if (response.IsSuccess) {
                         location.reload();
                         return;
@@ -58,7 +93,59 @@
 
                     error.textContent = response.Message;
                 },
-                error: function(err) {
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //on edit/delete
+        listContainer.addEventListener("click", function (evt) {
+            const element = evt.target;
+            const onUpdate = element.classList.contains("btnUpdate");
+            const onDelete = element.classList.contains("delete");
+
+            if (onUpdate) {
+                formUpdate.hiddenUpdateId.value = element.getAttribute("data-id");
+                formUpdate.inputUpdatedData.value = element.getAttribute("data-value");
+
+                modalContainer.modal("show");
+            }
+
+            //delete
+            if (onDelete) {
+                $.ajax({
+                    url: "/Settings/DeleteProjectStatus",
+                    type: "POST",
+                    data: { id: element.getAttribute("data-id") },
+                    success: response => {
+                        this.parentElement.parentElement.remove();
+                    },
+                    error: err => console.log(err)
+                });
+            }
+        });
+
+        //update
+        formUpdate.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
+            const model = {
+                ProjectStatusId: this.hiddenUpdateId.value,
+                Status: this.inputUpdatedData.value
+            }
+
+            $.ajax({
+                url: "/Settings/UpdateProjectStatus",
+                type: "POST",
+                data: model,
+                success: function (response) {
+                    if (response.IsSuccess)
+                        location.reload();
+
+                    error2.textContent = response.Message;
+                },
+                error: function (err) {
                     console.log(err);
                 }
             });
