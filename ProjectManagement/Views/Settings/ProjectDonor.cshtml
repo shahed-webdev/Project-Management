@@ -52,7 +52,10 @@
                         <span class="mr-2"><i class="fas fa-phone mr-1"></i>@item.Phone</span>
                         <span><i class="fas fa-envelope mr-1"></i>@item.Email</span>
                     </div>
-                    <a data-id="@item.DonorId" data-name="@item.Name" data-phone="@item.Phone" data-email="@item.Email" class="far fa-edit btnUpdate"></a>
+                    <div>
+                        <a data-id="@item.DonorId" class="far fa-trash red-text mr-3 delete"></a>
+                        <a data-id="@item.DonorId" data-name="@item.Name" data-phone="@item.Phone" data-email="@item.Email" class="far fa-edit btnUpdate"></a>
+                    </div>
                 </li>
             }
         </ul>
@@ -135,19 +138,33 @@
             });
         });
 
-        //on edit
-        listContainer.addEventListener("click", function(evt) {
+        //on edit/delete
+        listContainer.addEventListener("click", function (evt) {
             const element = evt.target;
             const onUpdate = element.classList.contains("btnUpdate");
+            const onDelete = element.classList.contains("delete");
 
-            if (!onUpdate) return;
+            if (onUpdate) {
+                formUpdate.hiddenUpdateId.value = element.getAttribute("data-id");
+                formUpdate.updateName.value = element.getAttribute("data-name");
+                formUpdate.updatePhone.value = element.getAttribute("data-phone");
+                formUpdate.updateEmail.value = element.getAttribute("data-email");
 
-            formUpdate.hiddenUpdateId.value = element.getAttribute("data-id");
-            formUpdate.updateName.value = element.getAttribute("data-name");
-            formUpdate.updatePhone.value = element.getAttribute("data-phone");
-            formUpdate.updateEmail.value = element.getAttribute("data-email");
+                modalContainer.modal("show");
+            }
 
-            modalContainer.modal("show");
+            //delete
+            if (onDelete) {
+                $.ajax({
+                    url: "/Settings/DeleteProjectDonor",
+                    type: "POST",
+                    data: { id: element.getAttribute("data-id") },
+                    success: response => {
+                        this.parentElement.parentElement.remove();
+                    },
+                    error: err => console.log(err)
+                });
+            }
         });
 
         //update
