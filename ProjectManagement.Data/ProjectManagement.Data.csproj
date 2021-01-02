@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20201122060939_AddSectorInRegistrationTable.Designer.cs" />
     <Compile Remove="Migrations\20210102104850_AddProjectCityTable.cs" />
     <Compile Remove="Migrations\20210102104850_AddProjectCityTable.Designer.cs" />
+    <Compile Remove="Migrations\20210102105244_AddProjectCityTable.cs" />
+    <Compile Remove="Migrations\20210102105244_AddProjectCityTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

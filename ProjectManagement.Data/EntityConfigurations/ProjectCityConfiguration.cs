@@ -14,7 +14,7 @@ namespace ProjectManagement.Data
 
             builder.HasOne(d => d.City)
                 .WithMany(p => p.ProjectCities)
-                .HasForeignKey(d => d.ProjectId)
+                .HasForeignKey(d => d.CityId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
