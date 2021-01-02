@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20201122055432_AddRole.Designer.cs" />
     <Compile Remove="Migrations\20201122060939_AddSectorInRegistrationTable.cs" />
     <Compile Remove="Migrations\20201122060939_AddSectorInRegistrationTable.Designer.cs" />
+    <Compile Remove="Migrations\20210102104850_AddProjectCityTable.cs" />
+    <Compile Remove="Migrations\20210102104850_AddProjectCityTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

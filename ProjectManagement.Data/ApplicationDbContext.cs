@@ -24,6 +24,7 @@ namespace ProjectManagement.Data
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectBeneficiary> ProjectBeneficiary { get; set; }
         public virtual DbSet<ProjectBeneficiaryType> ProjectBeneficiaryType { get; set; }
+        public virtual DbSet<ProjectCity> ProjectCity { get; set; }
         public virtual DbSet<ProjectDonor> ProjectDonor { get; set; }
         public virtual DbSet<ProjectReports> ProjectReports { get; set; }
         public virtual DbSet<ProjectSector> ProjectSector { get; set; }
@@ -50,6 +51,7 @@ namespace ProjectManagement.Data
             builder.ApplyConfiguration(new ProjectConfiguration());
             builder.ApplyConfiguration(new ProjectBeneficiaryConfiguration());
             builder.ApplyConfiguration(new ProjectBeneficiaryTypeConfiguration());
+            builder.ApplyConfiguration(new ProjectCityConfiguration());
             builder.ApplyConfiguration(new ProjectDonorConfiguration());
             builder.ApplyConfiguration(new ProjectReportsConfiguration());
             builder.ApplyConfiguration(new ProjectSectorConfiguration());

@@ -18,8 +18,22 @@ namespace ProjectManagement.Data
             builder.Property(p => p.ReportName)
                 .IsRequired()
                 .HasMaxLength(225);
+            builder.Property(p => p.KeyWord)
+                .HasMaxLength(128);
 
-            builder.Property(p => p.TotalBudget)
+            builder.Property(p => p.DonorType)
+                .HasMaxLength(50);
+
+            builder.Property(p => p.DirectIndirectType)
+                .HasMaxLength(50);
+
+            builder.Property(p => p.IndividualHouseholdType)
+                .HasMaxLength(50);
+
+            builder.Property(p => p.TotalBudgetBdt)
+                .HasColumnType("decimal(18, 2)");
+
+            builder.Property(p => p.TotalBudgetUsd)
                 .HasColumnType("decimal(18, 2)");
 
             builder.Property(p => p.TotalExpenditure)
@@ -36,11 +50,6 @@ namespace ProjectManagement.Data
 
             builder.Property(p => p.SubmissionDate)
                 .HasColumnType("date");
-
-            builder.HasOne(p => p.City)
-                .WithMany(c => c.Projects)
-                .HasForeignKey(p => p.CityId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.ProjectSector)
                 .WithMany(c => c.Projects)
