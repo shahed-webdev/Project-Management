@@ -27,17 +27,23 @@
             </ul>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="md-form">
                         <input type="hidden" id="hiddenProjectSectorId" value="@ViewBag.ProjectSector.ProjectSectorId">
                         <input type="text" id="inputTitle" class="form-control" required>
                         <label for="inputTitle">Title</label>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="md-form">
                         <input type="text" id="inputDescription" class="form-control">
                         <label for="inputDescription">Description</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="text" id="inputKeyword" class="form-control">
+                        <label for="inputKeyword">Keyword</label>
                     </div>
                 </div>
             </div>
@@ -65,14 +71,20 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg-3">
                     <div class="md-form mb-0">
                         <input type="text" id="inputDonors" autocomplete="off" class="form-control">
                         <label for="inputDonors">Find Donor</label>
                     </div>
                     <div id="donor-container" class="mb-4"></div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="text" id="inputDonorType" autocomplete="off" class="form-control">
+                        <label for="inputDonorType">Donor Type</label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
                     <div class="md-form">
                         <input type="text" id="inputSectors" class="form-control" disabled value="@ViewBag.ProjectSector.Sector">
                         <label for="inputSectors">Sector</label>
@@ -81,13 +93,25 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-3">
                     <div class="md-form">
                         <input type="text" id="inputTotalBudget" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalBudget">Total Budget</label>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="text" id="inputTotalBudgetBdt" class="form-control number-mask" autocomplete="off">
+                        <label for="inputTotalBudgetBdt">BDT</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="text" id="inputTotalBudgetUsd" class="form-control number-mask" autocomplete="off">
+                        <label for="inputTotalBudgetUsd">USD</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
                     <div class="md-form">
                         <input type="text" id="inputTotalExpenditure" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
@@ -98,22 +122,36 @@
             <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectState" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Sub-District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectCity" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Village</option>
                         </select>
                     </div>
+                    <div class="col-lg-3">
+                        <button id="btnLocationAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-map-marker-alt"></i> Add Location</button>
+                    </div>
                 </div>
+
+                <table class="table table-sm mt-4">
+                    <thead>
+                        <tr>
+                            <th><strong>District</strong></th>
+                            <th><strong>Sub-District</strong></th>
+                            <th><strong>Village</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyLocation"></tbody>
+                </table>
             </fieldset>
 
             <div class="row my-4">
@@ -129,6 +167,35 @@
                             </div>
                         </div>
                         <span id="imageError" class="field-validation-error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <select id="selectDirectIndirectType" class="mdb-select md-form">
+                        <option value="" disabled selected>Type</option>
+                        <option value="Direct">Direct</option>
+                        <option value="Indirect">Indirect</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <select id="selectIndividualHouseholdType" class="mdb-select md-form">
+                        <option value="" disabled selected>Type</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Household">Household</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="number" id="inputCount" class="form-control">
+                        <label for="inputCount">Count</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
+                        <input type="number" id="inputTotalCount" class="form-control">
+                        <label for="inputTotalCount">Total Count</label>
                     </div>
                 </div>
             </div>
