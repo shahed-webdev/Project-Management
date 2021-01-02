@@ -131,20 +131,23 @@
             <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select asp-items="@ViewBag.Country" id="selectCountry" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectState" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Sub-District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectCity" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Village</option>
                         </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <button id="btnLocationAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-map-marker-alt"></i> Add Location</button>
                     </div>
                 </div>
             </fieldset>
@@ -269,20 +272,23 @@
             <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select asp-items="@ViewBag.Country" id="selectCountry2" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectState2" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Sub-District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectCity2" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Village</option>
                         </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <button id="btnLocationAdd2" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-map-marker-alt"></i> Add Location</button>
                     </div>
                 </div>
             </fieldset>
@@ -399,20 +405,23 @@
             <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
                 <legend class="w-auto m-0">Location</legend>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select asp-items="@ViewBag.Country" id="selectCountry3" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectState3" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Sub-District</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <select id="selectCity3" name="CityId" class="mdb-select md-form m-0" searchable="Search here..">
                             <option value="" disabled selected>Village</option>
                         </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <button id="btnLocationAdd3" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-map-marker-alt"></i> Add Location</button>
                     </div>
                 </div>
             </fieldset>
@@ -489,7 +498,7 @@
 
 @section Scripts{
     <script>
-        $(function () {
+        $(function() {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();
         });
@@ -508,7 +517,7 @@
         const selectCity = document.getElementById("selectCity");
 
         //on change country step 1
-        selectCountry.addEventListener("change", function () {
+        selectCountry.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -516,7 +525,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -526,17 +535,20 @@
                         fragment.appendChild(createDropdownOption(item, false, false));
                     });
 
+                    selectCity.innerHTML = "";
+                    selectCity.appendChild(createDropdownOption({ value: "", label: "Village" }, true, true));
+
                     selectState.innerHTML = "";
                     selectState.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state step 1
-        selectState.addEventListener("change", function () {
+        selectState.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -544,7 +556,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -557,7 +569,7 @@
                     selectCity.innerHTML = "";
                     selectCity.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -570,7 +582,7 @@
         const selectCity2 = document.getElementById("selectCity2");
 
         //on change country step 2
-        selectCountry2.addEventListener("change", function () {
+        selectCountry2.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -578,7 +590,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -588,17 +600,20 @@
                         fragment.appendChild(createDropdownOption(item, false, false));
                     });
 
+                    selectCity2.innerHTML = "";
+                    selectCity2.appendChild(createDropdownOption({ value: "", label: "Village" }, true, true));
+
                     selectState2.innerHTML = "";
                     selectState2.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state step 2
-        selectState2.addEventListener("change", function () {
+        selectState2.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -606,7 +621,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -619,7 +634,7 @@
                     selectCity2.innerHTML = "";
                     selectCity2.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -632,7 +647,7 @@
         const selectCity3 = document.getElementById("selectCity3");
 
         //on change country step 3
-        selectCountry3.addEventListener("change", function () {
+        selectCountry3.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -640,7 +655,7 @@
             $.ajax({
                 url: "/Projects/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -650,17 +665,20 @@
                         fragment.appendChild(createDropdownOption(item, false, false));
                     });
 
+                    selectCity3.innerHTML = "";
+                    selectCity3.appendChild(createDropdownOption({ value: "", label: "Village" }, true, true));
+
                     selectState3.innerHTML = "";
                     selectState3.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on change state step 3
-        selectState3.addEventListener("change", function () {
+        selectState3.addEventListener("change", function() {
             const id = +this.value
 
             if (!id) return;
@@ -668,7 +686,7 @@
             $.ajax({
                 url: "/Projects/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     if (!response.IsSuccess) return;
 
                     const fragment = document.createDocumentFragment();
@@ -681,7 +699,7 @@
                     selectCity3.innerHTML = "";
                     selectCity3.appendChild(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -696,7 +714,7 @@
         }
 
         //on change Project Name
-        selectProjectName.addEventListener("change", function (evt) {
+        selectProjectName.addEventListener("change", function(evt) {
             selectProjectError.textContent = "";
             const id = this.value;
             const steps = { first: 1, second: 2, third: 3 }
@@ -768,7 +786,7 @@
         });
 
         //get form data as object
-        var serializeForm = function (form) {
+        var serializeForm = function(form) {
             const obj = {};
             const formData = new FormData(form);
             for (let key of formData.keys()) {
@@ -778,7 +796,7 @@
         };
 
         //submit form Step1
-        formStep1.addEventListener("submit", function (evt) {
+        formStep1.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const projectId = selectProject();
@@ -818,7 +836,7 @@
         });
 
         //submit form Step2
-        formStep2.addEventListener("submit", function (evt) {
+        formStep2.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const projectId = selectProject();
@@ -858,7 +876,7 @@
         });
 
         //submit form Step2
-        formStep3.addEventListener("submit", function (evt) {
+        formStep3.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const projectId = selectProject();
@@ -941,6 +959,36 @@
 
 
         }
+
+        /***Location add****/
+        function addLocation(btn, step) {
+            const btnLocationAdd = document.getElementById("btnLocationAdd");
+            const bodyLocation = document.getElementById("bodyLocation");
+
+            btnLocationAdd.addEventListener("click", function() {
+                const cityId = +selectCity.value;
+                if (!cityId) return;
+
+                if (model.CityIds.indexOf(cityId) !== -1) return;
+
+                model.CityIds.push(cityId);
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                <td>${getSelectedText(selectCountry)}</td>
+                <td>${getSelectedText(selectState)}</td>
+                <td>${getSelectedText(selectCity)}</td>
+                <td><i data-id="${cityId}" class="remove fas fa-trash-alt"></i></td>`;
+
+                bodyLocation.appendChild(tr);
+            });
+        }
+
+        //get dropdown selected text
+        function getSelectedText(select) {
+            return select.options[select.selectedIndex].text;
+        }
+
 
         //get location data
         function getLocation(id, step) {
@@ -1078,7 +1126,7 @@
         const participantBody1 = document.getElementById("participantBody1");
 
         //add
-        btnBeneficiaryAdd.addEventListener("click", function (evt) {
+        btnBeneficiaryAdd.addEventListener("click", function(evt) {
             evt.preventDefault();
             beneficiaryError.textContent = "";
 
@@ -1102,7 +1150,7 @@
                 Count: count
             }
 
-            const isAdded = tempModel.beneficiaries1.some(function (el) {
+            const isAdded = tempModel.beneficiaries1.some(function(el) {
                 return el.ProjectBeneficiaryTypeId === id;
             });
 
@@ -1117,7 +1165,7 @@
         });
 
         //remove
-        participantBody1.addEventListener("click", function (evt) {
+        participantBody1.addEventListener("click", function(evt) {
             const element = evt.target;
             const onDelete = element.classList.contains("remove");
 
@@ -1139,7 +1187,7 @@
         const participantBody2 = document.getElementById("participantBody2");
 
         //add
-        btnBeneficiaryAdd2.addEventListener("click", function (evt) {
+        btnBeneficiaryAdd2.addEventListener("click", function(evt) {
             evt.preventDefault();
             beneficiaryError.textContent = "";
 
@@ -1163,7 +1211,7 @@
                 Count: count
             }
 
-            const isAdded = tempModel.beneficiaries2.some(function (el) {
+            const isAdded = tempModel.beneficiaries2.some(function(el) {
                 return el.ProjectBeneficiaryTypeId === id;
             });
 
@@ -1178,7 +1226,7 @@
         });
 
         //remove
-        participantBody2.addEventListener("click", function (evt) {
+        participantBody2.addEventListener("click", function(evt) {
             const element = evt.target;
             const onDelete = element.classList.contains("remove");
 
@@ -1200,7 +1248,7 @@
         const participantBody3 = document.getElementById("participantBody3");
 
         //add
-        btnBeneficiaryAdd3.addEventListener("click", function (evt) {
+        btnBeneficiaryAdd3.addEventListener("click", function(evt) {
             evt.preventDefault();
             beneficiaryError.textContent = "";
 
@@ -1224,7 +1272,7 @@
                 Count: count
             }
 
-            const isAdded = tempModel.beneficiaries3.some(function (el) {
+            const isAdded = tempModel.beneficiaries3.some(function(el) {
                 return el.ProjectBeneficiaryTypeId === id;
             });
 
@@ -1239,7 +1287,7 @@
         });
 
         //remove
-        participantBody3.addEventListener("click", function (evt) {
+        participantBody3.addEventListener("click", function(evt) {
             const element = evt.target;
             const onDelete = element.classList.contains("remove");
 
@@ -1267,7 +1315,7 @@
 
         //***DELETE***
         const btnDeleteStep1 = document.getElementById("btnDeleteStep1");
-        btnDeleteStep1.addEventListener("click", function (evt) {
+        btnDeleteStep1.addEventListener("click", function(evt) {
             evt.preventDefault();
             const id = selectProjectName.value;
 
@@ -1291,7 +1339,7 @@
         });
 
         const btnDeleteStep2 = document.getElementById("btnDeleteStep2");
-        btnDeleteStep2.addEventListener("click", function (evt) {
+        btnDeleteStep2.addEventListener("click", function(evt) {
             evt.preventDefault();
             const id = selectProjectName.value;
 
@@ -1315,7 +1363,7 @@
         });
 
         const btnDeleteStep3 = document.getElementById("btnDeleteStep3");
-        btnDeleteStep3.addEventListener("click", function (evt) {
+        btnDeleteStep3.addEventListener("click", function(evt) {
             evt.preventDefault();
             const id = selectProjectName.value;
 
