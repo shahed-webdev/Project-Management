@@ -93,25 +93,19 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="md-form">
-                        <input type="text" id="inputTotalBudget" class="form-control number-mask" autocomplete="off">
-                        <label for="inputTotalBudget">Total Budget</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="md-form">
                         <input type="text" id="inputTotalBudgetBdt" class="form-control number-mask" autocomplete="off">
-                        <label for="inputTotalBudgetBdt">BDT</label>
+                        <label for="inputTotalBudgetBdt">Total Budget BDT</label>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="md-form">
                         <input type="text" id="inputTotalBudgetUsd" class="form-control number-mask" autocomplete="off">
-                        <label for="inputTotalBudgetUsd">USD</label>
+                        <label for="inputTotalBudgetUsd">Total Budget USD</label>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="md-form">
                         <input type="text" id="inputTotalExpenditure" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
@@ -171,57 +165,59 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col-lg-3">
-                    <select id="selectDirectIndirectType" class="mdb-select md-form">
-                        <option value="" disabled selected>Type</option>
-                        <option value="Direct">Direct</option>
-                        <option value="Indirect">Indirect</option>
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <select id="selectIndividualHouseholdType" class="mdb-select md-form">
-                        <option value="" disabled selected>Type</option>
-                        <option value="Individual">Individual</option>
-                        <option value="Household">Household</option>
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <div class="md-form">
-                        <input type="number" id="inputCount" class="form-control">
-                        <label for="inputCount">Count</label>
+            <fieldset class="border px-4 pb-4 pt-2 rounded mt-3">
+                <legend class="w-auto m-0">Beneficiary</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <select id="selectDirectIndirectType" class="mdb-select md-form">
+                            <option value="" disabled selected>Type</option>
+                            <option value="Direct">Direct</option>
+                            <option value="Indirect">Indirect</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="selectIndividualHouseholdType" class="mdb-select md-form">
+                            <option value="" disabled selected>Type</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Household">Household</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="md-form">
+                            <input type="number" id="inputCount" class="form-control">
+                            <label for="inputCount">Count</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="md-form">
-                        <input type="number" id="inputTotalCount" class="form-control">
-                        <label for="inputTotalCount">Total Count</label>
-                    </div>
-                </div>
-            </div>
 
-            <label id="beneficiaryError" class="red-text d-inline-block"></label>
-            <table class="table">
-                <thead class="grey lighten-5">
-                    <tr>
-                        <th>
-                            <select asp-items="@ViewBag.Type" id="selectBeneficiaryType" class="mdb-select md-form m-0">
-                                <option value="" disabled selected>Beneficiary Type</option>
-                            </select>
-                        </th>
-                        <th>
-                            <div class="md-form m-0">
-                                <input type="text" id="inputBeneficiaryCount" class="form-control">
-                                <label for="inputBeneficiaryCount">Beneficiary Count</label>
-                            </div>
-                        </th>
-                        <th class="text-right" style="width: 130px">
-                            <button id="btnBeneficiaryAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="beneficiaryTypeBody"></tbody>
-            </table>
+                <label id="beneficiaryError" class="red-text d-inline-block"></label>
+                <table class="table">
+                    <thead class="grey lighten-5">
+                        <tr>
+                            <th>
+                                <select asp-items="@ViewBag.Type" id="selectBeneficiaryType" class="mdb-select md-form m-0">
+                                    <option value="" disabled selected>Segregate Beneficiary</option>
+                                </select>
+                            </th>
+                            <th>
+                                <div class="md-form m-0">
+                                    <input type="text" id="inputBeneficiaryCount" class="form-control">
+                                    <label for="inputBeneficiaryCount">Beneficiary Count</label>
+                                </div>
+                            </th>
+                            <th class="text-right" style="width: 130px">
+                                <button id="btnBeneficiaryAdd" type="button" class="btn btn-sm btn-outline-success btn-rounded mb-0"><i class="fas fa-user-plus"></i> Add</button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="beneficiaryTypeBody"></tbody>
+                </table>
+
+                <div class="md-form">
+                    <input type="number" id="inputTotalCount" class="form-control">
+                    <label for="inputTotalCount">Total Count</label>
+                </div>
+            </fieldset>
         </div>
 
         <div class="text-right mt-4">

@@ -412,10 +412,9 @@ formStep1.addEventListener("submit", function (evt) {
     formData.append('Keyword', formStep1.inputKeyword.value);
     formData.append('DonorType', formStep1.inputDonorType.value);
 
-    formData.append('TotalBudget', formStep1.inputTotalBudget.value);
-    formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
     formData.append('TotalBudgetBdt', formStep1.inputTotalBudgetBdt.value);
     formData.append('TotalBudgetUsd', formStep1.inputTotalBudgetUsd.value);
+    formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
 
     formData.append('DirectIndirectType', formStep1.selectDirectIndirectType.value);
     formData.append('IndividualHouseholdType', formStep1.selectIndividualHouseholdType.value);
