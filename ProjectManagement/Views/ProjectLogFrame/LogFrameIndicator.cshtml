@@ -774,9 +774,6 @@
                     if (response.IsSuccess) {
                         tempModel.beneficiaries1.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries1, participantBody1);
-
-                        //get location
-                        getLocation(response.Data.CityId, 1);
                     }
                 },
                 error: err => console.log(err)
@@ -795,9 +792,6 @@
                     if (response.IsSuccess) {
                         tempModel.beneficiaries2.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries2, participantBody2);
-
-                        //get location
-                        getLocation(response.Data.CityId, 2);
                     }
                 },
                 error: err => console.log(err)
@@ -816,9 +810,6 @@
                     if (response.IsSuccess) {
                         tempModel.beneficiaries3.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries3, participantBody3);
-
-                        //get location
-                        getLocation(response.Data.CityId, 3);
                     }
                 },
                 error: err => console.log(err)
@@ -1042,10 +1033,10 @@
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                                        <td>${getSelectedText(district)}</td>
-                                        <td>${getSelectedText(subDistrict)}</td>
-                                        <td>${getSelectedText(village)}</td>
-                                        <td><i onClick="removeLocation(${step},this)" data-id="${village.value}" class="remove fas fa-trash-alt"></i></td>`;
+                                            <td>${getSelectedText(district)}</td>
+                                            <td>${getSelectedText(subDistrict)}</td>
+                                            <td>${getSelectedText(village)}</td>
+                                            <td><i onClick="removeLocation(${step},this)" data-id="${village.value}" class="remove fas fa-trash-alt"></i></td>`;
 
             bodyLocation.appendChild(tr);
 
@@ -1066,21 +1057,25 @@
             evt.parentElement.parentElement.remove();
         }
 
-        //get dropdown selected text
-        function getSelectedText(select) {
-            return select.options[select.selectedIndex].text;
-        }
+        //set location in table
+        function renderLocationTable(items, selector) {
+            const tBody = document.getElementById(selector);
+            tBody.innerHTML = "";
 
-        //get location data
-        function getLocation(id, step) {
-            $.ajax({
-                url: "/ProjectLogFrame/GetSelectedLocations",
-                data: { id },
-                success: response => {
+            const fragment = document.createDocumentFragment();
 
-                },
-                error: err => console.log(err)
+            items.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                        <td>${item.CountryName}</td>
+                        <td>${item.StateName}</td>
+                        <td>${item.CityName}</td>
+                        <td><i data-id="${item.CityId}" class="remove fas fa-trash-alt"></i></td>`;
+
+                fragment.appendChild(tr);
             });
+
+            tBody.appendChild(fragment);
         }
 
         //create dropdown options
@@ -1092,6 +1087,11 @@
             option.selected = selected;
 
             return option;
+        }
+
+        //get dropdown selected text
+        function getSelectedText(select) {
+            return select.options[select.selectedIndex].text;
         }
 
 
