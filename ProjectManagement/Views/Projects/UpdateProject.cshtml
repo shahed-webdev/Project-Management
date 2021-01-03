@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Add Project";
+﻿
+@{
+    ViewData["Title"] = "Update Project";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -9,7 +10,7 @@
 }
 
 <div class="container">
-    <h4 class="page-header mt-3">Add Project</h4>
+    <h4 class="page-header mt-3">Update Project</h4>
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
 
 
@@ -277,7 +278,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/add-project.js"></script>
+    <script src="~/pages-js/update-project.js"></script>
     <script>
         $(function () {
             $('.mdb-select').materialSelect();
@@ -303,3 +304,4 @@
         }
     </script>
 }
+

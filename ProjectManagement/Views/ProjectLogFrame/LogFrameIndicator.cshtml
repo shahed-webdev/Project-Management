@@ -770,10 +770,15 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries1 = [];
+                    tempModel.cityIds = [];
 
                     if (response.IsSuccess) {
                         tempModel.beneficiaries1.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries1, participantBody1);
+
+                        //location append
+                        tempModel.cityIds.push(...response.Data.CityIds);
+                        renderLocationTable(response.Data.Locations, 1);
                     }
                 },
                 error: err => console.log(err)
@@ -788,10 +793,15 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries2 = [];
+                    tempModel.cityIds2 = [];
 
                     if (response.IsSuccess) {
                         tempModel.beneficiaries2.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries2, participantBody2);
+
+                        //location append
+                        tempModel.cityIds2.push(...response.Data.CityIds);
+                        renderLocationTable(response.Data.Locations, 2);
                     }
                 },
                 error: err => console.log(err)
@@ -806,10 +816,15 @@
 
                     //re assign inserted value
                     tempModel.beneficiaries3 = [];
+                    tempModel.cityIds3 = [];
 
                     if (response.IsSuccess) {
                         tempModel.beneficiaries3.push(...response.Data.ProjectParticipants);
                         appendParticipants(tempModel.beneficiaries3, participantBody3);
+
+                        //location append
+                        tempModel.cityIds3.push(...response.Data.CityIds);
+                        renderLocationTable(response.Data.Locations, 3);
                     }
                 },
                 error: err => console.log(err)
@@ -1058,8 +1073,8 @@
         }
 
         //set location in table
-        function renderLocationTable(items, selector) {
-            const tBody = document.getElementById(selector);
+        function renderLocationTable(items,step) {
+            const tBody = document.getElementById(`bodyLocation${step === 1 ? "" : step}`);
             tBody.innerHTML = "";
 
             const fragment = document.createDocumentFragment();
@@ -1070,7 +1085,7 @@
                         <td>${item.CountryName}</td>
                         <td>${item.StateName}</td>
                         <td>${item.CityName}</td>
-                        <td><i data-id="${item.CityId}" class="remove fas fa-trash-alt"></i></td>`;
+                        <td><i onClick="removeLocation(${step},this)" data-id="${item.CityId}" class="remove fas fa-trash-alt"></i></td>`;
 
                 fragment.appendChild(tr);
             });
