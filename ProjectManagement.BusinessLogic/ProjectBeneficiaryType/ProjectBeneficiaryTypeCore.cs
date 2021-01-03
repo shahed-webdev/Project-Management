@@ -35,6 +35,27 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Delete(int beneficiaryTypeId)
+        {
+            try
+            {
+                if (_db.ProjectBeneficiaryType.IsNull(beneficiaryTypeId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ProjectBeneficiaryType.IsRelatedDataExist(beneficiaryTypeId))
+                    return new DbResponse(false, $"Already use in Project");
+
+                _db.ProjectBeneficiaryType.Delete(beneficiaryTypeId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse Edit(ProjectBeneficiaryTypeViewModel model)
         {
             try

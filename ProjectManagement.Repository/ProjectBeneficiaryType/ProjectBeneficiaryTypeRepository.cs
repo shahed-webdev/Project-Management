@@ -19,6 +19,22 @@ namespace ProjectManagement.Repository
             Db.ProjectBeneficiaryType.Add(beneficiaryType);
         }
 
+        public void Delete(int beneficiaryTypeId)
+        {
+            var beneficiaryType = Db.ProjectBeneficiaryType.Find(beneficiaryTypeId);
+            Db.ProjectBeneficiaryType.Remove(beneficiaryType);
+        }
+
+        public bool IsRelatedDataExist(int beneficiaryTypeId)
+        {
+            return Db.ProjectBeneficiary.Any(p => p.ProjectBeneficiaryTypeId == beneficiaryTypeId);
+        }
+
+        public bool IsNull(int beneficiaryTypeId)
+        {
+            return !Db.ProjectBeneficiaryType.Any(p => p.ProjectBeneficiaryTypeId == beneficiaryTypeId);
+        }
+
         public void Edit(ProjectBeneficiaryTypeViewModel model)
         {
             var beneficiaryType = Db.ProjectBeneficiaryType.Find(model.ProjectBeneficiaryTypeId);
