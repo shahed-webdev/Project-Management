@@ -131,7 +131,8 @@ inputAttachment.addEventListener("change", function (e) {
 
     const reports = {
         ReportTypeId: id,
-        Attachment: e.target.files[0]
+        Attachment: e.target.files[0],
+        FileTitle: e.target.files[0].name
     }
 
     model.ProjectReports.push(reports);

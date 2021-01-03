@@ -22,6 +22,7 @@
                     <th class="text-right"><strong>Total Budget</strong></th>
                     <th class="text-right"><strong>Total Expenditure</strong></th>
                     <th class="text-center"><strong>Submission Date</strong></th>
+                    <th class="text-center"><strong>Update</strong></th>
                 </tr>
             </thead>
             <tbody id="tBody">
@@ -40,6 +41,9 @@
                             {
                                 @item.SubmissionDate.Value.ToString("d MMM yyyy")
                             }
+                        </td>
+                        <td class="text-center">
+                            <a class="fas fa-edit" href="/Projects/UpdateProject/@item.ProjectId"></a>
                         </td>
                     </tr>
                 }
@@ -96,11 +100,11 @@
             modalContainer.modal("show");
         });
 
-        //submit 
+        //submit
         const formAdd = document.getElementById("formAdd");
         const error = document.getElementById("error");
 
-        formAdd.addEventListener("submit", function(evt) {
+        formAdd.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
             const model = {
@@ -112,7 +116,7 @@
                 url: "/Projects/AddExpense",
                 type: "POST",
                 data: model,
-                success: function(response) {
+                success: function (response) {
                     if (response.IsSuccess) {
                         location.reload();
                         return;
@@ -120,7 +124,7 @@
 
                     error.textContent = response.Message;
                 },
-                error: function(err) {
+                error: function (err) {
                     console.log(err);
                 }
             });
