@@ -140,5 +140,20 @@ namespace ProjectManagement.Controllers
             var response = _project.AddExpediter(model);
             return Json(response);
         }
+
+
+        /***Report****/
+        public IActionResult Report(int? id)
+        {
+            if (!id.HasValue) return RedirectToAction($"Features");
+
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features");
+
+            ViewBag.ProjectSector = response.Data;
+            ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
+
+            return View();
+        }
     }
 }

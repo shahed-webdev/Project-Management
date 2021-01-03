@@ -105,14 +105,14 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
-        //[HttpPost]
-        //public IActionResult DeleteBeneficiaryType(int id)
-        //{
-        //    var response = _beneficiary.Delete(id);
-        //    return Json(response);
-        //}
+        [HttpPost]
+        public IActionResult DeleteBeneficiaryType(int id)
+        {
+            var response = _beneficiary.Delete(id);
+            return Json(response);
+        }
 
-    
+
         //****Country****
         public IActionResult Country()
         {
@@ -229,6 +229,13 @@ namespace ProjectManagement.Controllers
         public IActionResult UpdateReportType(ReportTypeViewModel model)
         {
             var response = _reportType.Edit(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteReportType(int id)
+        {
+            var response = _reportType.Delete(id);
             return Json(response);
         }
     }
