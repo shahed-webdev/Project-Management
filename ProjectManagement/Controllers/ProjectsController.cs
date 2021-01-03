@@ -142,8 +142,9 @@ namespace ProjectManagement.Controllers
         }
 
 
-        /***update project**/
-        public IActionResult UpdateProject(int? id)
+        /***Update Project**/
+        [Route("/Projects/UpdateProject/{id}/{project}")]
+        public IActionResult UpdateProject(int? id, int project)
         {
             if (!id.HasValue) return RedirectToAction($"Features");
 
@@ -152,7 +153,14 @@ namespace ProjectManagement.Controllers
 
             ViewBag.ProjectSector = response.Data;
 
-            return View();
+            var model = _project.Get(project);
+
+            ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label", model.Data.ProjectStatusId);
+            ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
+            ViewBag.Type = new SelectList(_type.Ddl().Data, "value", "label");
+            ViewBag.ReportType = new SelectList(_reportType.Ddl().Data, "value", "label");
+
+            return View(model.Data);
         }
 
 

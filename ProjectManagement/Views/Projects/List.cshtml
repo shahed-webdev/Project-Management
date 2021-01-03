@@ -43,7 +43,7 @@
                             }
                         </td>
                         <td class="text-center">
-                            <a class="fas fa-edit" href="/Projects/UpdateProject/@item.ProjectId"></a>
+                            <a class="fas fa-edit" href="/Projects/UpdateProject/@item.ProjectSectorId/@item.ProjectId"></a>
                         </td>
                     </tr>
                 }
@@ -87,8 +87,6 @@
 
         //show modal
         tBody.addEventListener("click", function (evt) {
-            evt.preventDefault();
-
             const element = evt.target;
             const onAdd = element.classList.contains("add");
 

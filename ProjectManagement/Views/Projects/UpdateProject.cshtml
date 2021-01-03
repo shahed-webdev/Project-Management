@@ -1,4 +1,4 @@
-﻿
+﻿@model ProjectEditViewModel
 @{
     ViewData["Title"] = "Update Project";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -29,19 +29,19 @@
                 <div class="col-lg-5">
                     <div class="md-form">
                         <input type="hidden" id="hiddenProjectSectorId" value="@ViewBag.ProjectSector.ProjectSectorId">
-                        <input type="text" id="inputTitle" class="form-control" required>
+                        <input type="text" id="inputTitle" value="@Model.Title" class="form-control" required>
                         <label for="inputTitle">Title</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputDescription" class="form-control">
+                        <input type="text" id="inputDescription" value="@Model.Description" class="form-control">
                         <label for="inputDescription">Description</label>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="md-form">
-                        <input type="text" id="inputKeyword" class="form-control">
+                        <input type="text" id="inputKeyword" value="@Model.KeyWord" class="form-control">
                         <label for="inputKeyword">Keyword</label>
                     </div>
                 </div>
@@ -50,13 +50,13 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputStartDate" value="@DateTime.Now.ToString("d MMMM, yyyy")" class="form-control datepicker">
+                        <input type="text" id="inputStartDate" value="@Model.StartDate" class="form-control datepicker">
                         <label for="inputStartDate">Start Date</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@DateTime.Now.ToString("d MMMM, yyyy")">
+                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@Model.EndDate">
                         <label for="inputEndDate">End Date</label>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="md-form">
-                        <input type="text" id="inputDonorType" autocomplete="off" class="form-control">
+                        <input type="text" id="inputDonorType" value="@Model.DonorType" autocomplete="off" class="form-control">
                         <label for="inputDonorType">Donor Type</label>
                     </div>
                 </div>
@@ -94,19 +94,19 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputTotalBudgetBdt" class="form-control number-mask" autocomplete="off">
+                        <input type="text" id="inputTotalBudgetBdt" value="@Model.TotalBudgetBdt" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalBudgetBdt">Total Budget BDT</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputTotalBudgetUsd" class="form-control number-mask" autocomplete="off">
+                        <input type="text" id="inputTotalBudgetUsd" value="@Model.TotalBudgetUsd" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalBudgetUsd">Total Budget USD</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputTotalExpenditure" class="form-control number-mask" autocomplete="off">
+                        <input type="text" id="inputTotalExpenditure" value="@Model.TotalExpenditure" class="form-control number-mask" autocomplete="off">
                         <label for="inputTotalExpenditure">Total Expenditure</label>
                     </div>
                 </div>
@@ -160,6 +160,7 @@
                             </div>
                         </div>
                         <span id="imageError" class="field-validation-error"></span>
+                        <img src="@Model.FilePhoto" alt=""/>
                     </div>
                 </div>
             </div>
@@ -183,7 +184,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="md-form">
-                            <input type="number" id="inputCount" class="form-control">
+                            <input type="number" value="@Model.Count" id="inputCount" class="form-control">
                             <label for="inputCount">Count</label>
                         </div>
                     </div>
@@ -213,7 +214,7 @@
                 </table>
 
                 <div class="md-form">
-                    <input type="number" id="inputTotalCount" class="form-control">
+                    <input type="number" value="@Model.TotalCount" id="inputTotalCount" class="form-control">
                     <label for="inputTotalCount">Total Count</label>
                 </div>
             </fieldset>
@@ -234,13 +235,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputProjectName" class="form-control" disabled>
+                        <input type="text" id="inputProjectName" value="@Model.Title" class="form-control" disabled>
                         <label for="inputProjectName">Project Name</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@DateTime.Now.ToString("d MMMM, yyyy")">
+                        <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@Model.SubmissionDate">
                         <label for="inputSubmissionDate">Submission Date</label>
                     </div>
                 </div>
