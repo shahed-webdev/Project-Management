@@ -850,6 +850,10 @@
                 data.ProjectParticipants = tempModel.beneficiaries1;
             }
 
+            if (tempModel.cityIds.length) {
+                data.CityIds = tempModel.cityIds;
+            }
+
             this.btnStep1.disabled = true;
             this.btnStep1.textContent = "Submitting..";
 
@@ -890,6 +894,10 @@
                 data.ProjectParticipants = tempModel.beneficiaries2;
             }
 
+            if (tempModel.cityIds2.length) {
+                data.CityIds = tempModel.cityIds2;
+            }
+
             this.btnStep2.disabled = true;
             this.btnStep2.textContent = "Submitting..";
 
@@ -915,7 +923,7 @@
             });
         });
 
-        //submit form Step2
+        //submit form Step3
         formStep3.addEventListener("submit", function (evt) {
             evt.preventDefault();
 
@@ -928,6 +936,10 @@
 
             if (tempModel.beneficiaries3.length) {
                 data.ProjectParticipants = tempModel.beneficiaries3;
+            }
+
+            if (tempModel.cityIds3.length) {
+                data.CityIds = tempModel.cityIds3;
             }
 
             this.btnStep3.disabled = true;
@@ -1058,7 +1070,6 @@
         function getSelectedText(select) {
             return select.options[select.selectedIndex].text;
         }
-
 
         //get location data
         function getLocation(id, step) {

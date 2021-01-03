@@ -46,6 +46,13 @@ namespace ProjectManagement.Controllers
             var response = _status.Edit(model);
             return Json(response);
         }
+       
+        [HttpPost]
+        public IActionResult DeleteProjectStatus(int id)
+        {
+            var response = _status.Delete(id);
+            return Json(response);
+        }
 
 
         //*****Project Donor*****
@@ -66,6 +73,13 @@ namespace ProjectManagement.Controllers
         public IActionResult UpdateProjectDonor(DonorViewModel model)
         {
             var response = _donor.Edit(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProjectDonor(int id)
+        {
+            var response = _donor.Delete(id);
             return Json(response);
         }
 
@@ -91,9 +105,15 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
+        //[HttpPost]
+        //public IActionResult DeleteBeneficiaryType(int id)
+        //{
+        //    var response = _beneficiary.Delete(id);
+        //    return Json(response);
+        //}
 
-        /***location**/
-        //country
+    
+        //****Country****
         public IActionResult Country()
         {
             var model = _location.CountryList();
@@ -107,7 +127,21 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
-        //state
+        [HttpPost]
+        public IActionResult UpdateCountry(CountryViewModel model)
+        {
+            var response = _location.CountryEdit(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCountry(int id)
+        {
+            var response = _location.CountryDelete(id);
+            return Json(response);
+        }
+
+        //*****State****
         public IActionResult State()
         {
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
@@ -127,7 +161,21 @@ namespace ProjectManagement.Controllers
             return Json(response);
         }
 
-        //city
+        [HttpPost]
+        public IActionResult UpdateState(StateEditModel model)
+        {
+            var response = _location.StateEdit(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteState(int id)
+        {
+            var response = _location.StateDelete(id);
+            return Json(response);
+        }
+
+        //****City****
         public IActionResult City()
         {
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
@@ -146,6 +194,21 @@ namespace ProjectManagement.Controllers
             var response = _location.CityAdd(model);
             return Json(response);
         }
+
+        [HttpPost]
+        public IActionResult UpdateCity(CityEditModel model)
+        {
+            var response = _location.CityEdit(model);
+            return Json(response);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCity(int id)
+        {
+            var response = _location.CityDelete(id);
+            return Json(response);
+        }
+
 
 
         //*****Report Type*****

@@ -124,7 +124,6 @@
                 type: "POST",
                 data: model,
                 success: function (response) {
-                    console.log(response);
                     if (response.IsSuccess) {
                         location.reload();
                         return;
@@ -160,7 +159,10 @@
                     type: "POST",
                     data: { id: element.getAttribute("data-id") },
                     success: response => {
-                        this.parentElement.parentElement.remove();
+                        if (response.IsSuccess)
+                            element.parentElement.parentElement.remove();
+
+                        $.notify(response.Message, response.IsSuccess ? "success" : "error");
                     },
                     error: err => console.log(err)
                 });

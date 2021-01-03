@@ -70,7 +70,7 @@
 
 @section Scripts{
     <script>
-        $(function () {
+        $(function() {
             $('.mdb-select').materialSelect();
         });
 
@@ -85,7 +85,7 @@
         const modalContainer = $("#updateModal");
 
         //country change
-        selectCountry.addEventListener("change", function () {
+        selectCountry.addEventListener("change", function() {
             const id = +this.value;
 
             selectState.innerHTML = "";
@@ -96,7 +96,7 @@
             $.ajax({
                 url: "/Settings/GetStateByCountry",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     const fragment = document.createDocumentFragment();
 
                     const option1 = document.createElement("option");
@@ -115,14 +115,14 @@
 
                     selectState.append(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //state change
-        selectState.addEventListener("change", function () {
+        selectState.addEventListener("change", function() {
             const id = +this.value;
             appendData(id);
         });
@@ -135,7 +135,7 @@
             $.ajax({
                 url: "/Settings/GetCityByState",
                 data: { id },
-                success: function (response) {
+                success: function(response) {
                     const fragment = document.createDocumentFragment();
                     response.forEach(item => {
                         const li = document.createElement("li");
@@ -150,7 +150,7 @@
 
                     listItem.append(fragment);
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -158,7 +158,7 @@
 
 
         //insert
-        formAdd.addEventListener("submit", function (evt) {
+        formAdd.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const model = {
@@ -179,7 +179,7 @@
 
                     error.textContent = response.Message;
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
@@ -201,11 +201,14 @@
             //delete
             if (onDelete) {
                 $.ajax({
-                    url: "/Settings/DeleteProjectStatus",
+                    url: "/Settings/DeleteCity",
                     type: "POST",
                     data: { id: element.getAttribute("data-id") },
                     success: response => {
-                        this.parentElement.parentElement.remove();
+                        if (response.IsSuccess)
+                            element.parentElement.parentElement.remove();
+
+                        $.notify(response.Message, response.IsSuccess ? "success" : "error");
                     },
                     error: err => console.log(err)
                 });
@@ -217,17 +220,20 @@
             evt.preventDefault();
 
             const model = {
-                ProjectStatusId: this.hiddenUpdateId.value,
-                Status: this.inputUpdatedData.value
+                StateId: formAdd.selectState.value,
+                CityId: this.hiddenUpdateId.value,
+                CityName: this.inputUpdatedData.value
             }
 
             $.ajax({
-                url: "/Settings/UpdateProjectStatus",
+                url: "/Settings/UpdateCity",
                 type: "POST",
                 data: model,
                 success: function(response) {
-                    if (response.IsSuccess)
+                    if (response.IsSuccess) {
                         location.reload();
+                        return;
+                    }
 
                     error2.textContent = response.Message;
                 },

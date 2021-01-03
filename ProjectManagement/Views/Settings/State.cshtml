@@ -160,11 +160,14 @@
             //delete
             if (onDelete) {
                 $.ajax({
-                    url: "/Settings/DeleteProjectStatus",
+                    url: "/Settings/DeleteState",
                     type: "POST",
                     data: { id: element.getAttribute("data-id") },
                     success: response => {
-                        this.parentElement.parentElement.remove();
+                        if (response.IsSuccess)
+                            element.parentElement.parentElement.remove();
+
+                        $.notify(response.Message, response.IsSuccess ? "success" : "error");
                     },
                     error: err => console.log(err)
                 });
@@ -176,17 +179,20 @@
             evt.preventDefault();
 
             const model = {
-                ProjectStatusId: this.hiddenUpdateId.value,
-                Status: this.inputUpdatedData.value
+                CountryId: formAdd.selectCountry.value,
+                StateId: this.hiddenUpdateId.value,
+                StateName: this.inputUpdatedData.value
             }
 
             $.ajax({
-                url: "/Settings/UpdateProjectStatus",
+                url: "/Settings/UpdateState",
                 type: "POST",
                 data: model,
                 success: function(response) {
-                    if (response.IsSuccess)
+                    if (response.IsSuccess) {
                         location.reload();
+                        return;
+                    }
 
                     error2.textContent = response.Message;
                 },
