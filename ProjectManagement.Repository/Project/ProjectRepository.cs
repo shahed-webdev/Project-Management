@@ -27,6 +27,31 @@ namespace ProjectManagement.Repository
             throw new System.NotImplementedException();
         }
 
+        public ProjectEditViewModel Get(int projectId)
+        {
+            return Db.Project
+                .Where(p => p.ProjectId == projectId)
+                .ProjectTo<ProjectEditViewModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefault();
+        }
+
+        public void Delete(int projectId)
+        {
+            var project = Db.Project.Find(projectId);
+            Db.Project.Remove(project);
+        }
+
+        public bool IsRelatedDataExist(int projectId)
+        {
+            if (Db.LogFrame1stStepIndicator.Any(c => c.ProjectId == projectId))
+                return true;
+            if (Db.LogFrame2ndStepOutput.Any(c => c.ProjectId == projectId))
+                return true;
+            if (Db.LogFrame3rdStepActivity.Any(c => c.ProjectId == projectId))
+                return true;
+            return false;
+        }
+
         public bool IsExist(string title)
         {
             return Db.Project.Any(c => c.Title == title);
@@ -71,6 +96,14 @@ namespace ProjectManagement.Repository
 
             project.TotalExpenditure += model.Expenditure;
             Db.Project.Update(project);
+        }
+
+        public List<ProjectReportsAddModel> Reports(int projectId)
+        {
+            return Db.ProjectReports
+                .Where(p => p.ProjectId == projectId)
+                .ProjectTo<ProjectReportsAddModel>(_mapper.ConfigurationProvider)
+                .ToList();
         }
     }
 }

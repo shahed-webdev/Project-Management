@@ -35,6 +35,44 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Delete(int projectId)
+        {
+            try
+            {
+                if (_db.Project.IsNull(projectId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Project.IsRelatedDataExist(projectId))
+                    return new DbResponse(false, $"Already use in Log Frame");
+
+                _db.Project.Delete(projectId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
+        public DbResponse<ProjectEditViewModel> Get(int projectId)
+        {
+            try
+            {
+                var data = _db.Project.Get(projectId);
+
+                if (data == null)
+                    return new DbResponse<ProjectEditViewModel>(false, "No Data Found");
+
+                return new DbResponse<ProjectEditViewModel>(true, "Success", data);
+            }
+            catch (Exception e)
+            {
+                return new DbResponse<ProjectEditViewModel>(false, e.Message);
+            }
+        }
+
         public DbResponse Edit(ProjectEditViewModel model)
         {
             throw new System.NotImplementedException();
@@ -50,6 +88,19 @@ namespace ProjectManagement.BusinessLogic
             catch (Exception e)
             {
                 return new DbResponse<List<ProjectListViewModel>>(false, e.Message);
+            }
+        }
+
+        public DbResponse<List<ProjectReportsAddModel>> Reports(int projectId)
+        {
+            try
+            {
+                var data = _db.Project.Reports(projectId);
+                return new DbResponse<List<ProjectReportsAddModel>>(true, "Success", data);
+            }
+            catch (Exception e)
+            {
+                return new DbResponse<List<ProjectReportsAddModel>>(false, e.Message);
             }
         }
 

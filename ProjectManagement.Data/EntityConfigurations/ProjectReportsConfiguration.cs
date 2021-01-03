@@ -11,6 +11,9 @@ namespace ProjectManagement.Data
                 .IsRequired()
                 .HasMaxLength(128);
 
+            builder.Property(r => r.FileTitle)
+                .HasMaxLength(128);
+
             builder.Property(r => r.FileUrl)
                 .IsRequired()
                 .HasMaxLength(255);

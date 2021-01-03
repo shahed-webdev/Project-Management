@@ -12,13 +12,26 @@ namespace ProjectManagement.ViewModel
             CreateMap<Project, ProjectEditViewModel>().ReverseMap();
 
             CreateMap<ProjectBeneficiary, ProjectBeneficiaryAddModel>().ReverseMap();
-            CreateMap<ProjectReports, ProjectReportsAddModel>().ReverseMap();
+            CreateMap<ProjectReportsAddModel, ProjectReports>();
+            CreateMap<ProjectReports, ProjectReportsAddModel>()
+                .ForMember(d => d.ReportName, opt => opt.MapFrom(c => c.ReportType.ReportName));
 
             CreateMap<ProjectAddModel, Project>()
-                .ForMember(d => d.ProjectReports, opt => opt.MapFrom(c => c.ProjectReports))
-                .ForMember(d => d.ProjectBeneficiaries, opt => opt.MapFrom(c => c.ProjectBeneficiaries))
                 .ForMember(d => d.ProjectDonors, opt => opt.MapFrom(c => c.ProjectDonors.Select(d => new ProjectDonor { DonorId = d }).ToList()))
                 .ForMember(d => d.ProjectCities, opt => opt.MapFrom(c => c.CityIds.Select(d => new ProjectCity { CityId = d }).ToList())).ReverseMap();
+
+
+
+            CreateMap<Project, ProjectEditViewModel>()
+                .ForMember(d => d.ProjectDonors, opt => opt.MapFrom(c => c.ProjectDonors.Select(d => d.Donor).ToList()))
+                .ForMember(d => d.CityIds, opt => opt.MapFrom(c => c.ProjectCities.Select(d => d.CityId).ToArray()))
+                .ForMember(d => d.Locations, opt => opt.MapFrom(c => c.ProjectCities));
+
+            CreateMap<ProjectCity, CityWithStateCountryViewModel>()
+                .ForMember(d => d.CityName, opt => opt.MapFrom(c => c.City.CityName))
+                .ForMember(d => d.StateName, opt => opt.MapFrom(c => c.City.State.StateName))
+                .ForMember(d => d.CountryName, opt => opt.MapFrom(c => c.City.State.Country.CountryName));
+
 
 
         }
