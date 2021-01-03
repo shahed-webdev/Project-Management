@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Data;
 using ProjectManagement.ViewModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectManagement.Repository
@@ -23,7 +24,7 @@ namespace ProjectManagement.Repository
                     .FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
-                log.LogFrame3rdStepCities = model.CityIds.Select(c => new LogFrame3rdStepCity { CityId = c }).ToList();
+                log.LogFrame3rdStepCities = model.CityIds is null ? new List<LogFrame3rdStepCity>() : model.CityIds.Select(c => new LogFrame3rdStepCity { CityId = c }).ToList();
                 log.BaselineValue = model.BaselineValue;
                 log.TargetValue = model.TargetValue;
                 log.AchieveValue = model.AchieveValue;
@@ -41,7 +42,7 @@ namespace ProjectManagement.Repository
                 log.CurrencyMeasuringUnit = model.CurrencyMeasuringUnit;
                 log.SummaryOrRemarks = model.SummaryOrRemarks;
                 log.ReasonOfDeviation = model.ReasonOfDeviation;
-                log.LogFrame3rdStepParticipants = model.ProjectParticipants
+                log.LogFrame3rdStepParticipants = model.ProjectParticipants is null ? new List<LogFrame3rdStepParticipant>() : model.ProjectParticipants
                     .Select(p => _mapper.Map<LogFrame3rdStepParticipant>(p)).ToList();
 
 
