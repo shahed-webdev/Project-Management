@@ -8,7 +8,7 @@ namespace ProjectManagement.ViewModel
         public LogFrame1stStepModel()
         {
             ProjectParticipants = new HashSet<LogFrameParticipantsModel>();
-            Cities = new HashSet<CityWithStateCountryViewModel>();
+            Locations = new HashSet<CityWithStateCountryViewModel>();
         }
         public int ProjectId { get; set; }
         public int[] CityIds { get; set; }
@@ -28,7 +28,7 @@ namespace ProjectManagement.ViewModel
         public string Location { get; set; }
         public string PrimarySource { get; set; }
         public ICollection<LogFrameParticipantsModel> ProjectParticipants { get; set; }
-        public ICollection<CityWithStateCountryViewModel> Cities { get; set; }
+        public ICollection<CityWithStateCountryViewModel> Locations { get; set; }
 
     }
 }

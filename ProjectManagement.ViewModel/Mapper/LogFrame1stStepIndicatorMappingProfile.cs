@@ -10,9 +10,12 @@ namespace ProjectManagement.ViewModel
         {
             CreateMap<LogFrame1stStepModel, LogFrame1stStepIndicator>()
                 .ForMember(d => d.LogFrame1stStepParticipants, opt => opt.MapFrom(c => c.ProjectParticipants))
-                .ForMember(d => d.LogFrame1stStepCities, opt => opt.MapFrom(c => c.Cities))
-                .ForMember(d => d.LogFrame1stStepCities, opt => opt.MapFrom(c => c.CityIds.Select(d => new LogFrame1stStepCity() { CityId = d }).ToList()))
-                .ReverseMap();
+                .ForMember(d => d.LogFrame1stStepCities, opt => opt.MapFrom(c => c.CityIds.Select(d => new LogFrame1stStepCity() { CityId = d }).ToList()));
+
+            CreateMap<LogFrame1stStepIndicator, LogFrame1stStepModel>()
+                .ForMember(d => d.ProjectParticipants, opt => opt.MapFrom(c => c.LogFrame1stStepParticipants))
+                .ForMember(d => d.Locations, opt => opt.MapFrom(c => c.LogFrame1stStepCities))
+                .ForMember(d => d.CityIds, opt => opt.MapFrom(c => c.LogFrame1stStepCities.Select(l => l.CityId).ToArray()));
 
             CreateMap<LogFrame1stStepParticipant, LogFrameParticipantsModel>()
                 .ForMember(d => d.BeneficiaryType, opt => opt.MapFrom(c => c.ProjectBeneficiaryType.BeneficiaryType));
