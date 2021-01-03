@@ -15,4 +15,5 @@
 .progressbar li::before:hover { cursor: pointer; background: #33b5e5; }
 
 .hide-form{ display: none }
-.active-form{ display: block; -webkit-animation: fadeIn 2s; animation: fadeIn 1s; }​
+.active-form{ display: block; -webkit-animation: fadeIn 2s; animation: fadeIn 1s; }
+​
