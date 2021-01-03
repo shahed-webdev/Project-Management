@@ -35,6 +35,27 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse CountryDelete(int countryId)
+        {
+            try
+            {
+                if (_db.Country.IsNull(countryId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Country.IsRelatedDataExist(countryId))
+                    return new DbResponse(false, $"Already use in State");
+
+                _db.Country.Delete(countryId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse CountryEdit(CountryViewModel model)
         {
             try
@@ -98,6 +119,27 @@ namespace ProjectManagement.BusinessLogic
                 _db.State.Add(model);
                 _db.SaveChanges();
 
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
+        public DbResponse StateDelete(int stateId)
+        {
+            try
+            {
+                if (_db.State.IsNull(stateId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.State.IsRelatedDataExist(stateId))
+                    return new DbResponse(false, $"Already use in City");
+
+                _db.State.Delete(stateId);
+                _db.SaveChanges();
 
                 return new DbResponse(true, "Success");
             }
@@ -171,6 +213,27 @@ namespace ProjectManagement.BusinessLogic
                 _db.City.Add(model);
                 _db.SaveChanges();
 
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
+        public DbResponse CityDelete(int cityId)
+        {
+            try
+            {
+                if (_db.City.IsNull(cityId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.City.IsRelatedDataExist(cityId))
+                    return new DbResponse(false, $"Already use in projects");
+
+                _db.City.Delete(cityId);
+                _db.SaveChanges();
 
                 return new DbResponse(true, "Success");
             }

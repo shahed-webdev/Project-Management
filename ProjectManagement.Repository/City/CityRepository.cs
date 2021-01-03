@@ -20,9 +20,20 @@ namespace ProjectManagement.Repository
             Db.City.Add(city);
         }
 
-        public bool IsNull(int id)
+        public void Delete(int cityId)
         {
-            return !Db.City.Any(c => c.CityId == id);
+            var city = Db.City.Find(cityId);
+            Db.City.Remove(city);
+        }
+
+        public bool IsRelatedDataExist(int cityId)
+        {
+            return Db.ProjectCity.Any(p => p.CityId == cityId);
+        }
+
+        public bool IsNull(int cityId)
+        {
+            return !Db.City.Any(c => c.CityId == cityId);
         }
 
         public bool IsExist(int stateId, string city)

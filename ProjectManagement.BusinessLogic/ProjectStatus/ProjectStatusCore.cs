@@ -35,6 +35,27 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Delete(int projectStatusId)
+        {
+            try
+            {
+                if (_db.ProjectStatus.IsNull(projectStatusId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ProjectStatus.IsRelatedDataExist(projectStatusId))
+                    return new DbResponse(false, $"Already use in Project");
+
+                _db.ProjectStatus.Delete(projectStatusId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse Edit(ProjectStatusViewModel model)
         {
             try

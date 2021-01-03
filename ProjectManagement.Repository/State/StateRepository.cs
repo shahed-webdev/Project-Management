@@ -19,6 +19,17 @@ namespace ProjectManagement.Repository
             Db.State.Add(state);
         }
 
+        public void Delete(int stateId)
+        {
+            var state = Db.State.Find(stateId);
+            Db.State.Remove(state);
+        }
+
+        public bool IsRelatedDataExist(int stateId)
+        {
+            return Db.City.Any(c => c.StateId == stateId);
+        }
+
         public bool IsNull(int id)
         {
             return !Db.State.Any(c => c.StateId == id);

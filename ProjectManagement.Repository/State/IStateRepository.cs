@@ -7,6 +7,8 @@ namespace ProjectManagement.Repository
     {
 
         void Add(StateAddModel model);
+        void Delete(int stateId);
+        bool IsRelatedDataExist(int stateId);
         bool IsNull(int id);
         bool IsExist(int countryId, string state);
         bool IsExist(int countryId, string state, int updateId);

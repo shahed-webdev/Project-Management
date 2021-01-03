@@ -36,6 +36,27 @@ namespace ProjectManagement.BusinessLogic
 
         }
 
+        public DbResponse Delete(int reportTypeId)
+        {
+            try
+            {
+                if (_db.ReportType.IsNull(reportTypeId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.ReportType.IsRelatedDataExist(reportTypeId))
+                    return new DbResponse(false, $"Already use in Project");
+
+                _db.ReportType.Delete(reportTypeId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse Edit(ReportTypeViewModel model)
         {
             try

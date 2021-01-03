@@ -36,6 +36,27 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
+        public DbResponse Delete(int donorId)
+        {
+            try
+            {
+                if (_db.Donor.IsNull(donorId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Donor.IsRelatedDataExist(donorId))
+                    return new DbResponse(false, $"Already use in Project");
+
+                _db.Donor.Delete(donorId);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
+        }
+
         public DbResponse Edit(DonorViewModel model)
         {
             try

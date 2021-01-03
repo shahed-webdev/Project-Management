@@ -6,7 +6,9 @@ namespace ProjectManagement.Repository
     public interface ICountryRepository
     {
         void Add(CountryAddModel model);
-        bool IsNull(int id);
+        void Delete(int countryId);
+        bool IsRelatedDataExist(int countryId);
+        bool IsNull(int countryId);
         bool IsExist(string country);
         bool IsExist(string country, int updateId);
         List<CountryViewModel> List();
