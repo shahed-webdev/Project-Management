@@ -6,7 +6,7 @@ namespace ProjectManagement.ViewModel
     public class LogFrame3rdStepModel
     {
         public int ProjectId { get; set; }
-        public int? CityId { get; set; }
+        public int[] CityIds { get; set; }
         public decimal? BaselineValue { get; set; }
         public decimal? TargetValue { get; set; }
         public decimal? AchieveValue { get; set; }

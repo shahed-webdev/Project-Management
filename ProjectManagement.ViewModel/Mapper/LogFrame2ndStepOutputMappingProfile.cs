@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProjectManagement.Data;
+using System.Linq;
 
 namespace ProjectManagement.ViewModel
 {
@@ -7,8 +8,9 @@ namespace ProjectManagement.ViewModel
     {
         public LogFrame2ndStepOutputMappingProfile()
         {
-            CreateMap<LogFrame2ndStepOutput, LogFrame2ndStepModel>()
-                .ForMember(d => d.ProjectParticipants, opt => opt.MapFrom(c => c.LogFrame2ndStepParticipants))
+            CreateMap<LogFrame2ndStepModel, LogFrame2ndStepOutput>()
+                .ForMember(d => d.LogFrame2ndStepParticipants, opt => opt.MapFrom(c => c.ProjectParticipants))
+                .ForMember(d => d.LogFrame2ndStepCities, opt => opt.MapFrom(c => c.CityIds.Select(d => new LogFrame2ndStepCity() { CityId = d }).ToList()))
                 .ReverseMap();
 
             CreateMap<LogFrame2ndStepParticipant, LogFrameParticipantsModel>()

@@ -20,7 +20,7 @@ namespace ProjectManagement.Repository
                 var log = Db.LogFrame2ndStepOutput.Include(l => l.LogFrame2ndStepParticipants).FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
-                log.CityId = model.CityId;
+                log.LogFrame2ndStepCities = model.CityIds.Select(c => new LogFrame2ndStepCity { CityId = c }).ToList();
                 log.Output = model.Output;
                 log.OutputBaseIndicator = model.OutputBaseIndicator;
                 log.BaselineValue = model.BaselineValue;

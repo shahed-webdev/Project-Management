@@ -8,11 +8,10 @@ namespace ProjectManagement.Data
         public LogFrame1stStepIndicator()
         {
             LogFrame1stStepParticipants = new HashSet<LogFrame1stStepParticipant>();
+            LogFrame1stStepCities = new HashSet<LogFrame1stStepCity>();
         }
         public int LogFrame1stStepIndicatorId { get; set; }
         public int ProjectId { get; set; }
-        public int? CityId { get; set; }
-        public City City { get; set; }
         public string ProjectGoal { get; set; }
         public string ResultBaseIndicator { get; set; }
         public string Outcome { get; set; }
@@ -30,6 +29,7 @@ namespace ProjectManagement.Data
         public string PrimarySource { get; set; }
         public Project Project { get; set; }
         public ICollection<LogFrame1stStepParticipant> LogFrame1stStepParticipants { get; set; }
+        public ICollection<LogFrame1stStepCity> LogFrame1stStepCities { get; set; }
 
     }
 }

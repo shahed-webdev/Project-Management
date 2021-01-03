@@ -8,11 +8,10 @@ namespace ProjectManagement.Data
         public LogFrame2ndStepOutput()
         {
             LogFrame2ndStepParticipants = new HashSet<LogFrame2ndStepParticipant>();
+            LogFrame2ndStepCities = new HashSet<LogFrame2ndStepCity>();
         }
         public int LogFrame2ndStepOutputId { get; set; }
         public int ProjectId { get; set; }
-        public int? CityId { get; set; }
-        public City City { get; set; }
         public string Output { get; set; }
         public string OutputBaseIndicator { get; set; }
         public decimal? BaselineValue { get; set; }
@@ -29,5 +28,6 @@ namespace ProjectManagement.Data
         public Project Project { get; set; }
 
         public ICollection<LogFrame2ndStepParticipant> LogFrame2ndStepParticipants { get; set; }
+        public ICollection<LogFrame2ndStepCity> LogFrame2ndStepCities { get; set; }
     }
 }
