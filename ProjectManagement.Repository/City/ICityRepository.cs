@@ -6,7 +6,9 @@ namespace ProjectManagement.Repository
     public interface ICityRepository
     {
         void Add(CityAddModel model);
-        bool IsNull(int id);
+        void Delete(int cityId);
+        bool IsRelatedDataExist(int cityId);
+        bool IsNull(int cityId);
         bool IsExist(int stateId, string city);
         bool IsExist(int stateId, string city, int updateId);
         List<CityViewModel> List(int stateId);

@@ -19,12 +19,28 @@ namespace ProjectManagement.Repository
             Db.ProjectStatus.Add(status);
         }
 
+        public void Delete(int projectStatusId)
+        {
+            var status = Db.ProjectStatus.Find(projectStatusId);
+            Db.ProjectStatus.Remove(status);
+        }
+
+        public bool IsRelatedDataExist(int projectStatusId)
+        {
+            return Db.Project.Any(p => p.ProjectStatusId == projectStatusId);
+        }
+
         public void Edit(ProjectStatusViewModel model)
         {
             var status = Db.ProjectStatus.Find(model.ProjectStatusId);
             if (status == null) return;
             status.Status = model.Status;
             Db.ProjectStatus.Update(status);
+        }
+
+        public bool IsNull(int projectStatusId)
+        {
+            return !Db.ProjectStatus.Any(s => s.ProjectStatusId == projectStatusId);
         }
 
         public bool IsExist(string status)

@@ -19,6 +19,18 @@ namespace ProjectManagement.Repository
             Db.ReportType.Add(reportType);
         }
 
+        public void Delete(int reportTypeId)
+        {
+            var reportType = Db.ReportType.Find(reportTypeId);
+            Db.ReportType.Remove(reportType);
+
+        }
+
+        public bool IsRelatedDataExist(int reportTypeId)
+        {
+            return Db.ProjectReports.Any(r => r.ReportTypeId == reportTypeId);
+        }
+
         public void Edit(ReportTypeViewModel model)
         {
             var reportType = Db.ReportType.Find(model.ReportTypeId);
@@ -26,6 +38,11 @@ namespace ProjectManagement.Repository
 
             reportType.ReportName = model.ReportName;
             Db.ReportType.Update(reportType);
+        }
+
+        public bool IsNull(int reportTypeId)
+        {
+            return !Db.ReportType.Any(r => r.ReportTypeId == reportTypeId);
         }
 
         public bool IsExist(string reportName)

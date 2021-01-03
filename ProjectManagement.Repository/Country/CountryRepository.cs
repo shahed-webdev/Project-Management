@@ -19,9 +19,20 @@ namespace ProjectManagement.Repository
             Db.Country.Add(country);
         }
 
-        public bool IsNull(int id)
+        public void Delete(int countryId)
         {
-            return !Db.Country.Any(c => c.CountryId == id);
+            var country = Db.Country.Find(countryId);
+            Db.Country.Remove(country);
+        }
+
+        public bool IsRelatedDataExist(int countryId)
+        {
+            return Db.State.Any(s => s.CountryId == countryId);
+        }
+
+        public bool IsNull(int countryId)
+        {
+            return !Db.Country.Any(c => c.CountryId == countryId);
         }
 
         public bool IsExist(string country)

@@ -7,6 +7,7 @@ namespace ProjectManagement.BusinessLogic
     public interface IDonorCore
     {
         DbResponse Add(DonorAddModel model);
+        DbResponse Delete(int donorId);
         DbResponse Edit(DonorViewModel model);
         DbResponse<List<DonorViewModel>> List();
         DbResponse<List<DDL>> Ddl();

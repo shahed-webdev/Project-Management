@@ -21,6 +21,17 @@ namespace ProjectManagement.Repository
             Db.Donor.Add(donor);
         }
 
+        public void Delete(int donorId)
+        {
+            var donor = Db.Donor.Find(donorId);
+            Db.Donor.Remove(donor);
+        }
+
+        public bool IsRelatedDataExist(int donorId)
+        {
+            return Db.ProjectDonor.Any(d => d.DonorId == donorId);
+        }
+
         public void Edit(DonorViewModel model)
         {
             var donor = Db.Donor.Find(model.DonorId);
@@ -32,6 +43,11 @@ namespace ProjectManagement.Repository
             donor.Phone = model.Phone;
 
             Db.Donor.Update(donor);
+        }
+
+        public bool IsNull(int donorId)
+        {
+            return !Db.Donor.Any(c => c.DonorId == donorId);
         }
 
         public bool IsExistEmail(string email)
