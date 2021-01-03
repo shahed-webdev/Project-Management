@@ -5,6 +5,11 @@ namespace ProjectManagement.ViewModel
 {
     public class LogFrame3rdStepModel
     {
+        public LogFrame3rdStepModel()
+        {
+            ProjectParticipants = new HashSet<LogFrameParticipantsModel>();
+            Locations = new HashSet<CityWithStateCountryViewModel>();
+        }
         public int ProjectId { get; set; }
         public int[] CityIds { get; set; }
         public decimal? BaselineValue { get; set; }
@@ -25,5 +30,6 @@ namespace ProjectManagement.ViewModel
         public string SummaryOrRemarks { get; set; }
         public string ReasonOfDeviation { get; set; }
         public ICollection<LogFrameParticipantsModel> ProjectParticipants { get; set; }
+        public ICollection<CityWithStateCountryViewModel> Locations { get; set; }
     }
 }
