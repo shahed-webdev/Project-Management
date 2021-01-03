@@ -107,39 +107,5 @@ namespace ProjectManagement.Controllers
 
             return RedirectToAction("Index", "Account");
         }
-
-
-        // GET: SubAdminSignUp
-        public IActionResult SubAdminSignUp()
-        {
-            return View();
-        }
-
-        // POST: SubAdminSignUp
-        [HttpPost]
-        public async Task<IActionResult> SubAdminSignUp(SubAdminRegisterViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, model.Type.ToString()).ConfigureAwait(false);
-
-                // _RegistrationCore.AddSubAdmin(model);
-                return RedirectToAction("List", "SubAdmin");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
     }
 }

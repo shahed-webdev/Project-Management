@@ -169,14 +169,14 @@
                 <legend class="w-auto m-0">Beneficiary</legend>
                 <div class="row">
                     <div class="col-lg-4">
-                        <select id="selectDirectIndirectType" class="mdb-select md-form">
+                        <select asp-for="DirectIndirectType" id="selectDirectIndirectType" class="mdb-select md-form">
                             <option value="" disabled selected>Type</option>
                             <option value="Direct">Direct</option>
                             <option value="Indirect">Indirect</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <select id="selectIndividualHouseholdType" class="mdb-select md-form">
+                        <select asp-for="IndividualHouseholdType" id="selectIndividualHouseholdType" class="mdb-select md-form">
                             <option value="" disabled selected>Type</option>
                             <option value="Individual">Individual</option>
                             <option value="Household">Household</option>
