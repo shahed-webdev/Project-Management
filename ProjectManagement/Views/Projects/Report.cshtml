@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Report";
+    Layout = "_AdminLayout";
+}
+
+<div class="m-md-3">
+    <h4 class="page-header mt-3">Project Report</h4>
+    <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
+
+    <div class="card card-body">
+        <div class="md-form">
+            <select id="selectProjectName" name="ProjectId" asp-items="@ViewBag.ProjectName" class="mdb-select" searchable="Search here.." required>
+                <option value="" disabled selected>Choose Project Name</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('.mdb-select').materialSelect();
+        });
+    </script>
+}

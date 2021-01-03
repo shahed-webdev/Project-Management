@@ -76,7 +76,7 @@
         const modalContainer = $("#updateModal");
 
         //insert
-        formAdd.addEventListener("submit", function (evt) {
+        formAdd.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const model = { CountryName: this.inputCountryName.value }
@@ -85,7 +85,7 @@
                 url: "/Settings/PostCountry",
                 type: "POST",
                 data: model,
-                success: function (response) {
+                success: function(response) {
                     if (response.IsSuccess) {
                         location.reload();
                         return;
@@ -93,14 +93,14 @@
 
                     error.textContent = response.Message;
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
         });
 
         //on edit/delete
-        listContainer.addEventListener("click", function (evt) {
+        listContainer.addEventListener("click", function(evt) {
             const element = evt.target;
             const onUpdate = element.classList.contains("btnUpdate");
             const onDelete = element.classList.contains("delete");
@@ -115,11 +115,14 @@
             //delete
             if (onDelete) {
                 $.ajax({
-                    url: "/Settings/DeleteProjectStatus",
+                    url: "/Settings/DeleteCountry",
                     type: "POST",
                     data: { id: element.getAttribute("data-id") },
                     success: response => {
-                        this.parentElement.parentElement.remove();
+                        if (response.IsSuccess)
+                            element.parentElement.parentElement.remove();
+
+                        $.notify(response.Message, response.IsSuccess ? "success" : "error");
                     },
                     error: err => console.log(err)
                 });
@@ -127,25 +130,27 @@
         });
 
         //update
-        formUpdate.addEventListener("submit", function (evt) {
+        formUpdate.addEventListener("submit", function(evt) {
             evt.preventDefault();
 
             const model = {
-                ProjectStatusId: this.hiddenUpdateId.value,
-                Status: this.inputUpdatedData.value
+                CountryId: this.hiddenUpdateId.value,
+                CountryName: this.inputUpdatedData.value
             }
 
             $.ajax({
-                url: "/Settings/UpdateProjectStatus",
+                url: "/Settings/UpdateCountry",
                 type: "POST",
                 data: model,
-                success: function (response) {
-                    if (response.IsSuccess)
+                success: function(response) {
+                    if (response.IsSuccess) {
                         location.reload();
+                        return;
+                    }
 
                     error2.textContent = response.Message;
                 },
-                error: function (err) {
+                error: function(err) {
                     console.log(err);
                 }
             });
