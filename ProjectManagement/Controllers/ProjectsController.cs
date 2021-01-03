@@ -142,6 +142,20 @@ namespace ProjectManagement.Controllers
         }
 
 
+        /***update project**/
+        public IActionResult UpdateProject(int? id)
+        {
+            if (!id.HasValue) return RedirectToAction($"Features");
+
+            var response = _sector.Get(id.GetValueOrDefault());
+            if (!response.IsSuccess) return RedirectToAction($"Features");
+
+            ViewBag.ProjectSector = response.Data;
+
+            return View();
+        }
+
+
         /***Report****/
         public IActionResult Report(int? id)
         {
