@@ -17,7 +17,10 @@ namespace ProjectManagement.Repository
         {
             if (IsExist(model.ProjectId))
             {
-                var log = Db.LogFrame3rdStepActivity.Include(l => l.LogFrame3rdStepParticipants).FirstOrDefault(l => l.ProjectId == model.ProjectId);
+                var log = Db.LogFrame3rdStepActivity
+                    .Include(l => l.LogFrame3rdStepParticipants)
+                    .Include(l => l.LogFrame3rdStepCities)
+                    .FirstOrDefault(l => l.ProjectId == model.ProjectId);
 
                 log.ProjectId = model.ProjectId;
                 log.LogFrame3rdStepCities = model.CityIds.Select(c => new LogFrame3rdStepCity { CityId = c }).ToList();
