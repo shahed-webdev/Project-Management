@@ -96,7 +96,7 @@ namespace ProjectManagement.BusinessLogic
             try
             {
                 var data = _db.Project.Reports(projectId);
-                return new DbResponse<List<ProjectReportsAddModel>>(true, "Success", data);
+                return data is null ? new DbResponse<List<ProjectReportsAddModel>>(false, "No Data Found") : new DbResponse<List<ProjectReportsAddModel>>(true, "Success", data);
             }
             catch (Exception e)
             {
