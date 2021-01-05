@@ -31,12 +31,12 @@ namespace ProjectManagement.Repository
         public ProjectEditViewModel Get(int projectId)
         {
             return Db.Project
-                .Include(p => p.ProjectDonors)
-                .ThenInclude(d => d.Donor)
-                .Include(p => p.ProjectCities)
-                .ThenInclude(c => c.City)
-                .Include(p => p.ProjectBeneficiaries)
-                .Include(p => p.ProjectReports)
+                //.Include(p => p.ProjectDonors)
+                //.ThenInclude(d => d.Donor)
+                //.Include(p => p.ProjectCities)
+                //.ThenInclude(c => c.City)
+                //.Include(p => p.ProjectBeneficiaries)
+                //.Include(p => p.ProjectReports)
                 .Where(p => p.ProjectId == projectId)
                 .ProjectTo<ProjectEditViewModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefault();

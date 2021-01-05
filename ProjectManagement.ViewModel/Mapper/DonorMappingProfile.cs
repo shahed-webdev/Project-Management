@@ -9,6 +9,11 @@ namespace ProjectManagement.ViewModel
         {
             CreateMap<Donor, DonorAddModel>().ReverseMap();
             CreateMap<Donor, DonorViewModel>().ReverseMap();
+            CreateMap<ProjectDonor, DonorViewModel>()
+                .ForMember(d => d.Email, opt => opt.MapFrom(c => c.Donor.Email))
+                .ForMember(d => d.Name, opt => opt.MapFrom(c => c.Donor.Name))
+                .ForMember(d => d.Phone, opt => opt.MapFrom(c => c.Donor.Phone))
+                .ReverseMap();
 
         }
 

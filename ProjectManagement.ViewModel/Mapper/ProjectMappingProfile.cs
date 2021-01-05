@@ -23,8 +23,8 @@ namespace ProjectManagement.ViewModel
 
 
             CreateMap<Project, ProjectEditViewModel>()
-                .ForMember(d => d.ProjectDonors, opt => opt.MapFrom(c => c.ProjectDonors.Select(d => d.Donor).ToList()))
                 .ForMember(d => d.CityIds, opt => opt.MapFrom(c => c.ProjectCities.Select(d => d.CityId).ToArray()))
+                .ForMember(d => d.ProjectDonorIds, opt => opt.MapFrom(c => c.ProjectDonors.Select(d => d.DonorId).ToArray()))
                 .ForMember(d => d.Locations, opt => opt.MapFrom(c => c.ProjectCities));
 
             CreateMap<ProjectCity, CityWithStateCountryViewModel>()
