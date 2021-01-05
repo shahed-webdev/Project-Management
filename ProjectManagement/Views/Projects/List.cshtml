@@ -23,6 +23,7 @@
                     <th class="text-right"><strong>Total Expenditure</strong></th>
                     <th class="text-center"><strong>Submission Date</strong></th>
                     <th class="text-center"><strong>Update</strong></th>
+                    <th class="text-center"><strong>Delete</strong></th>
                 </tr>
             </thead>
             <tbody id="tBody">
@@ -44,6 +45,9 @@
                         </td>
                         <td class="text-center">
                             <a class="fas fa-edit" href="/Projects/UpdateProject/@item.ProjectSectorId/@item.ProjectId"></a>
+                        </td>
+                        <td class="text-center">
+                            <a class="fas fa-trash delete red-text" href="/Projects/DeleteProject/@item.ProjectId"></a>
                         </td>
                     </tr>
                 }
@@ -121,6 +125,31 @@
                     }
 
                     error.textContent = response.Message;
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        //delete
+        tBody.addEventListener("click", function (evt) {
+            const element = evt.target;
+
+            const isDelete = element.classList.contains("delete");
+            if (!isDelete) return;
+
+            evt.preventDefault();
+
+            $.ajax({
+                url: element.href,
+                success: function (response) {
+                    $.notify(response.Message, response.IsSuccess ? "success" : "error");
+
+                    if (response.IsSuccess) {
+                        element.parentElement.parentElement.remove();
+                        return;
+                    }
                 },
                 error: function (err) {
                     console.log(err);

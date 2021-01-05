@@ -445,6 +445,7 @@ formStep1.addEventListener("submit", function (evt) {
     model.ProjectReports.forEach((item, i) => {
         formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
         formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
+        formData.append(`ProjectReports[${i}].FileTitle`, item.FileTitle);
     });
 
     this.btnSubmit1.disabled = true;
@@ -513,11 +514,19 @@ formStep2.addEventListener("submit", function (evt) {
     const formData = new FormData();
     formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
     formData.append('ProjectStatusId', formStep1.selectStatus.value);
-    formData.append('CityId', formStep1.selectCity.value);
     formData.append('Title', formStep1.inputTitle.value);
     formData.append('Description', formStep1.inputDescription.value);
-    formData.append('TotalBudget', formStep1.inputTotalBudget.value);
+    formData.append('Keyword', formStep1.inputKeyword.value);
+    formData.append('DonorType', formStep1.inputDonorType.value);
+
+    formData.append('TotalBudgetBdt', formStep1.inputTotalBudgetBdt.value);
+    formData.append('TotalBudgetUsd', formStep1.inputTotalBudgetUsd.value);
     formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
+
+    formData.append('DirectIndirectType', formStep1.selectDirectIndirectType.value);
+    formData.append('IndividualHouseholdType', formStep1.selectIndividualHouseholdType.value);
+    formData.append('Count', formStep1.inputCount.value);
+    formData.append('TotalCount', formStep1.inputTotalCount.value);
 
     if (model.FilePhoto)
         formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
@@ -529,15 +538,21 @@ formStep2.addEventListener("submit", function (evt) {
         formData.append(`ProjectDonors[${i}]`, item);
     });
 
+    model.CityIds.forEach((item, i) => {
+        formData.append(`CityIds[${i}]`, item);
+    });
+
     model.ProjectBeneficiaries.forEach((item, i) => {
         formData.append(`ProjectBeneficiaries[${i}].ProjectBeneficiaryTypeId`, item.ProjectBeneficiaryTypeId);
         formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
     });
 
+
     formData.append('SubmissionDate', formStep2.inputSubmissionDate.value);
     model.ProjectReports.forEach((item, i) => {
         formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
         formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
+        formData.append(`ProjectReports[${i}].FileTitle`, item.FileTitle);
     });
 
 

@@ -50,13 +50,13 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputStartDate" value="@Model.StartDate" class="form-control datepicker">
+                        <input type="text" id="inputStartDate" value="@Model.StartDate.Value.ToString("d MMM yyyy")" class="form-control datepicker">
                         <label for="inputStartDate">Start Date</label>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@Model.EndDate">
+                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@Model.EndDate.Value.ToString("d MMM yyyy")e">
                         <label for="inputEndDate">End Date</label>
                     </div>
                 </div>
@@ -75,7 +75,14 @@
                         <input type="text" id="inputDonors" autocomplete="off" class="form-control">
                         <label for="inputDonors">Find Donor</label>
                     </div>
-                    <div id="donor-container" class="mb-4"></div>
+                    <div id="donor-container" class="mb-4">
+                        @foreach (var donor in Model.ProjectDonors)
+                        {
+                            <span>
+                                <strong>@donor.Name</strong><i data-id="@donor.DonorId" class="delete fas fa-times-circle"></i>
+                            </span>
+                        }
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="md-form">
@@ -160,7 +167,7 @@
                             </div>
                         </div>
                         <span id="imageError" class="field-validation-error"></span>
-                        <img src="@Model.FilePhoto" alt=""/>
+                        <img src="@Model.FilePhoto" alt="" />
                     </div>
                 </div>
             </div>
@@ -241,7 +248,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="md-form">
-                        <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@Model.SubmissionDate">
+                        <input type="text" id="inputSubmissionDate" class="form-control datepicker" value="@Model.SubmissionDate.Value.ToString("d MMM yyyy")">
                         <label for="inputSubmissionDate">Submission Date</label>
                     </div>
                 </div>
@@ -279,8 +286,11 @@
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/update-project.js"></script>
+    <script src="~/pages-js/update-project.js?v=1"></script>
     <script>
+        model.ProjectDonors = @Html.Raw(Json.Serialize(Model.ProjectDonors));
+
+
         $(function () {
             $('.mdb-select').materialSelect();
             $('.datepicker').pickadate();

@@ -164,6 +164,14 @@ namespace ProjectManagement.Controllers
         }
 
 
+        //delete project
+        public IActionResult DeleteProject(int id)
+        {
+            var response = _project.Delete(id);
+            return Json(response);
+        }
+
+
         /***Report****/
         public IActionResult Report(int? id)
         {
@@ -176,6 +184,13 @@ namespace ProjectManagement.Controllers
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
 
             return View();
+        }
+
+        //get report
+        public IActionResult GetReport(int id)
+        {
+            var response = _project.Reports(id);
+            return Json(response);
         }
     }
 }
