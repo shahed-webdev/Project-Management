@@ -30,6 +30,7 @@ namespace ProjectManagement.ViewModel
         public int TotalCount { get; set; }
         public string Photo { get; set; }
         public IFormFile FilePhoto { get; set; }
+        public string FilePhotoUrl { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? SubmissionDate { get; set; }
