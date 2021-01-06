@@ -101,7 +101,10 @@ namespace ProjectManagement.BusinessLogic
                 if (model.FilePhoto != null)
                     model.Photo = FileHandler.UploadedFile(model.FilePhoto, webRootPath, "projectReports");
 
-
+                foreach (var report in model.DeletedReports)
+                {
+                    FileHandler.DeleteFile(webRootPath, "projectReports", report.FileName);
+                }
 
                 _db.Project.Edit(model);
                 _db.SaveChanges();

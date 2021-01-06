@@ -65,7 +65,7 @@ namespace ProjectManagement.Repository
             if (model.DeletedReports != null)
             {
                 reports = project.ProjectReports
-                   .Where(p => model.DeletedReports.Select(r => r.ReportTypeId).Contains(p.ReportTypeId)).ToList();
+                   .Where(p => !model.DeletedReports.Select(r => r.ReportTypeId).Contains(p.ReportTypeId)).ToList();
             }
 
             if (model.AddedReports != null)
