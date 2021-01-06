@@ -23,5 +23,19 @@ namespace ProjectManagement.BusinessLogic
 
             return fileName;
         }
+
+
+        public static void DeleteFile(string webRootPath, string subPath, string fileName)
+        {
+            if (fileName == null) return;
+
+            var uploadsFolder = Path.Combine(webRootPath, $"FILES/{subPath}");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(uploadsFolder, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(uploadsFolder, fileName));
+            }
+        }
     }
 }
