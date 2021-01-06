@@ -63,7 +63,7 @@ namespace ProjectManagement.Repository
             if (model.DeletedReports != null)
             {
                 reports = project.ProjectReports
-                   .Where(p => !model.DeletedReports.Select(r => r.ReportTypeId).Contains(p.ReportTypeId)).ToList();
+                   .Where(p => !model.DeletedReports.Select(r => r.ReportTypeId).Contains(p.ReportTypeId))?.ToList();
             }
 
             if (model.AddedReports != null)
@@ -73,7 +73,7 @@ namespace ProjectManagement.Repository
             }
 
 
-            if (reports.Count > 0)
+            if (reports.Count > 0 || model.DeletedReports.Count > 0)
                 project.ProjectReports = reports;
 
             project.ProjectBeneficiaries = model.ProjectBeneficiaries != null ? model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList() : new List<ProjectBeneficiary>();
