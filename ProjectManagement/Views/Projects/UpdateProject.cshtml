@@ -17,9 +17,6 @@
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
     <input id="hiddenProjectId" type="hidden" value="@Model.ProjectId" />
 
-    <div id="successMessage" class="alert alert-success text-center" role="alert">
-        Project Submitted Successfully!
-    </div>
 
     <form id="formStep1">
         <div class="card card-body">
@@ -319,14 +316,12 @@
             <button id="btnSubmit2" type="submit" class="btn btn-custom-bg">Submit</button>
         </div>
     </form>
-
-    <p id="submitError" class="red-text text-right"></p>
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/update-project.js?v=1.1"></script>
+    <script src="~/pages-js/update-project.js?v=001"></script>
     <script>
-        model.ProjectDonors = @Html.Raw(Json.Serialize(Model.ProjectDonorIds));
+        model.ProjectDonorIds = @Html.Raw(Json.Serialize(Model.ProjectDonorIds));
         model.CityIds = @Html.Raw(Json.Serialize(Model.CityIds));
         model.ProjectBeneficiaries = @Html.Raw(Json.Serialize(Model.ProjectBeneficiaries));
         model.ProjectReports = @Html.Raw(Json.Serialize(Model.ProjectReports));

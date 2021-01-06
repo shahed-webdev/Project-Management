@@ -22,14 +22,14 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             $('.mdb-select').materialSelect();
         });
 
         const selectProject = document.getElementById("selectProjectName");
         const listItem = document.getElementById("listItem");
 
-        selectProject.addEventListener("change", function() {
+        selectProject.addEventListener("change", function () {
             listItem.innerHTML = "";
 
             $.ajax({
@@ -42,8 +42,11 @@
                     response.Data.forEach(item => {
                         const li = document.createElement("li");
                         li.className = "list-group-item d-flex justify-content-between align-items-center";
-                        li.innerHTML = `<strong>${item.ReportName}</strong>
-                                        <a target="_blank" href="/FILES/projectReports/${item.FileName}">download</a>`;
+                        li.innerHTML = ` <div>
+                                            <strong>${item.ReportName}</strong>
+                                            <i class="d-block text-muted">${item.FileTitle}</i>
+                                         </div>
+                                            <a target="_blank" href="/FILES/projectReports/${item.FileName}">download</a>`;
                         fragment.appendChild(li);
                     });
 

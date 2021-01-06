@@ -72,7 +72,6 @@ namespace ProjectManagement.Controllers
 
 
 
-
         //get state by country
         public IActionResult GetStateByCountry(int id)
         {

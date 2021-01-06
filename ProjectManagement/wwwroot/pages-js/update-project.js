@@ -2,7 +2,7 @@
 //global model
 const model = {
     FilePhoto: null,
-    ProjectDonors: [],
+    ProjectDonorIds: [],
     CityIds: [],
     ProjectBeneficiaries: [],
 
@@ -310,9 +310,9 @@ $('#inputDonors').typeahead({
 
 //**add donor**
 function appendDonor(donor) {
-    if (model.ProjectDonors.indexOf(donor.DonorId) !== -1) return;
+    if (model.ProjectDonorIds.indexOf(donor.DonorId) !== -1) return;
 
-    model.ProjectDonors.push(donor.DonorId);
+    model.ProjectDonorIds.push(donor.DonorId);
 
     const span = document.createElement("span");
     span.innerHTML = `<strong>${donor.Name}</strong><i data-id="${donor.DonorId}" class="delete fas fa-times-circle"></i>`;
@@ -328,10 +328,10 @@ donorContainer.addEventListener("click", function (evt) {
     if (!onDelete) return;
 
     const id = +element.getAttribute("data-id");
-    const index = model.ProjectDonors.indexOf(id);
+    const index = model.ProjectDonorIds.indexOf(id);
 
     if (index > -1) {
-        model.ProjectDonors.splice(index, 1);
+        model.ProjectDonorIds.splice(index, 1);
         element.parentElement.remove();
     }
 });
@@ -438,14 +438,8 @@ beneficiaryTypeBody.addEventListener("click", function (evt) {
 });
 
 
-//submit first step
-const submitError = document.getElementById("submitError");
-const successMessage = document.getElementById("successMessage");
-
 //posted data
 function postProjectData(sef, btn) {
-    submitError.textContent = "";
-
     const formData = new FormData();
     formData.append('ProjectId', document.getElementById("hiddenProjectId").value);
     formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
@@ -470,8 +464,8 @@ function postProjectData(sef, btn) {
     formData.append('StartDate', formStep1.inputStartDate.value);
     formData.append('EndDate', formStep1.inputEndDate.value);
 
-    model.ProjectDonors.forEach((item, i) => {
-        formData.append(`ProjectDonors[${i}]`, item);
+    model.ProjectDonorIds.forEach((item, i) => {
+        formData.append(`ProjectDonorIds[${i}]`, item);
     });
 
     model.CityIds.forEach((item, i) => {
@@ -509,24 +503,7 @@ function postProjectData(sef, btn) {
         contentType: false,
         success: response => {
             disableButton(btn, false);
-
-            if (response.IsSuccess) {
-                successMessage.style.display = "block";
-                sef.style.display = "none";
-
-                //reset model
-                model.FilePhoto = null;
-                model.ProjectDonors = [];
-                model.ProjectBeneficiaries = [];
-
-                model.ProjectReports = [];
-                model.AddedReports = [];
-                model.DeletedReports = [];
-
-                return;
-            }
-
-            submitError.textContent = response.Message;
+            $.notify(response.Message, response.IsSuccess ? "success" : "error");
         },
         error: err => {
             console.log(err);
@@ -557,7 +534,7 @@ formStep2.addEventListener("submit", function (evt) {
 //enable/disable btn
 function disableButton(btn, isDisable) {
     btn.disabled = isDisable;
-    btn.textContent = isDisable? "submitting..": "Submit";
+    btn.textContent = isDisable ? "submitting.." : "Submit";
 }
 
 //next click
