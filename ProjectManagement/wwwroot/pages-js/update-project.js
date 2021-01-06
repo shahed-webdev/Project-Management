@@ -501,7 +501,7 @@ function postProjectData(sef, btn) {
     disableButton(btn, true);
 
     $.ajax({
-        url: "/Projects/PostAddProject",
+        url: "/Projects/UpdateProject",
         type: "POST",
         data: formData,
         processData: false,

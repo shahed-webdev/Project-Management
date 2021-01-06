@@ -64,6 +64,7 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
+
         //POST: add project(ajax)
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
@@ -96,6 +97,7 @@ namespace ProjectManagement.Controllers
 
             return fileName;
         }
+
 
         //get state by country
         public IActionResult GetStateByCountry(int id)
@@ -165,6 +167,14 @@ namespace ProjectManagement.Controllers
             ViewBag.ReportType = new SelectList(_reportType.Ddl().Data, "value", "label");
 
             return View(responseProject.Data);
+        }
+
+        //POST: update project(ajax)
+        [HttpPost]
+        public IActionResult UpdateProject(ProjectEditModel model)
+        {
+            var response = _project.Edit(model);
+            return Json(response);
         }
 
 
