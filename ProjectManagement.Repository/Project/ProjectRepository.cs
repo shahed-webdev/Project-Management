@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Data;
 using ProjectManagement.ViewModel;
 using System.Collections.Generic;
@@ -23,9 +22,12 @@ namespace ProjectManagement.Repository
             Db.Project.Add(project);
         }
 
-        public void Edit(ProjectEditViewModel model)
+        public void Edit(ProjectEditModel model)
         {
-            throw new System.NotImplementedException();
+            var project = Db.Project.Find(model.ProjectId);
+
+
+            Db.Project.Remove(project);
         }
 
         public ProjectEditViewModel Get(int projectId)

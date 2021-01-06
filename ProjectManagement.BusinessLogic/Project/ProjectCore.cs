@@ -73,7 +73,7 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
-        public DbResponse Edit(ProjectEditViewModel model)
+        public DbResponse Edit(ProjectEditModel model)
         {
             throw new System.NotImplementedException();
         }

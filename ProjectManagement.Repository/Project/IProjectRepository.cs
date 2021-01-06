@@ -6,7 +6,7 @@ namespace ProjectManagement.Repository
     public interface IProjectRepository
     {
         void Add(ProjectAddModel model);
-        void Edit(ProjectEditViewModel model);
+        void Edit(ProjectEditModel model);
         ProjectEditViewModel Get(int projectId);
         void Delete(int projectId);
         bool IsRelatedDataExist(int projectId);
