@@ -22,7 +22,7 @@ namespace ProjectManagement.Repository
             Db.Project.Add(project);
         }
 
-        public void Edit(ProjectEditViewModel model)
+        public void Edit(ProjectEditModel model)
         {
             var project = Db.Project.Find(model.ProjectId);
 
