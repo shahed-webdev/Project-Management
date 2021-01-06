@@ -35,8 +35,7 @@ namespace ProjectManagement.Repository
 
             project.ProjectStatusId = model.ProjectStatusId;
 
-            if (model.CityIds != null)
-                project.ProjectCities = model.CityIds.Select(c => new ProjectCity { CityId = c }).ToList();
+            project.ProjectCities = model.CityIds != null ? model.CityIds.Select(c => new ProjectCity { CityId = c }).ToList() : new List<ProjectCity>();
 
             project.Title = model.Title;
             project.Description = model.Description;
@@ -57,8 +56,7 @@ namespace ProjectManagement.Repository
             project.EndDate = model.EndDate;
             project.SubmissionDate = model.SubmissionDate;
 
-            if (model.ProjectDonorIds != null)
-                project.ProjectDonors = model.ProjectDonorIds.Select(d => new ProjectDonor { DonorId = d }).ToList();
+            project.ProjectDonors = model.ProjectDonorIds != null ? model.ProjectDonorIds.Select(d => new ProjectDonor { DonorId = d }).ToList() : new List<ProjectDonor>();
 
             var reports = new List<ProjectReports>();
 
@@ -74,12 +72,11 @@ namespace ProjectManagement.Repository
                 reports.AddRange(addReports);
             }
 
+
             if (reports.Count > 0)
                 project.ProjectReports = reports;
 
-            if (model.ProjectBeneficiaries != null)
-                project.ProjectBeneficiaries = model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList();
-
+            project.ProjectBeneficiaries = model.ProjectBeneficiaries != null ? model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList() : new List<ProjectBeneficiary>();
 
 
             Db.Project.Update(project);
