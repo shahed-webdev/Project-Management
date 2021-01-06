@@ -61,6 +61,7 @@ namespace ProjectManagement.Controllers
             return View();
         }
 
+
         //POST: add project(ajax)
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
@@ -68,6 +69,7 @@ namespace ProjectManagement.Controllers
             var response = _project.Add(model, _webHostEnvironment.WebRootPath);
             return Json(response);
         }
+
 
 
 
@@ -117,6 +119,7 @@ namespace ProjectManagement.Controllers
 
 
         /***Update Project**/
+        [Route("/Projects/UpdateProject")]
         [Route("/Projects/UpdateProject/{id}/{project}")]
         public IActionResult UpdateProject(int? id, int project)
         {
@@ -127,14 +130,25 @@ namespace ProjectManagement.Controllers
 
             ViewBag.ProjectSector = response.Data;
 
-            var model = _project.Get(project);
+            var responseProject = _project.Get(project);
 
-            ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label", model.Data.ProjectStatusId);
+            if (!responseProject.IsSuccess)
+                return RedirectToAction($"List", new { id });
+
+            ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label", responseProject.Data.ProjectStatusId);
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
             ViewBag.Type = new SelectList(_type.Ddl().Data, "value", "label");
             ViewBag.ReportType = new SelectList(_reportType.Ddl().Data, "value", "label");
 
-            return View(model.Data);
+            return View(responseProject.Data);
+        }
+
+        //POST: update project(ajax)
+        [HttpPost]
+        public IActionResult UpdateProject(ProjectEditModel model)
+        {
+            var response = _project.Edit(model);
+            return Json(response);
         }
 
 

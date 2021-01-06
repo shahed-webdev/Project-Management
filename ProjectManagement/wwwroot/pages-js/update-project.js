@@ -5,7 +5,10 @@ const model = {
     ProjectDonors: [],
     CityIds: [],
     ProjectBeneficiaries: [],
-    ProjectReports: []
+
+    ProjectReports: [],
+    DeletedReports: [],
+    AddedReports: []
 };
 
 
@@ -41,6 +44,9 @@ inputPhoto.addEventListener("change", function (e) {
     }
 
     pathInput.value = file.name;
+
+    //preview image
+    readURL(e.target);
 
     //resize image
     const img = new Image();
@@ -102,6 +108,20 @@ function resizeImage(img, width, step, fileName) {
     model.FilePhoto = file;
 }
 
+//preview image
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        const imgFilePhoto = document.getElementById("imgFilePhoto");
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            imgFilePhoto.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 
 //file attachment
 const inputAttachment = document.getElementById("inputAttachment");
@@ -112,6 +132,7 @@ const reportList = document.getElementById("report-list");
 //add
 inputAttachment.addEventListener("change", function (e) {
     errorReportName.textContent = "";
+
     const id = +selectReportName.value;
     const text = selectReportName.options[selectReportName.selectedIndex].text;
 
@@ -126,6 +147,7 @@ inputAttachment.addEventListener("change", function (e) {
 
     if (isAdded) {
         this.value = "";
+        $.notify("Report Already Added!", "error");
         return;
     };
 
@@ -137,6 +159,9 @@ inputAttachment.addEventListener("change", function (e) {
 
     model.ProjectReports.push(reports);
 
+    //new added report
+    model.AddedReports.push(reports);
+
     const li = document.createElement("li");
     li.className = "list-group-item d-flex justify-content-between align-items-center";
     li.innerHTML = `
@@ -144,10 +169,12 @@ inputAttachment.addEventListener("change", function (e) {
               <span>${text}</span>
               <i>${e.target.files[0].name}</i>
             </div>
-            <i data-id="${id}" class="remove fas fa-trash-alt red-text"></i>`;
+            <i data-id="${id}" data-old="false" class="remove fas fa-trash-alt red-text"></i>`;
     reportList.appendChild(li);
 
     this.value = "";
+
+    $.notify("Report Successfully Added", "success");
 });
 
 //remove
@@ -158,8 +185,19 @@ reportList.addEventListener("click", function (evt) {
     if (!onDelete) return;
 
     const id = +element.getAttribute("data-id");
+    const isOldData = element.getAttribute("data-old");
+    const fileName = element.getAttribute("data-filename");
+
+    if (isOldData === "true") {
+        const oldData = { FileName: fileName, ReportTypeId: id }
+        model.DeletedReports.push(oldData);
+    }
 
     model.ProjectReports = model.ProjectReports.filter(el => el.ReportTypeId !== id);
+
+    //remove newly added report
+    model.AddedReports = model.AddedReports.filter(el => el.ReportTypeId !== id);
+
     element.parentElement.remove();
 });
 
@@ -308,7 +346,7 @@ btnLocationAdd.addEventListener("click", function () {
     if (!cityId) return;
 
     if (model.CityIds.indexOf(cityId) !== -1) return;
-    
+
     model.CityIds.push(cityId);
 
     const tr = document.createElement("tr");
@@ -401,9 +439,12 @@ beneficiaryTypeBody.addEventListener("click", function (evt) {
 
 
 //submit first step
-const submitError2 = document.getElementById("submitError2");
-formStep1.addEventListener("submit", function (evt) {
-    evt.preventDefault();
+const submitError = document.getElementById("submitError");
+const successMessage = document.getElementById("successMessage");
+
+//posted data
+function postProjectData(sef, btn) {
+    submitError.textContent = "";
 
     const formData = new FormData();
     formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
@@ -441,34 +482,45 @@ formStep1.addEventListener("submit", function (evt) {
         formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
     });
 
+    //2nd step
     formData.append('SubmissionDate', formStep2.inputSubmissionDate.value);
-    model.ProjectReports.forEach((item, i) => {
-        formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
-        formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
+
+    //added
+    model.AddedReports.forEach((item, i) => {
+        formData.append(`AddedReports[${i}].ReportTypeId`, item.ReportTypeId);
+        formData.append(`AddedReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
+        formData.append(`AddedReports[${i}].FileTitle`, item.FileTitle);
     });
 
-    this.btnSubmit1.disabled = true;
-    this.btnSubmit1.textContent = "submitting..";
+    //deleted
+    model.DeletedReports.forEach((item, i) => {
+        formData.append(`DeletedReports[${i}].ReportTypeId`, item.ReportTypeId);
+        formData.append(`DeletedReports[${i}].FileName`, item.FileName);
+    });
+
+    disableButton(btn, true);
 
     $.ajax({
-        url: "/Projects/PostAddProject",
+        url: "/Projects/UpdateProject",
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: response => {
-            this.btnSubmit1.disabled = false;
-            this.btnSubmit1.textContent = "Submit";
+            disableButton(btn, false);
 
             if (response.IsSuccess) {
                 successMessage.style.display = "block";
-                this.style.display = "none";
+                sef.style.display = "none";
 
                 //reset model
                 model.FilePhoto = null;
                 model.ProjectDonors = [];
                 model.ProjectBeneficiaries = [];
+
                 model.ProjectReports = [];
+                model.AddedReports = [];
+                model.DeletedReports = [];
 
                 return;
             }
@@ -477,12 +529,37 @@ formStep1.addEventListener("submit", function (evt) {
         },
         error: err => {
             console.log(err);
-            this.btnSubmit1.disabled = false;
-            this.btnSubmit1.textContent = "Submit";
+            disableButton(btn, false);
         }
     });
+}
+
+//post step 1
+formStep1.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+    postProjectData(this, this.btnSubmit1);
 });
 
+//submit second step
+formStep2.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+
+    if (!formStep1.inputTitle.value) {
+        stepChange(false);
+        formStep1.inputTitle.focus();
+        return;
+    }
+
+    postProjectData(this, this.btnSubmit2);
+});
+
+//enable/disable btn
+function disableButton(btn, isDisable) {
+    btn.disabled = isDisable;
+    btn.textContent = isDisable? "submitting..": "Submit";
+}
+
+//next click
 btnNext.addEventListener("click", function (evt) {
     evt.preventDefault();
 
@@ -493,90 +570,6 @@ btnNext.addEventListener("click", function (evt) {
         formStep2.inputProjectName.nextElementSibling.classList.add("active");
     }
 });
-
-//submit second step
-const submitError = document.getElementById("submitError");
-const successMessage = document.getElementById("successMessage");
-
-formStep2.addEventListener("submit", function (evt) {
-    evt.preventDefault();
-
-    submitError.textContent = "";
-
-    if (!formStep1.inputTitle.value) {
-        stepChange(false);
-        formStep1.inputTitle.focus();
-
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
-    formData.append('ProjectStatusId', formStep1.selectStatus.value);
-    formData.append('CityId', formStep1.selectCity.value);
-    formData.append('Title', formStep1.inputTitle.value);
-    formData.append('Description', formStep1.inputDescription.value);
-    formData.append('TotalBudget', formStep1.inputTotalBudget.value);
-    formData.append('TotalExpenditure', formStep1.inputTotalExpenditure.value);
-
-    if (model.FilePhoto)
-        formData.append('FilePhoto', model.FilePhoto, model.FilePhoto.name);
-
-    formData.append('StartDate', formStep1.inputStartDate.value);
-    formData.append('EndDate', formStep1.inputEndDate.value);
-
-    model.ProjectDonors.forEach((item, i) => {
-        formData.append(`ProjectDonors[${i}]`, item);
-    });
-
-    model.ProjectBeneficiaries.forEach((item, i) => {
-        formData.append(`ProjectBeneficiaries[${i}].ProjectBeneficiaryTypeId`, item.ProjectBeneficiaryTypeId);
-        formData.append(`ProjectBeneficiaries[${i}].Count`, item.Count);
-    });
-
-    formData.append('SubmissionDate', formStep2.inputSubmissionDate.value);
-    model.ProjectReports.forEach((item, i) => {
-        formData.append(`ProjectReports[${i}].ReportTypeId`, item.ReportTypeId);
-        formData.append(`ProjectReports[${i}].Attachment`, item.Attachment, item.Attachment.name);
-    });
-
-
-    this.btnSubmit.disabled = true;
-    this.btnSubmit.textContent = "submitting..";
-
-    $.ajax({
-        url: "/Projects/PostAddProject",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: response => {
-            this.btnSubmit.disabled = false;
-            this.btnSubmit.textContent = "Submit";
-
-            if (response.IsSuccess) {
-                successMessage.style.display = "block";
-                this.style.display = "none";
-
-                //reset model
-                model.FilePhoto = null;
-                model.ProjectDonors = [];
-                model.ProjectBeneficiaries = [];
-                model.ProjectReports = [];
-
-                return;
-            }
-
-            submitError.textContent = response.Message;
-        },
-        error: err => {
-            console.log(err);
-            this.btnSubmit.disabled = false;
-            this.btnSubmit.textContent = "Submit";
-        }
-    });
-});
-
 
 //next or prev page
 function stepChange(isNext) {
