@@ -7,6 +7,9 @@
 @section Styles{
     <link href="~/pages-css/steper-style.css" rel="stylesheet" />
     <link href="~/pages-css/add-project.css?v=1" rel="stylesheet" />
+    <style>
+        .file-photo { width: 100px; height: 100px; }
+    </style>
 }
 
 <div class="container">
@@ -79,7 +82,8 @@
                         @foreach (var donor in Model.ProjectDonors)
                         {
                             <span>
-                                <strong>@donor.Name</strong><i data-id="@donor.DonorId" class="delete fas fa-times-circle"></i>
+                                <strong>@donor.Name</strong>
+                                <i data-id="@donor.DonorId" class="delete fas fa-times-circle"></i>
                             </span>
                         }
                     </div>
@@ -150,12 +154,25 @@
                             <th><strong>Village</strong></th>
                         </tr>
                     </thead>
-                    <tbody id="bodyLocation"></tbody>
+                    <tbody id="bodyLocation">
+                        @foreach (var location in Model.Locations)
+                        {
+                            <tr>
+                                <td>@location.CountryName</td>
+                                <td>@location.StateName</td>
+                                <td>@location.CityName</td>
+                                <td><i data-id="@location.CityId" class="remove fas fa-trash-alt"></i></td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </fieldset>
 
             <div class="row mt-3">
-                <div class="col-lg-12">
+                <div class="col-lg-2">
+                    <img id="imgFilePhoto" src="@(string.IsNullOrEmpty(Model.FilePhotoUrl)? "/images/default.jpg" : $"/FILES/projectReports/{Model.FilePhotoUrl}")" class="file-photo" alt="">
+                </div>
+                <div class="col-lg-10">
                     <div class="md-form">
                         <div class="file-field">
                             <div class="btn btn-outline-info btn-rounded btn-sm float-left">
@@ -217,7 +234,16 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="beneficiaryTypeBody"></tbody>
+                    <tbody id="beneficiaryTypeBody">
+                        @foreach (var item in Model.ProjectBeneficiaries)
+                        {
+                            <tr>
+                                <td>@item.Count</td>
+                                <td>@item.Count</td>
+                                <td><i data-id="@item.ProjectBeneficiaryTypeId" class="remove fas fa-trash-alt"></i></td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
 
                 <div class="md-form">
@@ -274,22 +300,36 @@
                 </div>
             </div>
 
-            <ul id="report-list" class="list-group list-group-flush"></ul>
+            <ul id="report-list" class="list-group list-group-flush">
+                @foreach (var file in Model.ProjectReports)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="report-tems">
+                            <span>@file.ReportName</span>
+                            <i>@file.FileTitle</i>
+                        </div>
+                        <i data-id="@file.ReportTypeId" data-old="true" data-filename="@file.FileName" class="remove fas fa-trash-alt red-text"></i>
+                    </li>
+                }
+            </ul>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-4">
             <button id="btnPrevious" type="button" class="btn btn-grey"><i class="far fa-long-arrow-alt-left mr-1"></i>Previous</button>
-            <button id="btnSubmit" type="submit" class="btn btn-custom-bg">Submit</button>
+            <button id="btnSubmit2" type="submit" class="btn btn-custom-bg">Submit</button>
         </div>
-        <p id="submitError" class="red-text text-right"></p>
     </form>
+
+    <p id="submitError" class="red-text text-right"></p>
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/update-project.js?v=1"></script>
+    <script src="~/pages-js/update-project.js?v=2"></script>
     <script>
-        model.ProjectDonors = @Html.Raw(Json.Serialize(Model.ProjectDonors));
-
+        model.ProjectDonors = @Html.Raw(Json.Serialize(Model.ProjectDonorIds));
+        model.CityIds = @Html.Raw(Json.Serialize(Model.CityIds));
+        model.ProjectBeneficiaries = @Html.Raw(Json.Serialize(Model.ProjectBeneficiaries));
+        model.ProjectReports = @Html.Raw(Json.Serialize(Model.ProjectReports));
 
         $(function () {
             $('.mdb-select').materialSelect();

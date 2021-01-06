@@ -73,7 +73,7 @@ namespace ProjectManagement.Controllers
                 report.FileName = UploadedFile(report.Attachment, "projectReports");
                 report.FileUrl = "~/FILES/projectReports";
             }
-            
+
             model.Photo = UploadedFile(model.FilePhoto, "projectReports");
 
             var response = _project.Add(model);
@@ -86,7 +86,7 @@ namespace ProjectManagement.Controllers
 
             var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, $"FILES/{subPath}");
             var fileExtension = Path.GetExtension(file.FileName);
-            var fileName = Guid.NewGuid() + "." + fileExtension;
+            var fileName = Guid.NewGuid() + fileExtension;
             var filePath = Path.Combine(uploadsFolder, fileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -143,6 +143,7 @@ namespace ProjectManagement.Controllers
 
 
         /***Update Project**/
+        [Route("/Projects/UpdateProject")]
         [Route("/Projects/UpdateProject/{id}/{project}")]
         public IActionResult UpdateProject(int? id, int project)
         {
@@ -153,14 +154,17 @@ namespace ProjectManagement.Controllers
 
             ViewBag.ProjectSector = response.Data;
 
-            var model = _project.Get(project);
+            var responseProject = _project.Get(project);
 
-            ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label", model.Data.ProjectStatusId);
+            if (!responseProject.IsSuccess)
+                return RedirectToAction($"List", new { id });
+
+            ViewBag.Status = new SelectList(_status.Ddl().Data, "value", "label", responseProject.Data.ProjectStatusId);
             ViewBag.Country = new SelectList(_location.CountryDdl().Data, "value", "label");
             ViewBag.Type = new SelectList(_type.Ddl().Data, "value", "label");
             ViewBag.ReportType = new SelectList(_reportType.Ddl().Data, "value", "label");
 
-            return View(model.Data);
+            return View(responseProject.Data);
         }
 
 
