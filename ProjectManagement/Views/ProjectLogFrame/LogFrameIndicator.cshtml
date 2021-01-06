@@ -1348,7 +1348,12 @@
                 data: { id },
                 success: response => {
                     if (response.IsSuccess) {
-                        location.reload();
+                        $.notify("Successfully Deleted", "success");
+
+                        setTimeout(function() {
+                             location.reload();
+                        }, 2000);
+                       
                         return;
                     }
                     $.notify(response.Message, "error");
@@ -1371,10 +1376,12 @@
                 type: "POST",
                 data: { id },
                 success: response => {
-                    if (response.IsSuccess) {
+                    $.notify("Successfully Deleted", "success");
+
+                    setTimeout(function() {
                         location.reload();
-                        return;
-                    }
+                    }, 2000);
+
                     $.notify(response.Message, "error");
                 },
                 error: err => {
@@ -1395,10 +1402,12 @@
                 type: "POST",
                 data: { id },
                 success: response => {
-                    if (response.IsSuccess) {
+                    $.notify("Successfully Deleted", "success");
+
+                    setTimeout(function() {
                         location.reload();
-                        return;
-                    }
+                    }, 2000);
+
                     $.notify(response.Message, "error");
                 },
                 error: err => {
