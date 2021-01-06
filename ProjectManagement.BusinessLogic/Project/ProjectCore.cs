@@ -12,7 +12,7 @@ namespace ProjectManagement.BusinessLogic
         {
         }
 
-        public DbResponse Add(ProjectAddModel model)
+        public DbResponse Add(ProjectAddModel model, string webRootPath)
         {
             try
             {
@@ -22,6 +22,15 @@ namespace ProjectManagement.BusinessLogic
 
                 if (_db.Project.IsExist(model.Title))
                     return new DbResponse(false, $"'{model.Title}' already Exist");
+
+                foreach (var report in model.ProjectReports)
+                {
+                    report.FileName = FileHandler.UploadedFile(report.Attachment, webRootPath, "projectReports");
+                    report.FileUrl = "~/FILES/projectReports";
+                }
+
+                model.Photo = FileHandler.UploadedFile(model.FilePhoto, webRootPath, "projectReports");
+
 
                 _db.Project.Add(model);
                 _db.SaveChanges();
@@ -73,9 +82,36 @@ namespace ProjectManagement.BusinessLogic
             }
         }
 
-        public DbResponse Edit(ProjectEditModel model)
+        public DbResponse Edit(ProjectEditModel model, string webRootPath)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                if (_db.Project.IsNull(model.ProjectId))
+                    return new DbResponse(false, "Invalid Data");
+
+                if (_db.Project.IsExist(model.Title, model.ProjectId))
+                    return new DbResponse(false, $"'{model.Title}' already Exist");
+
+                foreach (var report in model.AddedReports)
+                {
+                    report.FileName = FileHandler.UploadedFile(report.Attachment, webRootPath, "projectReports");
+                    report.FileUrl = "~/FILES/projectReports";
+                }
+
+                if (model.FilePhoto != null)
+                    model.Photo = FileHandler.UploadedFile(model.FilePhoto, webRootPath, "projectReports");
+
+
+
+                _db.Project.Edit(model);
+                _db.SaveChanges();
+
+                return new DbResponse(true, "Success");
+            }
+            catch (Exception e)
+            {
+                return new DbResponse(false, e.Message);
+            }
         }
 
         public DbResponse<List<ProjectListViewModel>> List(int sectorId)

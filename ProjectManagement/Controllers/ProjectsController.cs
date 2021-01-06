@@ -1,13 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagement.BusinessLogic;
 using ProjectManagement.ViewModel;
+using System.Threading.Tasks;
 
 
 namespace ProjectManagement.Controllers
@@ -68,34 +65,11 @@ namespace ProjectManagement.Controllers
         [HttpPost]
         public IActionResult PostAddProject(ProjectAddModel model)
         {
-            foreach (var report in model.ProjectReports)
-            {
-                report.FileName = UploadedFile(report.Attachment, "projectReports");
-                report.FileUrl = "~/FILES/projectReports";
-            }
-            
-            model.Photo = UploadedFile(model.FilePhoto, "projectReports");
-
-            var response = _project.Add(model);
+            var response = _project.Add(model, _webHostEnvironment.WebRootPath);
             return Json(response);
         }
 
-        private string UploadedFile(IFormFile file, string subPath)
-        {
-            if (file == null) return null;
 
-            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, $"FILES/{subPath}");
-            var fileExtension = Path.GetExtension(file.FileName);
-            var fileName = Guid.NewGuid() + "." + fileExtension;
-            var filePath = Path.Combine(uploadsFolder, fileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                file.CopyTo(fileStream);
-            }
-
-            return fileName;
-        }
 
         //get state by country
         public IActionResult GetStateByCountry(int id)
@@ -179,7 +153,6 @@ namespace ProjectManagement.Controllers
 
             var response = _sector.Get(id.GetValueOrDefault());
             if (!response.IsSuccess) return RedirectToAction($"Features");
-
             ViewBag.ProjectSector = response.Data;
             ViewBag.ProjectName = new SelectList(_project.Ddl(id.Value).Data, "value", "label");
 

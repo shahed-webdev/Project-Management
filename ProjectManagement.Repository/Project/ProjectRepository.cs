@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Data;
 using ProjectManagement.ViewModel;
 using System.Collections.Generic;
@@ -24,10 +25,58 @@ namespace ProjectManagement.Repository
 
         public void Edit(ProjectEditModel model)
         {
-            var project = Db.Project.Find(model.ProjectId);
+            var project = Db.Project
+                .Include(p => p.ProjectDonors)
+                .Include(p => p.ProjectCities)
+                .Include(p => p.ProjectBeneficiaries)
+                .Include(p => p.ProjectReports)
+                .FirstOrDefault(p => p.ProjectId == model.ProjectId);
 
 
-            Db.Project.Remove(project);
+
+            project.ProjectStatusId = model.ProjectStatusId;
+            project.ProjectCities = model.CityIds.Select(c => new ProjectCity { CityId = c }).ToList();
+            project.Title = model.Title;
+            project.Description = model.Description;
+            project.KeyWord = model.KeyWord;
+            project.TotalBudgetBdt = model.TotalBudgetBdt;
+            project.TotalBudgetUsd = model.TotalBudgetUsd;
+            project.TotalExpenditure = model.TotalExpenditure;
+            project.DonorType = model.DonorType;
+            project.DirectIndirectType = model.DirectIndirectType;
+            project.IndividualHouseholdType = model.IndividualHouseholdType;
+            project.Count = model.Count;
+            project.TotalCount = model.TotalCount;
+            if (model.FilePhoto != null)
+                project.Photo = model.Photo;
+
+            project.StartDate = model.StartDate;
+            project.EndDate = model.EndDate;
+            project.SubmissionDate = model.SubmissionDate;
+            project.ProjectDonors = model.ProjectDonorIds.Select(d => new ProjectDonor { DonorId = d }).ToList();
+
+            var reports = new List<ProjectReports>();
+
+            if (model.DeletedReports != null)
+            {
+                reports = project.ProjectReports
+                   .Where(p => model.DeletedReports.Select(r => r.ReportTypeId).Contains(p.ReportTypeId)).ToList();
+            }
+
+            if (model.AddedReports != null)
+            {
+                var addReports = model.AddedReports.Select(r => _mapper.Map<ProjectReports>(r)).ToList();
+                reports.AddRange(addReports);
+            }
+
+            if (reports.Count > 0)
+                project.ProjectReports = reports;
+
+            project.ProjectBeneficiaries = model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList();
+
+
+
+            Db.Project.Update(project);
         }
 
         public ProjectEditViewModel Get(int projectId)

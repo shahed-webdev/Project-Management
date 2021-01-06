@@ -5,10 +5,10 @@ namespace ProjectManagement.BusinessLogic
 {
     public interface IProjectCore
     {
-        DbResponse Add(ProjectAddModel model);
+        DbResponse Add(ProjectAddModel model, string webRootPath);
         DbResponse Delete(int projectId);
         DbResponse<ProjectEditViewModel> Get(int projectId);
-        DbResponse Edit(ProjectEditModel model);
+        DbResponse Edit(ProjectEditModel model, string webRootPath);
         DbResponse<List<ProjectListViewModel>> List(int sectorId);
         DbResponse<List<ProjectReportsAddModel>> Reports(int projectId);
         DbResponse<List<DDL>> Ddl(int sectorId);
