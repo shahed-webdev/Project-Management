@@ -33,9 +33,11 @@ namespace ProjectManagement.Repository
                 .FirstOrDefault(p => p.ProjectId == model.ProjectId);
 
 
-
             project.ProjectStatusId = model.ProjectStatusId;
-            project.ProjectCities = model.CityIds.Select(c => new ProjectCity { CityId = c }).ToList();
+
+            if (model.CityIds != null)
+                project.ProjectCities = model.CityIds.Select(c => new ProjectCity { CityId = c }).ToList();
+
             project.Title = model.Title;
             project.Description = model.Description;
             project.KeyWord = model.KeyWord;
@@ -47,13 +49,16 @@ namespace ProjectManagement.Repository
             project.IndividualHouseholdType = model.IndividualHouseholdType;
             project.Count = model.Count;
             project.TotalCount = model.TotalCount;
+
             if (model.FilePhoto != null)
                 project.Photo = model.Photo;
 
             project.StartDate = model.StartDate;
             project.EndDate = model.EndDate;
             project.SubmissionDate = model.SubmissionDate;
-            project.ProjectDonors = model.ProjectDonorIds.Select(d => new ProjectDonor { DonorId = d }).ToList();
+
+            if (model.ProjectDonorIds != null)
+                project.ProjectDonors = model.ProjectDonorIds.Select(d => new ProjectDonor { DonorId = d }).ToList();
 
             var reports = new List<ProjectReports>();
 
@@ -72,7 +77,8 @@ namespace ProjectManagement.Repository
             if (reports.Count > 0)
                 project.ProjectReports = reports;
 
-            project.ProjectBeneficiaries = model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList();
+            if (model.ProjectBeneficiaries != null)
+                project.ProjectBeneficiaries = model.ProjectBeneficiaries.Select(b => _mapper.Map<ProjectBeneficiary>(b)).ToList();
 
 
 

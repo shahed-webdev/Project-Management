@@ -447,6 +447,7 @@ function postProjectData(sef, btn) {
     submitError.textContent = "";
 
     const formData = new FormData();
+    formData.append('ProjectId', document.getElementById("hiddenProjectId").value);
     formData.append('ProjectSectorId', formStep1.hiddenProjectSectorId.value);
     formData.append('ProjectStatusId', formStep1.selectStatus.value);
     formData.append('Title', formStep1.inputTitle.value);
@@ -501,7 +502,7 @@ function postProjectData(sef, btn) {
     disableButton(btn, true);
 
     $.ajax({
-        url: "/Projects/UpdateProject",
+        url: "/Projects/PostUpdateProject",
         type: "POST",
         data: formData,
         processData: false,

@@ -15,7 +15,7 @@
 <div class="container">
     <h4 class="page-header mt-3">Update Project</h4>
     <p class="mb-3">@ViewBag.ProjectSector.Sector</p>
-
+    <input id="hiddenProjectId" type="hidden" value="@Model.ProjectId" />
 
     <div id="successMessage" class="alert alert-success text-center" role="alert">
         Project Submitted Successfully!
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="md-form">
-                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@Model.EndDate.Value.ToString("d MMM yyyy")e">
+                        <input type="text" id="inputEndDate" class="form-control datepicker" value="@Model.EndDate.Value.ToString("d MMM yyyy")">
                         <label for="inputEndDate">End Date</label>
                     </div>
                 </div>
@@ -324,7 +324,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/pages-js/update-project.js?v=2"></script>
+    <script src="~/pages-js/update-project.js?v=1.1"></script>
     <script>
         model.ProjectDonors = @Html.Raw(Json.Serialize(Model.ProjectDonorIds));
         model.CityIds = @Html.Raw(Json.Serialize(Model.CityIds));

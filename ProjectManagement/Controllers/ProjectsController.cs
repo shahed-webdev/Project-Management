@@ -145,7 +145,7 @@ namespace ProjectManagement.Controllers
 
         //POST: update project(ajax)
         [HttpPost]
-        public IActionResult UpdateProject(ProjectEditModel model)
+        public IActionResult PostUpdateProject(ProjectEditModel model)
         {
             var response = _project.Edit(model, _webHostEnvironment.WebRootPath);
             return Json(response);
