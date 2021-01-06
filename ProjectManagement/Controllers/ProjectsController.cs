@@ -147,7 +147,7 @@ namespace ProjectManagement.Controllers
         [HttpPost]
         public IActionResult UpdateProject(ProjectEditModel model)
         {
-            var response = _project.Edit(model);
+            var response = _project.Edit(model, _webHostEnvironment.WebRootPath);
             return Json(response);
         }
 
