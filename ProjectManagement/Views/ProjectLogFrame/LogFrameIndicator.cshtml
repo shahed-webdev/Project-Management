@@ -1048,10 +1048,10 @@
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                                            <td>${getSelectedText(district)}</td>
-                                            <td>${getSelectedText(subDistrict)}</td>
-                                            <td>${getSelectedText(village)}</td>
-                                            <td><i onClick="removeLocation(${step},this)" data-id="${village.value}" class="remove fas fa-trash-alt"></i></td>`;
+                                                    <td>${getSelectedText(district)}</td>
+                                                    <td>${getSelectedText(subDistrict)}</td>
+                                                    <td>${getSelectedText(village)}</td>
+                                                    <td><i onClick="removeLocation(${step},this)" data-id="${village.value}" class="remove fas fa-trash-alt"></i></td>`;
 
             bodyLocation.appendChild(tr);
 
@@ -1073,7 +1073,7 @@
         }
 
         //set location in table
-        function renderLocationTable(items,step) {
+        function renderLocationTable(items, step) {
             const tBody = document.getElementById(`bodyLocation${step === 1 ? "" : step}`);
             tBody.innerHTML = "";
 
@@ -1082,10 +1082,10 @@
             items.forEach(item => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                        <td>${item.CountryName}</td>
-                        <td>${item.StateName}</td>
-                        <td>${item.CityName}</td>
-                        <td><i onClick="removeLocation(${step},this)" data-id="${item.CityId}" class="remove fas fa-trash-alt"></i></td>`;
+                                <td>${item.CountryName}</td>
+                                <td>${item.StateName}</td>
+                                <td>${item.CityName}</td>
+                                <td><i onClick="removeLocation(${step},this)" data-id="${item.CityId}" class="remove fas fa-trash-alt"></i></td>`;
 
                 fragment.appendChild(tr);
             });
@@ -1347,16 +1347,11 @@
                 type: "POST",
                 data: { id },
                 success: response => {
-                    if (response.IsSuccess) {
-                        $.notify("Successfully Deleted", "success");
+                    $.notify(response.Message, response.IsSuccess ? "success" : "error");
 
-                        setTimeout(function() {
-                             location.reload();
-                        }, 2000);
-                       
-                        return;
-                    }
-                    $.notify(response.Message, "error");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
                 },
                 error: err => {
                     console.log(err);
@@ -1376,13 +1371,11 @@
                 type: "POST",
                 data: { id },
                 success: response => {
-                    $.notify("Successfully Deleted", "success");
+                    $.notify(response.Message, response.IsSuccess ? "success" : "error");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload();
                     }, 2000);
-
-                    $.notify(response.Message, "error");
                 },
                 error: err => {
                     console.log(err);
@@ -1402,13 +1395,11 @@
                 type: "POST",
                 data: { id },
                 success: response => {
-                    $.notify("Successfully Deleted", "success");
+                    $.notify(response.Message, response.IsSuccess ? "success" : "error");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload();
                     }, 2000);
-
-                    $.notify(response.Message, "error");
                 },
                 error: err => {
                     console.log(err);
